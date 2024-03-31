@@ -1,0 +1,27 @@
+<div class="previewContainer">
+    <h3>{{ npc?.name ? npc?.name : 'name' }}</h3>
+    <table class="table">
+        <thead class="text-center">
+            <tr>
+                <th>STR</th>
+                <th>AGI</th>
+                <th>CON</th>
+                <th>INT</th>
+                <th>SPI</th>
+                <th>PER</th>
+                <th>CHA</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            <tr>
+                <td>{{ npc?.str }}</td>
+                <td>{{ npc?.agi }}</td>
+                <td>{{ npc?.con }}</td>
+                <td>{{ npc?.int }}</td>
+                <td>{{ npc?.spi }}</td>
+                <td>{{ npc?.per }}</td>
+                <td>{{ npc?.cha }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,22 @@
+<div class="generatorContainer">
+    <form class="row g-4">
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" (change)="handleNameUpdate($event)">
+            </div>
+        </div>
+        <div class="col">
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                    Toggle dropdown
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    @for (alignment of alignments; track $index) {
+                        <button ngbDropdownItem>{{ alignment }}</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

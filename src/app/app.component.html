@@ -1,5 +1,13 @@
 <main>
-  <div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col npc-generator">
+        <app-generator (generatedNPC)="handleGeneratedNPCChange($event)"></app-generator>
+      </div>
+      <div class="col npc-preview">
+        <app-preview [npc]="previewNPC"></app-preview>
+      </div>
+    </div>
   </div>
 </main>
-<router-outlet />
+<router-outlet/>
