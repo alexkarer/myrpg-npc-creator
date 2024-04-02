@@ -9,7 +9,7 @@
         <div class="col-3">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
-                    {{ npc?.alignment }}
+                    {{ npc.alignment }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
                     @for (alignment of alignments; track $index) {
@@ -21,7 +21,7 @@
         <div class="col-3">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownLevel" ngbDropdownToggle>
-                    Level {{ npc?.level }}
+                    Level {{ npc.level }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownLevel">
                     @for (levelConfig of levelConfigs; track $index) {
@@ -37,6 +37,32 @@
         </div>
         <div class="col">
             <p class="text-center fw-bold">Used NPC Creation Points: {{ usedNpCCreationPoints }}</p>
+        </div>
+    </div>
+    <div class="row g-3 mt-0">
+        <div class="col">
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownCreatureType" ngbDropdownToggle>
+                    {{ npc.creatureType.name }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownCreatureType">
+                    @for (creatureType of creatureTypes; track $index) {
+                        <button type="button" (click)="handleCreatureTypeUpdate($event)" ngbDropdownItem [value]="creatureType.name">{{ creatureType.name }}</button>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownSize" ngbDropdownToggle>
+                    {{ npc.creatureSize.name }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownSize">
+                    @for (creatureSize of creatureSizes; track $index) {
+                        <button type="button" (click)="handleCreatureSizeUpdate($event)" ngbDropdownItem [value]="creatureSize.name">{{ creatureSize.name }}</button>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

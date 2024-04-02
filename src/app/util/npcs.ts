@@ -3,6 +3,8 @@ import { Action } from "./action"
 import { Alignment } from "./alignment"
 import { Reaction } from "./reactions"
 import { Trait } from "./trait"
+import { CreatureType, creatureTypeHuman } from './creatureTypes';
+import { CreatureSize, medium } from "./creatureSize"
 
 export type NPC = {
     // Overview
@@ -23,6 +25,9 @@ export type NPC = {
     level: number,
     martialLevel: number,
     spellLevel: number,
+
+    creatureType: CreatureType,
+    creatureSize: CreatureSize,
 
     mp: number,
     ap: number,
@@ -61,14 +66,17 @@ export function createEmptyNPC(): NPC {
         str: 0,
         agi: 0,
         con: 0,
-        int: 0,
+        int: 1,
         spi: 0,
         per: 0,
-        cha: 0,
+        cha: 1,
 
         level: 0.25,
         martialLevel: 0,
         spellLevel: 0,
+
+        creatureType: creatureTypeHuman,
+        creatureSize: medium,
 
         mp: 6,
         ap: 0,
