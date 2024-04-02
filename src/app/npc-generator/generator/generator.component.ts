@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {  Component, EventEmitter, Output } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { Alignment } from '../../util/alignment';
-import { NPC, createEmptyNPC } from '../../npc-preview/npcs';
+import { Alignment, alignments } from '../../util/alignment';
+import { NPC, createEmptyNPC } from '../../util/npcs';
+import { LevelConfig, levelConfigs } from '../../util/levels';
 
 @Component({
   selector: 'app-generator',
@@ -15,18 +16,11 @@ export class GeneratorComponent {
   @Output() generatedNPC = new EventEmitter<NPC>;
   npc = createEmptyNPC();
 
-  alignments: Alignment[] = [
-    Alignment.None, 
-    Alignment.LawfulGood, 
-    Alignment.LawfulNeutral, 
-    Alignment.LawfulEvil, 
-    Alignment.NeutralGood, 
-    Alignment.Neutral, 
-    Alignment.NeutralEvil, 
-    Alignment.ChaoticGood,
-    Alignment.ChaoticNeutral,
-    Alignment.ChaoticEvil
-  ]
+  availibleNpCCreationPoints = 1;
+  usedNpCCreationPoints = 0;
+
+  readonly alignments = alignments;
+  readonly levelConfigs = levelConfigs;
 
   constructor() {
     this.generatedNPC.emit(this.npc);
@@ -40,6 +34,24 @@ export class GeneratorComponent {
     let target = event.target as HTMLInputElement;
     this.npc.name = target.value;
     this.emitNPCUpdate();
+  }
+
+  handleAlignmentUpdate(event: Event) {
+    let target = event.target as HTMLInputElement;
+    this.npc.alignment = target.value as Alignment;
+    this.emitNPCUpdate();
+  }
+
+  handleLevelUpdate(event: Event) {
+    let target = event.target as HTMLInputElement;
+    let levelConfig = levelConfigs.find(lvlConfig => lvlConfig.level === parseFloat(target.value));
+    if (levelConfig) {
+      this.availibleNpCCreationPoints = levelConfig.points;
+      this.npc.level = levelConfig.level;
+      this.npc.xp = levelConfig.XP;
+      this.npc.ap = levelConfig.AP;
+      this.emitNPCUpdate();
+    }
   }
 
 }

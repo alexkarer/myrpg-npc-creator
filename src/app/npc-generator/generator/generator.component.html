@@ -1,22 +1,42 @@
-<div class="generatorContainer">
-    <form class="row g-4">
-        <div class="col">
+<div class="container generatorContainer">
+    <form class="row g-3">
+        <div class="col-6">
             <div class="input-group">
                 <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                 <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" (change)="handleNameUpdate($event)">
             </div>
         </div>
-        <div class="col">
+        <div class="col-3">
             <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-                    Toggle dropdown
+                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
+                    {{ npc?.alignment }}
                 </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
                     @for (alignment of alignments; track $index) {
-                        <button ngbDropdownItem>{{ alignment }}</button>
+                        <button type="button" (click)="handleAlignmentUpdate($event)" ngbDropdownItem [value]="alignment">{{ alignment }}</button>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownLevel" ngbDropdownToggle>
+                    Level {{ npc?.level }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownLevel">
+                    @for (levelConfig of levelConfigs; track $index) {
+                        <button type="button" (click)="handleLevelUpdate($event)" ngbDropdownItem [value]="levelConfig.level">{{ levelConfig.level }}</button>
                     }
                 </div>
             </div>
         </div>
     </form>
+    <div class="row g-3 mt-0">
+        <div class="col">
+            <p class="text-center fw-bold">Availible NPC Creation Points: {{ availibleNpCCreationPoints }}</p>
+        </div>
+        <div class="col">
+            <p class="text-center fw-bold">Used NPC Creation Points: {{ usedNpCCreationPoints }}</p>
+        </div>
+    </div>
 </div>

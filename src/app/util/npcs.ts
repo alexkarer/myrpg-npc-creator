@@ -1,8 +1,8 @@
 import { NONE_TYPE } from "@angular/compiler"
-import { Action } from "../util/action"
-import { Alignment } from "../util/alignment"
-import { Reaction } from "../util/reactions"
-import { Trait } from "../util/trait"
+import { Action } from "./action"
+import { Alignment } from "./alignment"
+import { Reaction } from "./reactions"
+import { Trait } from "./trait"
 
 export type NPC = {
     // Overview
@@ -66,13 +66,13 @@ export function createEmptyNPC(): NPC {
         per: 0,
         cha: 0,
 
-        level: 0,
+        level: 0.25,
         martialLevel: 0,
         spellLevel: 0,
 
-        mp: 0,
+        mp: 6,
         ap: 0,
-        specialMovement: [],
+        specialMovement: ['fly(3m)', 'swim(1.5m)'],
 
         hp: 0,
         hardness: 0,

@@ -1,5 +1,13 @@
 <div class="previewContainer">
     <h3>{{ npc?.name ? npc?.name : 'name' }}</h3>
+    <div class="container pb-2">
+        <div class="row">
+            <div class = "col">
+                <span class="text-start">{{ npc?.alignment ? npc?.alignment : '-' }}</span>
+            </div>
+        </div>
+    </div>
+    <span class></span>
     <table class="table">
         <thead class="text-center">
             <tr>
@@ -24,4 +32,20 @@
             </tr>
         </tbody>
     </table>
+    <div class="container">
+        <div class="row gx-3">
+            <div class="col">
+                <p class="text-center fw-bold">MP: {{ npc?.mp }}</p>
+            </div>
+            <div class="col">
+                <p class="text-center fw-bold">AP: {{ npc?.ap }}</p>
+            </div>
+            <div class="col">
+                <p class="text-center fw-bold">HP: {{ npc?.hp }}</p>
+            </div>
+            <div class="col">
+                <p class="text-center fw-bold">Special Movement: {{ flattenNpcSpecialMove() }}</p>
+            </div>
+        </div>
+    </div>
 </div>

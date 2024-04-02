@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PreviewComponent } from './npc-preview/preview.component';
-import { NPC, createEmptyNPC } from './npc-preview/npcs';
+import { NPC, createEmptyNPC } from './util/npcs';
 import { GeneratorComponent } from "./npc-generator/generator/generator.component";
 
 @Component({

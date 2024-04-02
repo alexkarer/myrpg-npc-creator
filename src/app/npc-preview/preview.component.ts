@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NPC } from './npcs';
+import { NPC } from '../util/npcs';
 
 @Component({
   selector: 'app-preview',
@@ -9,4 +9,11 @@ import { NPC } from './npcs';
 })
 export class PreviewComponent {
   @Input() public npc?: NPC
+
+  flattenNpcSpecialMove(): string {
+    if (this.npc) {
+      return this.npc?.specialMovement.join(', ');
+    }
+    return '';
+  }
 }
