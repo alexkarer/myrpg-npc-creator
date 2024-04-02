@@ -4,7 +4,8 @@
         <div class="row">
             <div class = "col">
                 <h5>
-                    {{ npc?.alignment ? npc?.alignment : '-' }}
+                    Level {{ npc?.level ? npc?.level : '' }}
+                    {{ npc?.alignment ? npc?.alignment : '' }}
                     {{ npc?.creatureSize?.name ? npc?.creatureSize?.name : '' }}
                     {{ npc?.creatureType?.name ? npc?.creatureType?.name : '' }}
                 </h5>
