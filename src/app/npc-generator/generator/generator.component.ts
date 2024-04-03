@@ -31,7 +31,12 @@ export class GeneratorComponent {
   }
 
   private emitNPCUpdate() {
+    this.calculateHP();
     this.generatedNPC.emit(this.npc);
+  }
+
+  private calculateHP(): void {
+    this.npc.hp = Math.floor((this.npc.creatureSize.hpPerLevel + this.npc.con) * this.npc.level);
   }
 
   handleNameUpdate(event: Event) {
@@ -90,6 +95,8 @@ export class GeneratorComponent {
     if (creatureSize) {
       let previousCreatureSize = this.npc.creatureSize;
 
+      this.usedNpCCreationPoints -= previousCreatureSize.npcCreationPointsCost;
+      this.usedNpCCreationPoints += creatureSize.npcCreationPointsCost;
       this.npc.str -= previousCreatureSize.strBonus;
       this.npc.str += previousCreatureSize.strBonus;
 

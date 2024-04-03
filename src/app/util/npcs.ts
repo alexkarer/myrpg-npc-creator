@@ -80,7 +80,7 @@ export function createEmptyNPC(): NPC {
 
         mp: 6,
         ap: 0,
-        specialMovement: ['fly(3m)', 'swim(1.5m)'],
+        specialMovement: [],
 
         hp: 0,
         hardness: 0,
