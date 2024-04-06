@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CreatureSize } from '../../../util/creatureSize';
+import { CreatureSize } from '../../../util/model/creatureSize';
 
 @Component({
   selector: 'app-creature-size-info',

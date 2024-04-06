@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { CreatureType, AttributeModifiers } from '../../../util/creatureTypes';
+import { CreatureType } from '../../../util/model/creatureTypes';
+import { toStringAttributeModifiers } from '../../../util/stringUtils';
 
 @Component({
   selector: 'app-creature-type-info',
@@ -13,15 +14,10 @@ export class CreatureTypeInfoComponent {
   @Input() creatureType?: CreatureType
 
   attributeModifiers(): string {
-    let attributeString = (this.creatureType?.attributeModifiers.str !== 0 ? 'STR: ' + this.creatureType?.attributeModifiers.str + ', ' : '') +
-      (this.creatureType?.attributeModifiers.agi !== 0 ? 'AGI: ' + this.creatureType?.attributeModifiers.agi + ', ' : '') +
-      (this.creatureType?.attributeModifiers.con !== 0 ? 'CON: ' + this.creatureType?.attributeModifiers.con + ', ' : '') +
-      (this.creatureType?.attributeModifiers.int !== 0 ? 'INT: ' + this.creatureType?.attributeModifiers.int + ', ' : '') +
-      (this.creatureType?.attributeModifiers.spi !== 0 ? 'SPI: ' + this.creatureType?.attributeModifiers.spi + ', ' : '') +
-      (this.creatureType?.attributeModifiers.per !== 0 ? 'PER: ' + this.creatureType?.attributeModifiers.per + ', ' : '') +
-      (this.creatureType?.attributeModifiers.cha !== 0 ? 'CHA: ' + this.creatureType?.attributeModifiers.cha + ', ' : '');
-
-    return attributeString.substring(0, attributeString.length - 2);
+    if (this.creatureType?.attributeModifiers) {
+      return toStringAttributeModifiers(this.creatureType.attributeModifiers, false);
+    }
+    return '';
   }
 
   damageResistances(): string {

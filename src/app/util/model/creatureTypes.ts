@@ -1,3 +1,4 @@
+import { AttributeModifiers } from "./AttributeModifiers"
 import { Trait } from "./trait"
 
 export type CreatureType = {
@@ -8,18 +9,9 @@ export type CreatureType = {
     damageVulnurabilities: string[],
     damageImmunities: string[],
     conditionImmunities: string[],
+    baseHP: number,
     freeTrait?: Trait,
     otherBonuses: string,
-}
-
-export type AttributeModifiers = {
-    str: number,
-    agi: number,
-    con: number,
-    int: number,
-    spi: number,
-    per: number,
-    cha: number
 }
 
 export const creatureTypeHuman: CreatureType = {
@@ -38,6 +30,7 @@ export const creatureTypeHuman: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: [],
     conditionImmunities: [],
+    baseHP: 6,
     freeTrait: undefined,
     otherBonuses: '1 extra NPC Point',
 }
@@ -58,6 +51,7 @@ export const creatureTypeDwarf: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: [],
     conditionImmunities: [],
+    baseHP: 8,
     freeTrait: undefined,
     otherBonuses: '6m tremorsense while on rocky or earthy terrain',
 }
@@ -78,6 +72,7 @@ export const creatureTypeElf: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: [],
     conditionImmunities: [],
+    baseHP: 6,
     freeTrait: undefined,
     otherBonuses: '+1 MP',
 }
@@ -98,6 +93,7 @@ export const creatureTypeBeast: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: [],
     conditionImmunities: [],
+    baseHP: 6,
     freeTrait: undefined,
     otherBonuses: '',
 }
@@ -118,9 +114,11 @@ export const creatureTypeUndead: CreatureType = {
     damageVulnurabilities: ['holy'],
     damageImmunities: ['unholy', 'poison'],
     conditionImmunities: ['poisoned', 'bleeding', 'sleeping'],
+    baseHP: 10,
     freeTrait: {
         title: 'Undead',
-        description: "Doesn't need to sleep, drink, eat"
+        description: "Doesn't need to sleep, drink, eat",
+        npcPointsCost: 0
     },
     otherBonuses: '',
 }
@@ -141,9 +139,11 @@ export const creatureTypeEthereal: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: ['cosmic'],
     conditionImmunities: [],
+    baseHP: 8,
     freeTrait: {
         title: 'non-living entity',
-        description: 'Doesn’t need to sleep, drink, eat'
+        description: 'Doesn’t need to sleep, drink, eat',
+        npcPointsCost: 0
     },
     otherBonuses: '',
 }
@@ -164,6 +164,7 @@ export const creatureTypeEarthElemental: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: ['poison'],
     conditionImmunities: ['poisoned'],
+    baseHP: 10,
     freeTrait: undefined,
     otherBonuses: '+2 HP per Level',
 }
@@ -184,6 +185,7 @@ export const creatureTypeFireElemental: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: ['fire'],
     conditionImmunities: [],
+    baseHP: 8,
     freeTrait: undefined,
     otherBonuses: 'base attack can deal fire damage instead',
 }
@@ -204,6 +206,7 @@ export const creatureTypeAirElemntal: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: ['lightning'],
     conditionImmunities: [],
+    baseHP: 8,
     freeTrait: undefined,
     otherBonuses: 'free fly (1.5m) speed, base attack can deal lightning damage instead',
 }
@@ -224,6 +227,7 @@ export const creatureTypeWaterElemental: CreatureType = {
     damageVulnurabilities: [],
     damageImmunities: ['acid', 'cold'],
     conditionImmunities: [],
+    baseHP: 8,
     freeTrait: undefined,
     otherBonuses: 'free swim speed, base attack can deal acid or cold damage',
 }

@@ -1,56 +1,168 @@
-<div class="previewContainer">
-    <h3 class="text-white">{{ npc?.name ? npc?.name : 'name' }}</h3>
-    <div class="container pb-2">
-        <div class="row">
-            <div class = "col">
-                <h5 class="text-white">
-                    Level {{ npc?.level ? npc?.level : '' }}
-                    {{ npc?.alignment ? npc?.alignment : '' }}
-                    {{ npc?.creatureSize?.name ? npc?.creatureSize?.name : '' }}
-                    {{ npc?.creatureType?.name ? npc?.creatureType?.name : '' }}
-                </h5>
-            </div>
+<div class="container previewContainer">
+     <!-- OVERVIEW -->
+    <div class="row">
+        <div class = "col">
+            <h3 class="text-white">{{ npc?.name ? npc?.name : 'name' }}</h3>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <h5 class="text-white">{{ npc?.baseStatArray }}, {{ npc?.xp }} XP</h5>
         </div>
     </div>
-    <span class></span>
-    <table class="table">
-        <thead class="text-center">
-            <tr>
-                <th>STR</th>
-                <th>AGI</th>
-                <th>CON</th>
-                <th>INT</th>
-                <th>SPI</th>
-                <th>PER</th>
-                <th>CHA</th>
-            </tr>
-        </thead>
-        <tbody class="text-center">
-            <tr>
-                <td>{{ npc?.str }}</td>
-                <td>{{ npc?.agi }}</td>
-                <td>{{ npc?.con }}</td>
-                <td>{{ npc?.int }}</td>
-                <td>{{ npc?.spi }}</td>
-                <td>{{ npc?.per }}</td>
-                <td>{{ npc?.cha }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="container">
-        <div class="row gx-3">
-            <div class="col-2">
-                <p class="text-center fw-bold fs-5 text-white">MP: {{ npc?.mp }}</p>
-            </div>
-            <div class="col-2">
-                <p class="text-center fw-bold fs-5 text-white">AP: {{ npc?.ap }}</p>
-            </div>
-            <div class="col-2">
-                <p class="text-center fw-bold fs-5 text-white">HP: {{ npc?.hp }}</p>
-            </div>
-            <div class="col-6">
-                <p class="fw-bold text-white">Special Movement: {{ flattenNpcSpecialMove() }}</p>
-            </div>
+    <div class="row mt-2">
+        <div class = "col-6">
+            <h5 class="text-white">
+                Level {{ npc?.level }} {{ npc?.alignment }} {{ npc?.creatureSize?.name }} {{ npc?.creatureType?.name }}
+            </h5>
         </div>
+        <div class = "col-3">
+            <h5 class="text-white">
+                Martial Level: {{ npc?.martialLevel }}
+            </h5>
+        </div>
+        <div class = "col-3">
+            <h5 class="text-white">
+                Spellcasting Level: {{ npc?.spellLevel }}
+            </h5>
+        </div>
+    </div>
+     <!-- ATTRIBUTES -->
+    <div class="row mt-3">
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th>STR</th>
+                    <th>AGI</th>
+                    <th>CON</th>
+                    <th>INT</th>
+                    <th>SPI</th>
+                    <th>PER</th>
+                    <th>CHA</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr>
+                    <td>{{ npc?.str }}</td>
+                    <td>{{ npc?.agi }}</td>
+                    <td>{{ npc?.con }}</td>
+                    <td>{{ npc?.int }}</td>
+                    <td>{{ npc?.spi }}</td>
+                    <td>{{ npc?.per }}</td>
+                    <td>{{ npc?.cha }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- CORE VALUES -->
+    <div class="row gx-1">
+        <div class="col-2">
+            <h5 class="text-center fw-bold text-white">MP: {{ npc?.mp }}</h5>
+        </div>
+        <div class="col-2">
+            <h5 class="text-center fw-bold text-white">AP: {{ npc?.ap }}</h5>
+        </div>
+        <div class="col-2">
+            <h5 class="text-center fw-bold text-white">HP: {{ npc?.hp }}</h5>
+        </div>
+        <div class="col-6">
+            <span class="fw-bold text-white">Special Movement: {{ flattenNpcSpecialMove() }}</span>
+        </div>
+    </div>
+     <!-- DEFENSES -->
+    <div class="row mt-3">
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th>Hardness</th>
+                    <th>Dodge</th>
+                    <th>Toughness</th>
+                    <th>Willpower</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr>
+                    <td>{{ npc?.hardnessBonus }}</td>
+                    <td>{{ npc?.dodgeBonus }}</td>
+                    <td>{{ npc?.toughnessBonus }}</td>
+                    <td>{{ npc?.willpowerBonus }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- RESISTENCES, IMMUNITIES, SHIELD BLOCK -->
+    <div class="row mt-3">
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th>Vulnurabilities</th>
+                    <th>Damage Resistances</th>
+                    <th>Damage Immunities</th>
+                    <th>Condition Immunities</th>
+                    <th>Shield Block</th>
+                </tr>
+            </thead>
+            <tbody class="text-center ">
+                <tr>
+                    <td>{{ npc?.vulnurabilities?.join(', ') }}</td>
+                    <td>{{ npc?.resistances?.join(', ') }}</td>
+                    <td>{{ npc?.immunities?.join(', ') }}</td>
+                    <td>{{ npc?.conditionImmunies?.join(', ') }}</td>
+                    <td>{{ npc?.shieldBlock }} ({{ npc?.shieldThreshold }})</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- TRAITS -->
+    <div class="row mt-1">
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th colspan="8"><h5 class="fw-bold">Traits</h5></th>
+                </tr>
+            </thead>
+            <tbody class="table-striped">
+                <tr *ngFor="let trait of npc?.traits">
+                    <td colspan="1"><span class="fw-bold">{{ trait.title }}</span></td>
+                    <td colspan="7">{{ trait.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- ACTIONS -->
+    <div class="row mt-1">
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th colspan="8"><h5 class="fw-bold">Actions</h5></th>
+                </tr>
+                <tr>
+                    <th><h5>Name</h5></th>
+                    <th><h5>AP</h5></th>
+                    <th colspan="6"><h5>Description</h5></th>
+                </tr>
+            </thead>
+            <tbody class="text-center table-striped">
+                <tr *ngFor="let action of npc?.actions">
+                    <td><span class="fw-bold">{{ action.name }}</span></td>
+                    <td>{{ action.apCost }}</td>
+                    <td colspan="6">{{ action.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- REACTIONS -->
+    <div class="row mt-1">
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th colspan="8"><h5 class="fw-bold">Reactions</h5></th>
+                </tr>
+            </thead>
+            <tbody class="text-center table-striped">
+                <tr *ngFor="let reaction of npc?.reactions">
+                    <td colspan="1"><span class="fw-bold">{{ reaction.name }}</span></td>
+                    <td colspan="7">{{ reaction.description }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

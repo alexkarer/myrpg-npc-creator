@@ -1,19 +1,23 @@
 import {  Component, EventEmitter, Output } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { Alignment, alignments } from '../../util/alignment';
-import { NPC, createEmptyNPC } from '../../util/npcs';
-import { levelConfigs } from '../../util/levels';
-import { AttributeModifiers, creatureTypes } from '../../util/creatureTypes';
-import { creatureSizes } from '../../util/creatureSize';
+import { Alignment, alignments } from '../../util/model/alignment';
+import { NPC, createEmptyNPC } from '../../util/model/npc';
+import { levelConfigs } from '../../util/model/levels';
+import { creatureTypes } from '../../util/model/creatureTypes';
+import { creatureSizes } from '../../util/model/creatureSize';
 import { CommonModule } from '@angular/common';
 import { CreatureSizeInfoComponent } from './creature-size-info/creature-size-info.component';
 import { CreatureTypeInfoComponent } from './creature-type-info/creature-type-info.component';
-import { BaseStatArray, BaseStatArrays, fighterBaseStatArrays } from '../../util/baseStatArray';
+import { BaseStatArray, BaseStatArrays, fighterBaseStatArrays } from '../../util/model/baseStatArray';
+import { BaseStatArrayInfoComponent } from './base-stat-array-info/base-stat-array-info.component';
+import { AttributeModifiers } from '../../util/model/AttributeModifiers';
+import { removeElements } from '../../util/listUtils';
+import { defensiveTraits, getAllTraits, movementTraits, wargearTraits } from '../../util/model/trait';
 
 @Component({
   selector: 'app-generator',
   standalone: true,
-  imports: [NgbDropdownModule, CommonModule, CreatureSizeInfoComponent, CreatureTypeInfoComponent],
+  imports: [NgbDropdownModule, CommonModule, CreatureSizeInfoComponent, CreatureTypeInfoComponent, BaseStatArrayInfoComponent],
   templateUrl: './generator.component.html',
   styleUrl: './generator.component.scss'
 })
@@ -29,12 +33,15 @@ export class GeneratorComponent {
   readonly levelConfigs = levelConfigs;
   readonly creatureTypes = creatureTypes;
   readonly creatureSizes = creatureSizes;
+  
+  readonly movementTraits = movementTraits;
+  readonly defensiveTraits = defensiveTraits;
+  readonly wargearTraits = wargearTraits;
 
-  selectedBaseStatArray: BaseStatArrays = BaseStatArrays.FIGHTER;
   baseStatArrays = Object.values(BaseStatArrays);
+  currentBaseStatArray?: BaseStatArray = fighterBaseStatArrays.at(0);
 
   constructor() {
-    this.applyBaseStatArray(fighterBaseStatArrays.find(a => a.level === this.npc.level));
     this.generatedNPC.emit(this.npc);
   }
 
@@ -44,7 +51,7 @@ export class GeneratorComponent {
   }
 
   private calculateHP(): void {
-    this.npc.hp = Math.floor((this.npc.creatureSize.hpPerLevel + this.npc.con) * this.npc.level);
+    this.npc.hp = this.npc.creatureType.baseHP + Math.floor((this.npc.creatureSize.hpPerLevel + this.npc.con) * this.npc.level);
   }
 
   npcCreationPointsExceeded(): boolean {
@@ -67,14 +74,12 @@ export class GeneratorComponent {
     let target = event.target as HTMLInputElement;
     let levelConfig = levelConfigs.find(lvlConfig => lvlConfig.level === parseFloat(target.value));
     if (levelConfig) {
-      const oldLevel = this.npc.level;
-
       this.availibleNpCCreationPoints = levelConfig.points;
       this.npc.level = levelConfig.level;
       this.npc.xp = levelConfig.XP;
       this.npc.ap = levelConfig.AP;
 
-      this.handleBaseStatArrayUpdate(this.selectedBaseStatArray, oldLevel);
+      this.handleBaseStatArrayUpdate(this.npc.baseStatArray);
       this.emitNPCUpdate();
     }
   }
@@ -87,8 +92,18 @@ export class GeneratorComponent {
 
       this.usedNpCCreationPoints -= previousCreatureType.npcCreationPointsCost;
       this.usedNpCCreationPoints += creatureType.npcCreationPointsCost;
+
       this.applyAttributeModifiers(previousCreatureType.attributeModifiers, false);
       this.applyAttributeModifiers(creatureType.attributeModifiers);
+
+      removeElements(this.npc.conditionImmunies, previousCreatureType.conditionImmunities);
+      this.npc.conditionImmunies.push(...creatureType.conditionImmunities);
+      removeElements(this.npc.resistances, previousCreatureType.damageResistances);
+      this.npc.resistances.push(...creatureType.damageResistances);
+      removeElements(this.npc.immunities, previousCreatureType.damageImmunities);
+      this.npc.immunities.push(...creatureType.damageImmunities);
+      removeElements(this.npc.vulnurabilities, previousCreatureType.damageVulnurabilities);
+      this.npc.vulnurabilities.push(...creatureType.damageVulnurabilities);
       
       this.npc.creatureType = creatureType;
       this.emitNPCUpdate();
@@ -121,10 +136,10 @@ export class GeneratorComponent {
     }
   }
 
-  handleBaseStatArrayUpdate(selectedArray: BaseStatArrays, oldLevel: number): void {
-    switch(this.selectedBaseStatArray) {
+  handleBaseStatArrayUpdate(selectedArray: BaseStatArrays): void {
+    switch(this.npc.baseStatArray) {
       case BaseStatArrays.FIGHTER:
-        this.removeBaseStatArray(fighterBaseStatArrays.find(a => a.level === oldLevel));
+        this.removeBaseStatArray(this.currentBaseStatArray);
         break;
       case BaseStatArrays.SPELLCASTER: 
         break;
@@ -136,17 +151,19 @@ export class GeneratorComponent {
 
     switch(selectedArray) {
       case BaseStatArrays.FIGHTER:
-        this.applyBaseStatArray(fighterBaseStatArrays.find(a => a.level === this.npc.level));
-        this.selectedBaseStatArray = selectedArray;
+        const bsa = fighterBaseStatArrays.find(a => a.level === this.npc.level);
+        this.applyBaseStatArray(bsa);
+        this.currentBaseStatArray = bsa;
+        this.npc.baseStatArray = selectedArray;
         break;
       case BaseStatArrays.SPELLCASTER: 
-        this.selectedBaseStatArray = selectedArray; 
+        this.npc.baseStatArray = selectedArray; 
         break;
       case BaseStatArrays.SPECIALIST: 
-        this.selectedBaseStatArray = selectedArray;
+        this.npc.baseStatArray = selectedArray;
         break;
       case BaseStatArrays.HYBRID: 
-        this.selectedBaseStatArray = selectedArray; 
+        this.npc.baseStatArray = selectedArray; 
         break;
     }
     this.emitNPCUpdate();
@@ -157,6 +174,10 @@ export class GeneratorComponent {
       return;
     }
     this.applyAttributeModifiers(baseStatArray.attributeModifiers, false);
+    this.npc.hardnessBonus -=  baseStatArray.hardness;
+    this.npc.dodgeBonus -= baseStatArray.dodge;
+    this.npc.toughnessBonus -= baseStatArray.toughness;
+    this.npc.willpowerBonus -= baseStatArray.willpower
   }
 
   private applyBaseStatArray(baseStatArray?: BaseStatArray): void {
@@ -166,5 +187,26 @@ export class GeneratorComponent {
     this.applyAttributeModifiers(baseStatArray.attributeModifiers);
     this.npc.martialLevel = baseStatArray.martialLevel;
     this.npc.spellLevel = baseStatArray.spellcastingLevel;
+
+    this.npc.hardnessBonus +=  baseStatArray.hardness;
+    this.npc.dodgeBonus += baseStatArray.dodge;
+    this.npc.toughnessBonus += baseStatArray.toughness;
+    this.npc.willpowerBonus += baseStatArray.willpower;
+  }
+
+  handleTraitSelection(event: Event): void {
+    let target = event.target as HTMLInputElement;
+    let traitToRemoveIndex = this.npc.traits.findIndex(t => t.title === target.value);
+    let trait = getAllTraits().find(t => t.title === target.value);
+
+    if (traitToRemoveIndex !== -1) {
+      this.npc.traits.splice(traitToRemoveIndex, 1);
+    } else if (trait) {
+      this.npc.traits.push(trait);
+    }
+  }
+
+  isTraitActive(traitName: string) {
+    return this.npc.traits.findIndex(t => t.title === traitName) !== -1;
   }
 }

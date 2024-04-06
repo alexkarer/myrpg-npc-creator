@@ -1,5 +1,5 @@
 import { DiceExpression, Die } from './DiceExpression';
-import { AttributeModifiers } from "./creatureTypes"
+import { AttributeModifiers } from "./AttributeModifiers"
 
 export type BaseStatArray = {
     level: number,

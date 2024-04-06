@@ -1,16 +1,17 @@
-import { NONE_TYPE } from "@angular/compiler"
 import { Action } from "./action"
 import { Alignment } from "./alignment"
 import { Reaction } from "./reactions"
 import { Trait } from "./trait"
 import { CreatureType, creatureTypeHuman } from './creatureTypes';
 import { CreatureSize, medium } from "./creatureSize"
+import { BaseStatArrays } from './baseStatArray';
 
 export type NPC = {
     // Overview
     name: string,
     biography: string,
     alignment: Alignment,
+    baseStatArray: BaseStatArrays,
 
     // Attributes
     str: number,
@@ -35,13 +36,14 @@ export type NPC = {
 
     // Defenses
     hp: number,
-    hardness: number,
-    dodge: number,
-    toughness: number,
-    willpower: number,
+    hardnessBonus: number,
+    dodgeBonus: number,
+    toughnessBonus: number,
+    willpowerBonus: number,
 
     resistances: string[],
     immunities: string[],
+    conditionImmunies: string[],
     vulnurabilities: string[],
 
     shieldBlock: number,
@@ -62,35 +64,37 @@ export function createEmptyNPC(): NPC {
         name: '',
         biography: '',
         alignment: Alignment.None,
+        baseStatArray: BaseStatArrays.FIGHTER,
 
-        str: 0,
-        agi: 0,
-        con: 0,
+        str: 2,
+        agi: 1,
+        con: 1,
         int: 1,
         spi: 0,
-        per: 0,
+        per: 1,
         cha: 1,
 
         level: 0.25,
-        martialLevel: 0,
+        martialLevel: 1,
         spellLevel: 0,
 
         creatureType: creatureTypeHuman,
         creatureSize: medium,
 
         mp: 6,
-        ap: 0,
+        ap: 2,
         specialMovement: [],
 
         hp: 0,
-        hardness: 0,
-        dodge: 0,
-        toughness: 0,
-        willpower: 0,
+        hardnessBonus: 1,
+        dodgeBonus: 0,
+        toughnessBonus: 1,
+        willpowerBonus: 0,
 
         resistances: [],
         immunities: [],
         vulnurabilities: [],
+        conditionImmunies: [],
 
         shieldBlock: 0,
         shieldThreshold: 0,
