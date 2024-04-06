@@ -1,10 +1,10 @@
-<main>
+<main data-bs-theme="dark">
   <div class="container-fluid">
     <div class="row">
-      <div class="col npc-generator">
+      <div class="col bg-body">
         <app-generator (generatedNPC)="handleGeneratedNPCChange($event)"></app-generator>
       </div>
-      <div class="col npc-preview">
+      <div class="col npc-preview bg-body-secondary">
         <app-preview [npc]="previewNPC"></app-preview>
       </div>
     </div>

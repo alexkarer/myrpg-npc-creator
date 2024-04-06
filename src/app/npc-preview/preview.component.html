@@ -1,9 +1,9 @@
 <div class="previewContainer">
-    <h3>{{ npc?.name ? npc?.name : 'name' }}</h3>
+    <h3 class="text-white">{{ npc?.name ? npc?.name : 'name' }}</h3>
     <div class="container pb-2">
         <div class="row">
             <div class = "col">
-                <h5>
+                <h5 class="text-white">
                     Level {{ npc?.level ? npc?.level : '' }}
                     {{ npc?.alignment ? npc?.alignment : '' }}
                     {{ npc?.creatureSize?.name ? npc?.creatureSize?.name : '' }}
@@ -40,16 +40,16 @@
     <div class="container">
         <div class="row gx-3">
             <div class="col-2">
-                <p class="text-center fw-bold">MP: {{ npc?.mp }}</p>
+                <p class="text-center fw-bold fs-5 text-white">MP: {{ npc?.mp }}</p>
             </div>
             <div class="col-2">
-                <p class="text-center fw-bold">AP: {{ npc?.ap }}</p>
+                <p class="text-center fw-bold fs-5 text-white">AP: {{ npc?.ap }}</p>
             </div>
             <div class="col-2">
-                <p class="text-center fw-bold">HP: {{ npc?.hp }}</p>
+                <p class="text-center fw-bold fs-5 text-white">HP: {{ npc?.hp }}</p>
             </div>
             <div class="col-6">
-                <p class="fw-bold">Special Movement: {{ flattenNpcSpecialMove() }}</p>
+                <p class="fw-bold text-white">Special Movement: {{ flattenNpcSpecialMove() }}</p>
             </div>
         </div>
     </div>

@@ -1,0 +1,48 @@
+<div class="container bg-info-subtle creature-type-info-container">
+    <div class="row">
+        <span class="fw-bold text-info-emphasis">NPC Creation Points cost: {{ creatureType?.npcCreationPointsCost }}</span>
+    </div>
+    <div class="row">
+        <span class="text-info-emphasis">
+            <span class="fw-bold">Attribute Modifiers: </span>
+            <span>{{ attributeModifiers() }}</span>
+        </span>
+    </div>
+    <div class="row">
+        <span class="text-info-emphasis">
+            <span class="fw-bold">Damage Resistances: </span>
+            <span>{{ damageResistances() }}</span>
+        </span>
+    </div>
+    <div class="row">
+        <span class="text-info-emphasis">
+            <span class="fw-bold">Damage Vulnurabilities: </span>
+            <span>{{ damageVulnurabilities() }}</span>
+        </span>
+    </div>
+    <div class="row">
+        <span class="text-info-emphasis">
+            <span class="fw-bold">Damage Immunities: </span>
+            <span>{{ damageImmunities() }}</span>
+        </span>
+    </div>
+    <div class="row">
+        <span class="text-info-emphasis">
+            <span class="fw-bold">Condition Immunities: </span>
+            <span>{{ conditionImmunities() }}</span>
+        </span>
+    </div>
+    <div class="row">
+        <span class="text-info-emphasis">
+            <span class="fw-bold">Free Trait: </span>
+            <span class="fst-italic">{{ creatureType?.freeTrait?.title ? creatureType?.freeTrait?.title + ', ' : ''}}</span>
+            <span>{{ creatureType?.freeTrait?.description }}</span>
+        </span>
+    </div>
+    <div class="row">
+        <span class="text-info-emphasis">
+            <span class="fw-bold">Other bonuses:</span>
+            <span>{{ creatureType?.otherBonuses }}</span>
+        </span>
+    </div>
+</div>

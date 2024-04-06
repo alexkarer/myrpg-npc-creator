@@ -1,14 +1,15 @@
 <div class="container generatorContainer">
+    <!-- NAME, ALIGNMENT AND LEVEL -->
     <form class="row g-3">
-        <div class="col-6">
+        <div class="col-8">
             <div class="input-group">
                 <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                 <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" (change)="handleNameUpdate($event)">
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
             <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-primary" id="dropdownAlignment" ngbDropdownToggle>
+                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
                     {{ npc.alignment }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
@@ -18,9 +19,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
             <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-primary" id="dropdownLevel" ngbDropdownToggle>
+                <button type="button" class="btn btn-outline-primary" id="dropdownLevel" ngbDropdownToggle>
                     Level {{ npc.level }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownLevel">
@@ -31,18 +32,35 @@
             </div>
         </div>
     </form>
+    <!-- NPC CREATION POINTS -->
     <div class="row g-3 mt-0">
         <div class="col">
-            <p class="text-center fw-bold">Availible NPC Creation Points: {{ availibleNpCCreationPoints }}</p>
+            <p class="text-center fw-bold fs-5 text-white">Availible NPC Creation Points: {{ availibleNpCCreationPoints }}</p>
         </div>
         <div class="col">
-            <p class="text-center fw-bold">Used NPC Creation Points: {{ usedNpCCreationPoints }}</p>
+            <p class="text-center fw-bold fs-5" 
+                [ngClass]="{'text-bg-danger' : npcCreationPointsExceeded(), 'text-bg-success' : !npcCreationPointsExceeded()}" >
+                Used NPC Creation Points: {{ usedNpCCreationPoints }}
+            </p>
         </div>
     </div>
+    <!-- CREATURE TYPE AND SIZE -->
     <div class="row g-3 mt-0">
-        <div class="col">
+        <div class="col-6">
             <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-primary" id="dropdownCreatureType" ngbDropdownToggle>
+                <button type="button" class="btn btn-outline-primary" id="dropdownSize" ngbDropdownToggle>
+                    {{ npc.creatureSize.name }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownSize">
+                    @for (creatureSize of creatureSizes; track $index) {
+                        <button type="button" (click)="handleCreatureSizeUpdate($event)" ngbDropdownItem [value]="creatureSize.name">{{ creatureSize.name }}</button>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownCreatureType" ngbDropdownToggle>
                     {{ npc.creatureType.name }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownCreatureType">
@@ -52,17 +70,31 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+    </div>
+    <div class="row g-3 mt-0">
+        <div class="col-6">
+            <app-creature-size-info [creatureSize]="npc.creatureSize"></app-creature-size-info>
+        </div>
+        <div class="col-6">
+            <app-creature-type-info [creatureType]="npc.creatureType"></app-creature-type-info>
+        </div>
+    </div>
+    <!-- BASE STAT ARRAY -->
+    <div class="row g-3 mt-0">
+        <div class="col 3">
             <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-primary" id="dropdownSize" ngbDropdownToggle>
-                    {{ npc.creatureSize.name }}
+                <button type="button" class="btn btn-outline-primary" id="dropdownSize" ngbDropdownToggle>
+                    {{ selectedBaseStatArray }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownSize">
-                    @for (creatureSize of creatureSizes; track $index) {
-                        <button type="button" (click)="handleCreatureSizeUpdate($event)" ngbDropdownItem [value]="creatureSize.name">{{ creatureSize.name }}</button>
+                    @for (baseStatArray of baseStatArrays; track $index) {
+                        <button type="button" (click)="handleBaseStatArrayUpdate(baseStatArray, npc.level)" ngbDropdownItem [value]="baseStatArray">{{ baseStatArray }}</button>
                     }
                 </div>
             </div>
-        </div>+
+        </div>
+        <div class="col 9">
+
+        </div>
     </div>
 </div>
