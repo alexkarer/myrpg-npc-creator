@@ -18,4 +18,32 @@ export class PreviewComponent {
     }
     return '';
   }
+
+  get hardness(): number {
+    if (this.npc) {
+      return this.npc.hardnessBonus + this.npc.str;
+    }
+    return 0;
+  }
+
+  get dodge(): number {
+    if (this.npc) {
+      return this.npc.dodgeBonus + this.npc.agi;
+    }
+    return 0;
+  }
+
+  get toughness(): number {
+    if (this.npc) {
+      return this.npc.toughnessBonus + this.npc.con;
+    }
+    return 0;
+  }
+
+  get willpower(): number {
+    if (this.npc) {
+      return this.npc.willpowerBonus + this.npc.spi;
+    }
+    return 0;
+  }
 }

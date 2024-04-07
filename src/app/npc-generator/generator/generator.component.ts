@@ -200,8 +200,13 @@ export class GeneratorComponent {
     let trait = getAllTraits().find(t => t.title === target.value);
 
     if (traitToRemoveIndex !== -1) {
+      let trait = this.npc.traits.at(traitToRemoveIndex);
+      if (trait) {
+        this.usedNpCCreationPoints -= trait.npcPointsCost;
+      } 
       this.npc.traits.splice(traitToRemoveIndex, 1);
     } else if (trait) {
+      this.usedNpCCreationPoints += trait.npcPointsCost;
       this.npc.traits.push(trait);
     }
   }
