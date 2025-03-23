@@ -4,11 +4,10 @@ import { BaseStatArray } from '../../../util/model/baseStatArray';
 import { DiceExpression } from '../../../util/model/DiceExpression';
 
 @Component({
-  selector: 'app-base-stat-array-info',
-  standalone: true,
-  imports: [],
-  templateUrl: './base-stat-array-info.component.html',
-  styleUrl: './base-stat-array-info.component.scss'
+    selector: 'app-base-stat-array-info',
+    imports: [],
+    templateUrl: './base-stat-array-info.component.html',
+    styleUrl: './base-stat-array-info.component.scss'
 })
 export class BaseStatArrayInfoComponent {
 

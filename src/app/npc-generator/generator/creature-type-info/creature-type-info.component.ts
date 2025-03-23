@@ -3,11 +3,10 @@ import { CreatureType } from '../../../util/model/creatureTypes';
 import { toStringAttributeModifiers } from '../../../util/stringUtils';
 
 @Component({
-  selector: 'app-creature-type-info',
-  standalone: true,
-  imports: [],
-  templateUrl: './creature-type-info.component.html',
-  styleUrl: './creature-type-info.component.scss'
+    selector: 'app-creature-type-info',
+    imports: [],
+    templateUrl: './creature-type-info.component.html',
+    styleUrl: './creature-type-info.component.scss'
 })
 export class CreatureTypeInfoComponent {
 

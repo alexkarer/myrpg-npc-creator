@@ -15,11 +15,10 @@ import { removeElements } from '../../util/listUtils';
 import { defensiveTraits, getAllTraits, movementTraits, wargearTraits } from '../../util/model/trait';
 
 @Component({
-  selector: 'app-generator',
-  standalone: true,
-  imports: [NgbDropdownModule, CommonModule, CreatureSizeInfoComponent, CreatureTypeInfoComponent, BaseStatArrayInfoComponent],
-  templateUrl: './generator.component.html',
-  styleUrl: './generator.component.scss'
+    selector: 'app-generator',
+    imports: [NgbDropdownModule, CommonModule, CreatureSizeInfoComponent, CreatureTypeInfoComponent, BaseStatArrayInfoComponent],
+    templateUrl: './generator.component.html',
+    styleUrl: './generator.component.scss'
 })
 export class GeneratorComponent {
 
