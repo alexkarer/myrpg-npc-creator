@@ -25,20 +25,16 @@ The Level you choose determines your Creation Points as well as XP reward
 Archetype determines the following:
 - Base Ability
 - Attribute Set (based on Level)
-- Defensive Proficiencies
+- Defenses
 - Spell Level / Martial Level
-- Which attributes can be boosted
 - NPC Creation Points
-- SKills to be boosted
 
 ### 3. Choose Attribute Boost and Skill Boost
 
-Your Archetype gives you a list of availible attributes that can be selected to be boosted by +2.
-At Level 10 you can get an additional Attribute to boost.
+An Attibute can be selected to be boosted +2.
+At Level 6,12,18 you can get an additional Attribute to boost.
 
-Additionally a set of skills can be boosted:
-- strong boost equal to LEVEL + 2
-- weak boost equal to LEVEL/2 + 1
+Additionally a set of skills can be boosted. For each int you can boost one skill
 
 ### 4. Choose Creature Type and Size
 
