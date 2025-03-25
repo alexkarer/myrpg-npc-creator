@@ -1,0 +1,30 @@
+{
+    // TODO: also create utility class which based on name provides a function which accepts an NPC object as Input and applies necesarry changes
+    // also has a function to reverse the changes
+    "creatureTypeSpecificTraits": [
+        { "pointsCost": 0, "name": "Versatile", "description": "Increase NPC creation Points by 1." },
+        { "pointsCost": 0, "name": "Undead", "description": "Doesn't require food, water or sleep. Can't get Exhausted" },
+        { "pointsCost": 0, "name": "Fire Elemental", "description": "For Base Ability can deal fire damage instead." },
+        { "pointsCost": 0, "name": "Air Elemental", "description": "Gain fly(1.5m) speed and for Base Ability can deal lightning damage instead." },
+        { "pointsCost": 0, "name": "Water Elemental", "description": "Gain swim(1.5m) speed and for Base Ability can deal frost or acid damage instead." }
+        { "pointsCost": 0, "name": "Immortal", "description": "Doesn't require food, water or sleep. Can't get Exhausted. When it is reduced to 0 [HP] instead of dying it goes back to the Aether where it reforms." }
+    ],
+    "movementTraits": [
+        { "pointsCost": 1, "name": "Nimble I", "description": "+1 [MP]" },
+        { "pointsCost": 2, "name": "Nimble II", "description": "+2 [MP]" },
+        { "pointsCost": 3, "name": "Nimble III", "description": "+3 [MP]" },
+        { "pointsCost": 1, "name": "Fly I", "description": "gain fly(1.5m) speed." },
+        { "pointsCost": 2, "name": "Fly II", "description": "gain fly(3m) speed." },
+        { "pointsCost": 3, "name": "Fly III", "description": "gain fly(6m) speed." }
+    ],
+    "defensiveTraits": [
+        { "pointsCost": 1, "name": "Tough", "description": "+2 [HP] per [LEVEL]" }
+    ],
+    "wargearTraits": [
+    ],
+    "otherTraits": [
+        { "pointsCost": 1, "name": "Nightvision I", "description": "Gain 4.5m nightvision" },
+        { "pointsCost": 2, "name": "Nightvision II", "description": "Gain 6m nightvision" },
+        { "pointsCost": 3, "name": "Nightvision III", "description": "Gain 12m nightvision" }
+    ]
+}

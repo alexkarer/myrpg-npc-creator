@@ -6,8 +6,8 @@ You choose Level and archetype which determinse your base stats and proficencies
 
 1. Choose Level of creature
 2. Choose Archetype: Warrior, Expert, Spellcaster
-3. Choose Attribute Boost and Skill Boost (no cost)
-4. Choose Creature Type and Size (spend points)
+3. Choose Creature Type and Size (spend points)
+4. Choose Attribute Boost and Skill Boost (no cost)
 5. Spend points for Traits and Gear 
 6. Spend points for Abilities
 
@@ -29,14 +29,7 @@ Archetype determines the following:
 - Spell Level / Martial Level
 - NPC Creation Points
 
-### 3. Choose Attribute Boost and Skill Boost
-
-An Attibute can be selected to be boosted +2.
-At Level 6,12,18 you can get an additional Attribute to boost.
-
-Additionally a set of skills can be boosted. For each int you can boost one skill
-
-### 4. Choose Creature Type and Size
+### 3. Choose Creature Type and Size
 
 Size modifies the following things:
 - Dodge
@@ -49,7 +42,17 @@ Choosing a larger Size than medium will cost creation points.
 
 Creature Type can determine the following things:
 - traits
-- immunities/resistances
+- immunities/resistances/vunlurabilities
+- attribute bonuses
+
+multiple creature types can be selected with some limitations
+
+### 4. Choose Attribute Boost and Skill Boost
+
+An Attibute can be selected to be boosted +2.
+At Level 6,12,18 you can get an additional Attribute to boost.
+
+Additionally a set of skills can be boosted. For each int you can boost one skill
 
 ### 5. Spend Points for Traits and Gear
 
