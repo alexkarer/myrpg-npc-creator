@@ -1,57 +1,64 @@
 {
-    "genericBaseStatArray": [
+    "warriorBaseStatArray": [
         { 
-            "levels": { "level": "1/8", "martialLevel": 0, "spellLevel": 0 },
+            "levels": { "level": 0.125, "martialLevel": 0, "spellLevel": 0 },
+            "hpBonus": 6,
             "attributes": { "str": 0, "agi": 0, "con": 0, "int": 0, "spi": 0, "per": 0, "cha": 0 },
             "defenseBonus": { "hardness": 0, "dodge": 0, "toughness": 0, "willpower": 0 },
             "npcCreationPoints": 0
-        }
-    ],
-    "warriorBaseStatArray": [
+        },
         { 
-            "levels": { "level": "1/4", "martialLevel": 1, "spellLevel": 0 },
+            "levels": { "level": 0.25, "martialLevel": 1, "spellLevel": 0 },
+            "hpBonus": 8,
             "attributes": { "str": 2, "agi": 1, "con": 2, "int": 0, "spi": 0, "per": 1, "cha": 0 },
             "defenseBonus": { "hardness": 1, "dodge": 0, "toughness": 1, "willpower": 0 },
             "npcCreationPoints": 1
         },
         { 
-            "levels": { "level": "1/2", "martialLevel": 1, "spellLevel": 0 },
-            "attributes": { "str": 3, "agi": 2, "con": 3, "int": 0, "spi": 0, "per": 2, "cha": 0 },
+            "levels": { "level": 0.5, "martialLevel": 1, "spellLevel": 0 },
+            "hpBonus": 10,
+            "attributes": { "str": 2, "agi": 2, "con": 2, "int": 0, "spi": 0, "per": 2, "cha": 0 },
             "defenseBonus": { "hardness": 1, "dodge": 0, "toughness": 1, "willpower": 0 },
             "npcCreationPoints": 1
         },
         { 
-            "levels": { "level": "1", "martialLevel": 1, "spellLevel": 0 },
+            "levels": { "level": 1, "martialLevel": 1, "spellLevel": 0 },
+            "hpBonus": 14,
             "attributes": { "str": 3, "agi": 2, "con": 3, "int": 0, "spi": 0, "per": 2, "cha": 0 },
             "defenseBonus": { "hardness": 1, "dodge": 0, "toughness": 1, "willpower": 0 },
             "npcCreationPoints": 2
         },
         { 
-            "levels": { "level": "2", "martialLevel": 2, "spellLevel": 0 },
+            "levels": { "level": 2, "martialLevel": 2, "spellLevel": 0 },
+            "hpBonus": 18,
             "attributes": { "str": 4, "agi": 2, "con": 4, "int": 1, "spi": 1, "per": 2, "cha": 0 },
             "defenseBonus": { "hardness": 2, "dodge": 1, "toughness": 2, "willpower": 0 },
             "npcCreationPoints": 2
         },
         { 
-            "levels": { "level": "3", "martialLevel": 3, "spellLevel": 0 },
+            "levels": { "level": 3, "martialLevel": 3, "spellLevel": 0 },
+            "hpBonus": 22,
             "attributes": { "str": 4, "agi": 3, "con": 4, "int": 1, "spi": 1, "per": 3, "cha": 0 },
             "defenseBonus": { "hardness": 3, "dodge": 2, "toughness": 3, "willpower": 1 },
             "npcCreationPoints": 3
         },
         { 
-            "levels": { "level": "4", "martialLevel": 4, "spellLevel": 0 },
+            "levels": { "level": 4, "martialLevel": 4, "spellLevel": 0 },
+            "hpBonus": 26,
             "attributes": { "str": 5, "agi": 3, "con": 5, "int": 1, "spi": 1, "per": 3, "cha": 0 },
             "defenseBonus": { "hardness": 4, "dodge": 2, "toughness": 4, "willpower": 1 },
             "npcCreationPoints": 3
         },
         { 
-            "levels": { "level": "5", "martialLevel": 5, "spellLevel": 0 },
+            "levels": { "level": 5, "martialLevel": 5, "spellLevel": 0 },
+            "hpBonus": 30,
             "attributes": { "str": 5, "agi": 3, "con": 5, "int": 2, "spi": 2, "per": 3, "cha": 0 },
             "defenseBonus": { "hardness": 5, "dodge": 3, "toughness": 5, "willpower": 1 },
             "npcCreationPoints": 4
         },
         { 
-            "levels": { "level": "6", "martialLevel": 6, "spellLevel": 1 },
+            "levels": { "level": 6, "martialLevel": 6, "spellLevel": 1 },
+            "hpBonus": 34,
             "attributes": { "str": 6, "agi": 4, "con": 6, "int": 2, "spi": 2, "per": 4, "cha": 1 },
             "defenseBonus": { "hardness": 6, "dodge": 4, "toughness": 6, "willpower": 2 },
             "npcCreationPoints": 4
@@ -59,60 +66,132 @@
     ],
     "spellCasterBaseStatArray": [
         { 
-            "levels": { "level": "1/4", "martialLevel": 0, "spellLevel": 1 },
+            "levels": { "level": 0.125, "martialLevel": 0, "spellLevel": 0 },
+            "hpBonus": 6,
+            "attributes": { "str": 0, "agi": 0, "con": 0, "int": 0, "spi": 0, "per": 0, "cha": 0 },
+            "defenseBonus": { "hardness": 0, "dodge": 0, "toughness": 0, "willpower": 0 },
+            "npcCreationPoints": 0
+        },
+        { 
+            "levels": { "level": 0.25, "martialLevel": 0, "spellLevel": 1 },
+            "hpBonus": 7,
             "attributes": { "str": 0, "agi": 1, "con": 0, "int": 1, "spi": 2, "per": 1, "cha": 0 },
             "defenseBonus": { "hardness": 0, "dodge": 0, "toughness": 0, "willpower": 1 },
             "npcCreationPoints": 1
         },
         { 
-            "levels": { "level": "1/2", "martialLevel": 0, "spellLevel": 1 },
-            "attributes": { "str": 0, "agi": 2, "con": 0, "int": 2, "spi": 23, "per": 2, "cha": 0 },
+            "levels": { "level": 0.5, "martialLevel": 0, "spellLevel": 1 },
+            "hpBonus": 8,
+            "attributes": { "str": 0, "agi": 2, "con": 0, "int": 2, "spi": 2, "per": 2, "cha": 0 },
             "defenseBonus": { "hardness": 0, "dodge": 0, "toughness": 0, "willpower": 1 },
             "npcCreationPoints": 2
         },
         { 
-            "levels": { "level": "1", "martialLevel": 0, "spellLevel": 1 },
+            "levels": { "level": 1, "martialLevel": 0, "spellLevel": 1 },
+            "hpBonus": 10,
             "attributes": { "str": 0, "agi": 2, "con": 0, "int": 2, "spi": 3, "per": 2, "cha": 0 },
             "defenseBonus": { "hardness": 0, "dodge": 0, "toughness": 0, "willpower": 1 },
             "npcCreationPoints": 3
         },
         { 
-            "levels": { "level": "2", "martialLevel": 0, "spellLevel": 2 },
-            "attributes": { "str": 0, "agi": 2, "con": 1, "int": 2, "spi": 4, "per": 2, "cha": 1 },
+            "levels": { "level": 2, "martialLevel": 0, "spellLevel": 2 },
+            "hpBonus": 12,
+            "attributes": { "str": 0, "agi": 2, "con": 1, "int": 2, "spi": 4, "per": 3, "cha": 1 },
             "defenseBonus": { "hardness": 0, "dodge": 0, "toughness": 0, "willpower": 2 },
             "npcCreationPoints": 4
         },
         { 
-            "levels": { "level": "3", "martialLevel": 0, "spellLevel": 3 },
+            "levels": { "level": 3, "martialLevel": 0, "spellLevel": 3 },
+            "hpBonus": 14,
             "attributes": { "str": 0, "agi": 3, "con": 1, "int": 3, "spi": 4, "per": 3, "cha": 1 },
             "defenseBonus": { "hardness": 1, "dodge": 10, "toughness": 1, "willpower": 3 },
             "npcCreationPoints": 5
         },
         { 
-            "levels": { "level": "4", "martialLevel": 0, "spellLevel": 4 },
-            "attributes": { "str": 0, "agi": 3, "con": 1, "int": 3, "spi": 5, "per": 3, "cha": 1 },
+            "levels": { "level": 4, "martialLevel": 0, "spellLevel": 4 },
+            "hpBonus": 16,
+            "attributes": { "str": 0, "agi": 3, "con": 1, "int": 3, "spi": 5, "per": 4, "cha": 1 },
             "defenseBonus": { "hardness": 1, "dodge": 1, "toughness": 1, "willpower": 4 },
             "npcCreationPoints": 6
         },
         { 
-            "levels": { "level": "5", "martialLevel": 0, "spellLevel": 5 },
-            "attributes": { "str": 0, "agi": 3, "con": 2, "int": 3, "spi": 5, "per": 3, "cha": 2 },
+            "levels": { "level": 5, "martialLevel": 0, "spellLevel": 5 },
+            "hpBonus": 18,
+            "attributes": { "str": 0, "agi": 3, "con": 2, "int": 3, "spi": 5, "per": 4, "cha": 2 },
             "defenseBonus": { "hardness": 1, "dodge": 1, "toughness": 1, "willpower": 5 },
             "npcCreationPoints": 7
         },
         { 
-            "levels": { "level": "6", "martialLevel": 1, "spellLevel": 6 },
-            "attributes": { "str": 1, "agi": 4, "con": 2, "int": 4, "spi": 6, "per": 4, "cha": 2 },
+            "levels": { "level": 6, "martialLevel": 1, "spellLevel": 6 },
+            "hpBonus": 20,
+            "attributes": { "str": 1, "agi": 4, "con": 2, "int": 4, "spi": 6, "per": 5, "cha": 2 },
             "defenseBonus": { "hardness": 2, "dodge": 2, "toughness": 2, "willpower": 6 },
             "npcCreationPoints": 8
         }
     ],
     "expertBaseStatArray": [
         { 
-            "levels": { "level": "1/4", "martialLevel": 0, "spellLevel": 0 },
-            "attributes": { "str": 0, "agi": 2, "con": 0, "int": 2, "spi": 0, "per": 2, "cha": 1 },
+            "levels": { "level": 0.125, "martialLevel": 0, "spellLevel": 0 },
+            "hpBonus": 6,
+            "attributes": { "str": 0, "agi": 0, "con": 0, "int": 0, "spi": 0, "per": 0, "cha": 0 },
+            "defenseBonus": { "hardness": 0, "dodge": 0, "toughness": 0, "willpower": 0 },
+            "npcCreationPoints": 0
+        },
+        { 
+            "levels": { "level": 0.25, "martialLevel": 0, "spellLevel": 0 },
+            "hpBonus": 7,
+            "attributes": { "str": 0, "agi": 2, "con": 0, "int": 2, "spi": 0, "per": 1, "cha": 0 },
             "defenseBonus": { "hardness": 0, "dodge": 1, "toughness": 0, "willpower": 0 },
-            "npcCreationPoints": 1
+            "npcCreationPoints": 2
+        },
+        { 
+            "levels": { "level": 0.5, "martialLevel": 0, "spellLevel": 0 },
+            "hpBonus": 8,
+            "attributes": { "str": 0, "agi": 2, "con": 1, "int": 2, "spi": 1, "per": 2, "cha": 1 },
+            "defenseBonus": { "hardness": 0, "dodge": 1, "toughness": 0, "willpower": 0 },
+            "npcCreationPoints": 3
+        },
+        { 
+            "levels": { "level": 1, "martialLevel": 0, "spellLevel": 0 },
+            "hpBonus": 10,
+            "attributes": { "str": 1, "agi": 3, "con": 1, "int": 3, "spi": 1, "per": 2, "cha": 1 },
+            "defenseBonus": { "hardness": 0, "dodge": 1, "toughness": 0, "willpower": 0 },
+            "npcCreationPoints": 4
+        },
+        { 
+            "levels": { "level": 2, "martialLevel": 1, "spellLevel": 1 },
+            "hpBonus": 13,
+            "attributes": { "str": 1, "agi": 4, "con": 1, "int": 4, "spi": 1, "per": 3, "cha": 2 },
+            "defenseBonus": { "hardness": 0, "dodge": 2, "toughness": 0, "willpower": 1 },
+            "npcCreationPoints": 6
+        },
+        { 
+            "levels": { "level": 3, "martialLevel": 2, "spellLevel": 2 },
+            "hpBonus": 16,
+            "attributes": { "str": 1, "agi": 4, "con": 2, "int": 4, "spi": 2, "per": 3, "cha": 2 },
+            "defenseBonus": { "hardness": 1, "dodge": 3, "toughness": 1, "willpower": 2 },
+            "npcCreationPoints": 8
+        },
+        { 
+            "levels": { "level": 4, "martialLevel": 2, "spellLevel": 2 },
+            "hpBonus": 19,
+            "attributes": { "str": 2, "agi": 5, "con": 2, "int": 5, "spi": 2, "per": 4, "cha": 2 },
+            "defenseBonus": { "hardness": 1, "dodge": 4, "toughness": 1, "willpower": 2 },
+            "npcCreationPoints": 8
+        },
+        { 
+            "levels": { "level": 5, "martialLevel": 3, "spellLevel": 3 },
+            "hpBonus": 22,
+            "attributes": { "str": 2, "agi": 5, "con": 2, "int": 5, "spi": 2, "per": 4, "cha": 3 },
+            "defenseBonus": { "hardness": 1, "dodge": 5, "toughness": 1, "willpower": 3 },
+            "npcCreationPoints": 10
+        },
+        { 
+            "levels": { "level": 6, "martialLevel": 4, "spellLevel": 4 },
+            "hpBonus": 25,
+            "attributes": { "str": 2, "agi": 6, "con": 3, "int": 6, "spi": 3, "per": 5, "cha": 3 },
+            "defenseBonus": { "hardness": 2, "dodge": 6, "toughness": 2, "willpower": 4 },
+            "npcCreationPoints": 12
         }
     ]
 }

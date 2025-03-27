@@ -1,22 +1,14 @@
 import {  Component, EventEmitter, Output } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { Alignment, alignments } from '../../util/model/alignment';
-import { NPC, createEmptyNPC } from '../../util/model/npc';
-import { levelConfigs } from '../../util/model/levels';
-import { creatureTypes } from '../../util/model/creatureTypes';
-import { creatureSizes } from '../../util/model/creatureSize';
+import { Alignment, alignments } from '../../npc/alignments';
+import { NPC, createEmptyNPC } from '../../npc/npc';
 import { CommonModule } from '@angular/common';
-import { CreatureSizeInfoComponent } from './creature-size-info/creature-size-info.component';
-import { CreatureTypeInfoComponent } from './creature-type-info/creature-type-info.component';
-import { BaseStatArray, BaseStatArrays, fighterBaseStatArrays } from '../../util/model/baseStatArray';
-import { BaseStatArrayInfoComponent } from './base-stat-array-info/base-stat-array-info.component';
-import { AttributeModifiers } from '../../util/model/AttributeModifiers';
-import { removeElements } from '../../util/listUtils';
-import { defensiveTraits, getAllTraits, movementTraits, wargearTraits } from '../../util/model/trait';
+import levelJson from '../../../resources/levels.json';
+import archeTypesJson from '../../../resources/archetypes.json'; 
 
 @Component({
     selector: 'app-generator',
-    imports: [NgbDropdownModule, CommonModule, CreatureSizeInfoComponent, CreatureTypeInfoComponent, BaseStatArrayInfoComponent],
+    imports: [NgbDropdownModule, CommonModule],
     templateUrl: './generator.component.html',
     styleUrl: './generator.component.scss'
 })
@@ -25,32 +17,17 @@ export class GeneratorComponent {
   @Output() generatedNPC = new EventEmitter<NPC>;
   npc = createEmptyNPC();
 
+  selectedArcheType = ArcheTypes.WARRIOR;
   availibleNpCCreationPoints = 1;
   usedNpCCreationPoints = 0;
 
+  readonly archTypes = Object.values(ArcheTypes);
   readonly alignments = alignments;
-  readonly levelConfigs = levelConfigs;
-  readonly creatureTypes = creatureTypes;
-  readonly creatureSizes = creatureSizes;
-  
-  readonly movementTraits = movementTraits;
-  readonly defensiveTraits = defensiveTraits;
-  readonly wargearTraits = wargearTraits;
-
-  baseStatArrays = Object.values(BaseStatArrays);
-  currentBaseStatArray?: BaseStatArray = fighterBaseStatArrays.at(0);
+  readonly levelNumbers = levelJson.map(lvl => lvl.level);
 
   constructor() {
+    this.updateArcheTypeBaseStatArray(this.selectedArcheType);
     this.generatedNPC.emit(this.npc);
-  }
-
-  private emitNPCUpdate(): void {
-    this.calculateHP();
-    this.generatedNPC.emit(this.npc);
-  }
-
-  private calculateHP(): void {
-    this.npc.hp = this.npc.creatureType.baseHP + Math.floor((this.npc.creatureSize.hpPerLevel + this.npc.con) * this.npc.level);
   }
 
   npcCreationPointsExceeded(): boolean {
@@ -60,157 +37,69 @@ export class GeneratorComponent {
   handleNameUpdate(event: Event): void {
     let target = event.target as HTMLInputElement;
     this.npc.name = target.value;
-    this.emitNPCUpdate();
+    this.generatedNPC.emit(this.npc);
   }
 
   handleAlignmentUpdate(event: Event): void {
     let target = event.target as HTMLInputElement;
     this.npc.alignment = target.value as Alignment;
-    this.emitNPCUpdate();
+    this.generatedNPC.emit(this.npc);
   }
 
-  handleLevelUpdate(event: Event): void {
-    let target = event.target as HTMLInputElement;
-    let levelConfig = levelConfigs.find(lvlConfig => lvlConfig.level === parseFloat(target.value));
+  handleLevelUpdate(levelNumber: number): void {
+    let levelConfig = levelJson.find(lvlConfig => lvlConfig.level === levelNumber);
     if (levelConfig) {
-      this.availibleNpCCreationPoints = levelConfig.points;
-      this.npc.level = levelConfig.level;
-      this.npc.xp = levelConfig.XP;
-      this.npc.ap = levelConfig.AP;
-
-      this.handleBaseStatArrayUpdate(this.npc.baseStatArray);
-      this.emitNPCUpdate();
+      this.npc.levelConfig = levelConfig;
+      this.reCalculateHP();
+      this.generatedNPC.emit(this.npc);
     }
   }
 
-  handleCreatureTypeUpdate(event: Event): void {
+  handleArcheTypeUpdate(event: Event): void {
     let target = event.target as HTMLInputElement;
-    let creatureType = creatureTypes.find(creatureType => creatureType.name === target.value);
-    if (creatureType) {
-      let previousCreatureType = this.npc.creatureType;
+    let archeType = target.value as ArcheTypes;
+    this.updateArcheTypeBaseStatArray(archeType);
+    this.generatedNPC.emit(this.npc);
+  }
 
-      this.usedNpCCreationPoints -= previousCreatureType.npcCreationPointsCost;
-      this.usedNpCCreationPoints += creatureType.npcCreationPointsCost;
-
-      this.applyAttributeModifiers(previousCreatureType.attributeModifiers, false);
-      this.applyAttributeModifiers(creatureType.attributeModifiers);
-
-      removeElements(this.npc.conditionImmunies, previousCreatureType.conditionImmunities);
-      this.npc.conditionImmunies.push(...creatureType.conditionImmunities);
-      removeElements(this.npc.resistances, previousCreatureType.damageResistances);
-      this.npc.resistances.push(...creatureType.damageResistances);
-      removeElements(this.npc.immunities, previousCreatureType.damageImmunities);
-      this.npc.immunities.push(...creatureType.damageImmunities);
-      removeElements(this.npc.vulnurabilities, previousCreatureType.damageVulnurabilities);
-      this.npc.vulnurabilities.push(...creatureType.damageVulnurabilities);
-      
-      this.npc.creatureType = creatureType;
-      this.emitNPCUpdate();
+  private updateArcheTypeBaseStatArray(archeType: ArcheTypes): void {
+    // TODO: properly update everything and remove old update
+    switch(archeType) {
+      case ArcheTypes.WARRIOR:
+        this.selectedArcheType = archeType;
+        let warrior = archeTypesJson.warriorBaseStatArray.find(bsa => bsa.levels.level === this.npc.levelConfig.level);
+        if (warrior) {
+          this.npc.baseStatArray = warrior;
+        }
+        break;
+      case ArcheTypes.SPELLCASTER:
+        this.selectedArcheType = archeType;
+        let spellCaster = archeTypesJson.spellCasterBaseStatArray.find(bsa => bsa.levels.level === this.npc.levelConfig.level);
+        if (spellCaster) {
+          this.npc.baseStatArray = spellCaster;
+        }
+        break;
+      case ArcheTypes.EXPERT:
+        this.selectedArcheType = archeType;
+        let expert = archeTypesJson.expertBaseStatArray.find(bsa => bsa.levels.level === this.npc.levelConfig.level);
+        if (expert) {
+          this.npc.baseStatArray = expert;
+        }
+        break;
+      default:
+        console.error('Illegal ArcheType: ' + archeType);
     }
+    this.reCalculateHP();
   }
 
-  private applyAttributeModifiers(attributeModifiers: AttributeModifiers, add: boolean = true): void {
-    add ? this.npc.str += attributeModifiers.str : this.npc.str -= attributeModifiers.str;
-    add ? this.npc.agi += attributeModifiers.agi : this.npc.agi -= attributeModifiers.agi;
-    add ? this.npc.con += attributeModifiers.con : this.npc.con -= attributeModifiers.con;
-    add ? this.npc.int += attributeModifiers.int : this.npc.int -= attributeModifiers.int;
-    add ? this.npc.spi += attributeModifiers.spi : this.npc.spi -= attributeModifiers.spi;
-    add ? this.npc.per += attributeModifiers.per : this.npc.per -= attributeModifiers.per;
-    add ? this.npc.cha += attributeModifiers.cha : this.npc.cha -= attributeModifiers.cha;
+  private reCalculateHP(): void {
+    this.npc.hp = this.npc.baseStatArray.hpBonus + Math.floor((this.npc.creatureSize.hpPerLevel + Math.floor(this.npc.con / 2)) * this.npc.levelConfig.level);
   }
 
-  handleCreatureSizeUpdate(event: Event): void {
-    let target = event.target as HTMLInputElement;
-    let creatureSize = creatureSizes.find(creatureSize => creatureSize.name === target.value);
-    if (creatureSize) {
-      let previousCreatureSize = this.npc.creatureSize;
+}
 
-      this.usedNpCCreationPoints -= previousCreatureSize.npcCreationPointsCost;
-      this.usedNpCCreationPoints += creatureSize.npcCreationPointsCost;
-      this.npc.str -= previousCreatureSize.strBonus;
-      this.npc.str += previousCreatureSize.strBonus;
-
-      this.npc.creatureSize = creatureSize;
-      this.emitNPCUpdate();
-    }
-  }
-
-  handleBaseStatArrayUpdate(selectedArray: BaseStatArrays): void {
-    switch(this.npc.baseStatArray) {
-      case BaseStatArrays.FIGHTER:
-        this.removeBaseStatArray(this.currentBaseStatArray);
-        break;
-      case BaseStatArrays.SPELLCASTER: 
-        break;
-      case BaseStatArrays.SPECIALIST: 
-        break;
-      case BaseStatArrays.HYBRID: 
-        break;
-    }
-
-    switch(selectedArray) {
-      case BaseStatArrays.FIGHTER:
-        const bsa = fighterBaseStatArrays.find(a => a.level === this.npc.level);
-        this.applyBaseStatArray(bsa);
-        this.currentBaseStatArray = bsa;
-        this.npc.baseStatArray = selectedArray;
-        break;
-      case BaseStatArrays.SPELLCASTER: 
-        this.npc.baseStatArray = selectedArray; 
-        break;
-      case BaseStatArrays.SPECIALIST: 
-        this.npc.baseStatArray = selectedArray;
-        break;
-      case BaseStatArrays.HYBRID: 
-        this.npc.baseStatArray = selectedArray; 
-        break;
-    }
-    this.emitNPCUpdate();
-  }
-
-  private removeBaseStatArray(baseStatArray?: BaseStatArray): void {
-    if (!baseStatArray) {
-      return;
-    }
-    this.applyAttributeModifiers(baseStatArray.attributeModifiers, false);
-    this.npc.hardnessBonus -=  baseStatArray.hardness;
-    this.npc.dodgeBonus -= baseStatArray.dodge;
-    this.npc.toughnessBonus -= baseStatArray.toughness;
-    this.npc.willpowerBonus -= baseStatArray.willpower
-  }
-
-  private applyBaseStatArray(baseStatArray?: BaseStatArray): void {
-    if (!baseStatArray) {
-      return;
-    }
-    this.applyAttributeModifiers(baseStatArray.attributeModifiers);
-    this.npc.martialLevel = baseStatArray.martialLevel;
-    this.npc.spellLevel = baseStatArray.spellcastingLevel;
-
-    this.npc.hardnessBonus +=  baseStatArray.hardness;
-    this.npc.dodgeBonus += baseStatArray.dodge;
-    this.npc.toughnessBonus += baseStatArray.toughness;
-    this.npc.willpowerBonus += baseStatArray.willpower;
-  }
-
-  handleTraitSelection(event: Event): void {
-    let target = event.target as HTMLInputElement;
-    let traitToRemoveIndex = this.npc.traits.findIndex(t => t.title === target.value);
-    let trait = getAllTraits().find(t => t.title === target.value);
-
-    if (traitToRemoveIndex !== -1) {
-      let trait = this.npc.traits.at(traitToRemoveIndex);
-      if (trait) {
-        this.usedNpCCreationPoints -= trait.npcPointsCost;
-      } 
-      this.npc.traits.splice(traitToRemoveIndex, 1);
-    } else if (trait) {
-      this.usedNpCCreationPoints += trait.npcPointsCost;
-      this.npc.traits.push(trait);
-    }
-  }
-
-  isTraitActive(traitName: string) {
-    return this.npc.traits.findIndex(t => t.title === traitName) !== -1;
-  }
+enum ArcheTypes {
+  WARRIOR = 'Warrior',
+  SPELLCASTER = 'Spellcaster',
+  EXPERT = 'Expert'
 }

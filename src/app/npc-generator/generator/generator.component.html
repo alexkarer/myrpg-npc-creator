@@ -22,11 +22,11 @@
         <div class="col-3 d-flex justify-content-center">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownLevel" ngbDropdownToggle>
-                    Level {{ npc.level }}
+                    Level {{ npc.levelConfig.level }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownLevel">
-                    @for (levelConfig of levelConfigs; track $index) {
-                        <button type="button" (click)="handleLevelUpdate($event)" ngbDropdownItem [value]="levelConfig.level">{{ levelConfig.level }}</button>
+                    @for (levelNumber of levelNumbers; track $index) {
+                        <button type="button" (click)="handleLevelUpdate(levelNumber)" ngbDropdownItem>Level {{ levelNumber }}</button>
                     }
                 </div>
             </div>
@@ -44,120 +44,24 @@
             </p>
         </div>
     </div>
-    <!-- CREATURE TYPE AND SIZE -->
     <div class="row g-3 mt-0">
-        <div class="col-6 d-flex justify-content-center">
-            <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownSize" ngbDropdownToggle>
-                    {{ npc.creatureSize.name }}
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownSize">
-                    @for (creatureSize of creatureSizes; track $index) {
-                        <button type="button" (click)="handleCreatureSizeUpdate($event)" ngbDropdownItem [value]="creatureSize.name">{{ creatureSize.name }}</button>
-                    }
-                </div>
-            </div>
-        </div>
-        <div class="col-6 d-flex justify-content-center">
-            <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownCreatureType" ngbDropdownToggle>
-                    {{ npc.creatureType.name }}
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownCreatureType">
-                    @for (creatureType of creatureTypes; track $index) {
-                        <button type="button" (click)="handleCreatureTypeUpdate($event)" ngbDropdownItem [value]="creatureType.name">{{ creatureType.name }}</button>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row g-3 mt-0">
-        <div class="col-6">
-            <app-creature-size-info [creatureSize]="npc.creatureSize"></app-creature-size-info>
-        </div>
-        <div class="col-6">
-            <app-creature-type-info [creatureType]="npc.creatureType"></app-creature-type-info>
-        </div>
-    </div>
-    <!-- BASE STAT ARRAY -->
-    <div class="row g-3 mt-2">
-        <div class="col-3 d-flex justify-content-center">
-            <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownSize" ngbDropdownToggle>
-                    {{ this.npc.baseStatArray }}
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownSize">
-                    @for (baseStatArray of baseStatArrays; track $index) {
-                        <button type="button" (click)="handleBaseStatArrayUpdate(baseStatArray)" ngbDropdownItem [value]="baseStatArray">{{ baseStatArray }}</button>
-                    }
-                </div>
-            </div>
-        </div>
-        <div class="col-9">
-            <app-base-stat-array-info [baseStatArray]="currentBaseStatArray"></app-base-stat-array-info>
-        </div>
-    </div>
-    <!-- TRATIS -->
-    <div class="row mt-3">
-        <h3 class="text-white">Traits</h3>
-    </div>
-    <div class="row g-3 mt-1">
         <div class="col">
-            <div ngbDropdown class="d-inline-block" autoClose="outside">
-                <button type="button" class="btn btn-outline-primary" id="dropdownMovementTraits" ngbDropdownToggle>
-                    Movement Traits
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
+                    {{ selectedArcheType }}
                 </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownMovementTraits">
-                    @for (trait of movementTraits; track $index) {
-                        <button type="button" [ngClass]="{'active' : isTraitActive(trait.title)}"
-                         (click)="handleTraitSelection($event)" ngbDropdownItem [value]="trait.title">
-                            {{ trait.title }}
-                        </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
+                    @for (archType of archTypes; track $index) {
+                        <button type="button" (click)="handleArcheTypeUpdate($event)" ngbDropdownItem [value]="archType">{{ archType }}</button>
                     }
                 </div>
             </div>
         </div>
         <div class="col">
-            <div ngbDropdown class="d-inline-block" autoClose="outside">
-                <button type="button" class="btn btn-outline-primary" id="dropdownDefensiveTraits" ngbDropdownToggle>
-                    Defensive Traits
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownDefensiveTraits">
-                    @for (trait of defensiveTraits; track $index) {
-                        <button type="button" [ngClass]="{'active' : isTraitActive(trait.title)}"
-                         (click)="handleTraitSelection($event)" ngbDropdownItem [value]="trait.title">
-                            {{ trait.title }}
-                        </button>
-                    }
-                </div>
-            </div>
+            
         </div>
         <div class="col">
-            <div ngbDropdown class="d-inline-block" autoClose="outside">
-                <button type="button" class="btn btn-outline-primary" id="dropdownWargearTraits" ngbDropdownToggle>
-                    Wargear Traits
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownWargearTraits">
-                    @for (trait of wargearTraits; track $index) {
-                        <button type="button" [ngClass]="{'active' : isTraitActive(trait.title)}"
-                         (click)="handleTraitSelection($event)" ngbDropdownItem [value]="trait.title">
-                            {{ trait.title }}
-                        </button>
-                    }
-                </div>
-            </div>
+            
         </div>
-    </div>
-    <!-- ACTIONS -->
-    <div class="row mt-3">
-        <h3 class="text-white">Actions</h3>
-    </div>
-    <div class="row g-3 mt-1">
-    </div>
-    <!-- REACTIONS -->
-    <div class="row mt-3">
-        <h3 class="text-white">Reactions</h3>
-    </div>
-    <div class="row g-3 mt-1">
     </div>
 </div>

@@ -1,11 +1,14 @@
 {
     "martialAbilities": [
-
+        { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }
     ],
     "spellAbilities": [
-
+        { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }
     ],
     "otherAbilities": [
-        
+        { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }
+    ],
+    "reactionAbilities": [
+        { "name": "", "pointsCost": 0, "description": "" }
     ]
 }
