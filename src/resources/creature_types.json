@@ -55,7 +55,7 @@
             "per": 0,
             "cha": 0
         },
-        "damageResistances": [ { "type": "poison", "value": "5 + [LEVEL]/2" } ],
+        "damageResistances": [ { "type": "poison", "value": "5 + [HALF LEVEL]" } ],
         "damageImmunities": [],
         "damageVulnurabilities": [],
         "statusEffectImmunities": [],

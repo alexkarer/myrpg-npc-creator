@@ -32,20 +32,21 @@
             </div>
         </div>
     </form>
-    <!-- NPC CREATION POINTS -->
-    <div class="row g-3 mt-0">
-        <div class="col">
-            <p class="text-center fw-bold fs-5 text-white">Availible NPC Creation Points: {{ npcRepo.$availibleNpcCreationPoints | async }}</p>
-        </div>
-        <div class="col">
-            <p class="text-center fw-bold fs-5" 
-                [ngClass]="{'text-bg-danger' : npcCreationPointsExceeded() | async, 'text-bg-success' : !(npcCreationPointsExceeded() | async)}" >
-                Used NPC Creation Points: {{ npcRepo.$usedNpcCreationPoints }}
-            </p>
+    <div class="row mt-4">
+        <div class="d-flex justify-content-around">
+            <div class="col">
+                <p class="text-center fw-bold fs-5 text-white">Availible NPC Creation Points: {{ npcRepo.$availibleNpcCreationPoints | async }}</p>
+            </div>
+            <div class="col">
+                <p class="text-center fw-bold fs-5" 
+                    [ngClass]="{'text-bg-danger' : npcCreationPointsExceeded() | async, 'text-bg-success' : !(npcCreationPointsExceeded() | async)}" >
+                    Used NPC Creation Points: {{ npcRepo.$usedNpcCreationPoints | async }}
+                </p>
+            </div>
         </div>
     </div>
-    <div class="row g-3 mt-0">
-        <div class="col">
+    <div class="row mt-3">
+        <div class="d-flex justify-content-around">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
                     {{ selectedArcheType }}
@@ -56,12 +57,26 @@
                     }
                 </div>
             </div>
-        </div>
-        <div class="col">
-            
-        </div>
-        <div class="col">
-            
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
+                    {{ npcRepo.$creatureType | async }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
+                    @for (creatureType of creatureTypes; track $index) {
+                        <button type="button" (click)="npcRepo.updateCreatureType(creatureType)" ngbDropdownItem>{{ creatureType.name }}</button>
+                    }
+                </div>
+            </div>
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
+                    {{ npcRepo.$creatureSize | async }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
+                    @for (creatureSize of creatureSizes; track $index) {
+                        <button type="button" (click)="npcRepo.updateCreatureSize(creatureSize)" ngbDropdownItem>{{ creatureSize.name }}</button>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

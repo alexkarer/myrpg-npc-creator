@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { createStore, select, setProp, withProps } from "@ngneat/elf";
-import { NPC, LevelConfig, BaseStatArray } from './npc';
+import { NPC, LevelConfig, BaseStatArray, CreatureType, CreatureSize } from './npc';
 import { Alignment } from "./alignments";
 
 import creatureTypesJson from '../../resources/creature_types.json'; 
@@ -97,7 +97,7 @@ export class NpcRepository {
     $shieldBlock = npcStore.pipe(select(state =>  state.shieldBlock === 0 ? 0 : this.getBaseStatArray(state).levels.martialLevel + state.shieldBlock));
     $shieldThreshold = npcStore.pipe(select(state => state.shieldThreshold));
 
-    $damageResistances = npcStore.pipe(select(state => [...state.creatureType.damageResistances, ...state.additionalResistances].join(', ')));
+    $damageResistances = npcStore.pipe(select(state => this.flattenDamageResistances(state)));
     $damageImmunities = npcStore.pipe(select(state => [...state.creatureType.damageImmunities, ...state.additionalImmunities].join(', ')));
     $statusEffectImmunties = npcStore.pipe(select(state => [...state.creatureType.statusEffectImmunities, ...state.additionalStatusEffectImmunities].join(', ')));
     $damageVulnurabilities = npcStore.pipe(select(state => [...state.creatureType.damageVulnurabilities, ...state.additionalVulnurabilities].join(', ')));
@@ -120,6 +120,14 @@ export class NpcRepository {
 
     updateBaseStatArray(bsas: BaseStatArray[]) {
         npcStore.update(setProp('archeTypeBaseStatArrays', bsas));
+    }
+
+    updateCreatureType(type: CreatureType) {
+        npcStore.update(setProp('creatureType', type));
+    }
+
+    updateCreatureSize(size: CreatureSize) {
+        npcStore.update(setProp('creatureSize', size));
     }
 
     private getBaseStatArray(state: NPC): BaseStatArray {
@@ -145,5 +153,13 @@ export class NpcRepository {
 
     private calculatePer(state: NPC): number {
         return state.perBonus + this.getBaseStatArray(state).attributes.per + state.creatureType.attributeBonsuses.per;
+    }
+
+    private flattenDamageResistances(state: NPC): string {
+        return [...state.creatureType.damageResistances, ...state.additionalResistances]
+            .map(dmgR => dmgR.type + ' ' + dmgR.value)
+            .map(str => str.replaceAll('[HALF LEVEL]', Math.floor(state.levelConfig.level / 2).toString()))
+            .sort((s1, s2) => s1.localeCompare(s2))
+            .join(', ');
     }
 }

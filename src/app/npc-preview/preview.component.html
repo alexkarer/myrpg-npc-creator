@@ -100,10 +100,10 @@
             </thead>
             <tbody class="text-center ">
                 <tr>
-                    <td>{{ npcRepo.$damageVulnurabilities }}</td>
-                    <td>{{ npcRepo.$damageResistances }}</td>
-                    <td>{{ npcRepo.$damageImmunities }}</td>
-                    <td>{{ npcRepo.$statusEffectImmunties }}</td>
+                    <td>{{ npcRepo.$damageVulnurabilities | async }}</td>
+                    <td>{{ npcRepo.$damageResistances | async }}</td>
+                    <td>{{ npcRepo.$damageImmunities | async }}</td>
+                    <td>{{ npcRepo.$statusEffectImmunties | async }}</td>
                 </tr>
             </tbody>
         </table>

@@ -7,7 +7,7 @@ import creatureTypesJson from '../../resources/creature_types.json';
 export type CreatureType = typeof creatureTypesJson[0];
 
 import sizesJson from '../../resources/sizes.json'; 
-export type Size = typeof sizesJson[0];
+export type CreatureSize = typeof sizesJson[0];
 
 import traitsJson from '../../resources/traits.json'; 
 export type Trait = typeof traitsJson.creatureTypeSpecificTraits[0];
@@ -29,7 +29,7 @@ export type NPC = {
     levelConfig: LevelConfig,
     archeTypeBaseStatArrays: BaseStatArray[],
     creatureType: CreatureType,
-    creatureSize: Size,
+    creatureSize: CreatureSize,
     mpBonus: number,
     specialMovement: string[],
 

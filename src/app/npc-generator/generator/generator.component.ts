@@ -7,6 +7,8 @@ import { NpcRepository } from '../../npc/npc.repository';
 import { combineLatest, map, Observable } from 'rxjs';
 import levelJson from '../../../resources/levels.json';
 import archeTypesJson from '../../../resources/archetypes.json'; 
+import creatureTypesJson from '../../../resources/creature_types.json'; 
+import creatureSizesJson from '../../../resources/sizes.json'; 
 
 @Component({
     selector: 'app-generator',
@@ -19,6 +21,8 @@ export class GeneratorComponent {
   readonly archTypes = Object.values(ArcheTypes);
   readonly alignments = alignments;
   readonly levelNumbers = levelJson.map(lvl => lvl.level);
+  readonly creatureTypes = creatureTypesJson;
+  readonly creatureSizes = creatureSizesJson;
 
   selectedArcheType = ArcheTypes.WARRIOR;
 
