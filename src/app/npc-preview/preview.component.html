@@ -1,126 +1,149 @@
-<div class="container previewContainer">
-     <!-- OVERVIEW -->
-    <div class="row">
-        <div class = "col">
-            <h3 class="text-white">{{ npcRepo.$name | async }}</h3>
-        </div>
-        <div class="col d-flex justify-content-end">
-            <h5 class="text-white">Level {{ npcRepo.$level | async }}, {{ npcRepo.$xp | async }} XP</h5>
-        </div>
+<div class="m-1">
+    <div class="d-flex justify-content-between mt-3">
+        <h3 class="text-white">{{ npcRepo.$name | async }}</h3>
+        <h5 class="text-white">Level {{ npcRepo.$level | async }}, {{ npcRepo.$xp | async }} XP</h5>
     </div>
-    <div class="row mt-2">
-        <div class = "col-6">
-            <h5 class="text-white">{{ npcRepo.$alignment | async }} {{ npcRepo.$creatureSize | async }} {{ npcRepo.$creatureType | async }}</h5>
-        </div>
-        <div class = "col-3">
-            <h5 class="text-white">
-                Martial Level: {{ npcRepo.$martialLevel | async }}
-            </h5>
-        </div>
-        <div class = "col-3">
-            <h5 class="text-white">
-                Spellcasting Level: {{ npcRepo.$spellLevel | async }}
-            </h5>
-        </div>
+    <div class="d-flex justify-content-between mt-2">
+        <h5 class="text-white">{{ npcRepo.$alignment | async }} {{ npcRepo.$creatureSize | async }} {{ npcRepo.$creatureType | async }}</h5>
+        <h5 class="text-white">Martial Level: {{ npcRepo.$martialLevel | async }}, Spell Level: {{ npcRepo.$spellLevel | async }}</h5>
     </div>
-    <div class="row mt-3">
-        <table class="table">
-            <thead class="text-center">
-                <tr>
-                    <th>STR</th>
-                    <th>AGI</th>
-                    <th>CON</th>
-                    <th>INT</th>
-                    <th>SPI</th>
-                    <th>PER</th>
-                    <th>CHA</th>
-                </tr>
-            </thead>
+    <hr class="mt-0">
+    <div class="mt-3 d-flex justify-content-between">
+        <table class="table w-25">
             <tbody class="text-center">
                 <tr>
+                    <th>STR</th>
                     <td>{{ npcRepo.$str | async }}</td>
+                </tr>
+                <tr>
+                    <th>AGI</th>
                     <td>{{ npcRepo.$agi | async }}</td>
+                </tr>
+                <tr>
+                    <th>CON</th>
                     <td>{{ npcRepo.$con | async }}</td>
+                </tr>
+                <tr>
+                    <th>INT</th>
                     <td>{{ npcRepo.$int | async }}</td>
+                </tr>
+                <tr>
+                    <th>SPI</th>
                     <td>{{ npcRepo.$spi | async }}</td>
+                </tr>
+                <tr>
+                    <th>PER</th>
                     <td>{{ npcRepo.$per | async }}</td>
+                </tr>
+                <tr>
+                    <th>CHA</th>
                     <td>{{ npcRepo.$cha | async }}</td>
                 </tr>
             </tbody>
         </table>
-    </div>
-    <!-- CORE VALUES -->
-    <div class="row gx-1">
-        <div class="col-2">
-            <h5 class="text-center fw-bold text-white">MP: {{ npcRepo.$mp | async }}</h5>
+        <div class="mx-2 d-flex flex-column">
+            <table class="table">
+                <tbody class="text-center">
+                    <tr>
+                        <th>HP</th>
+                        <td>{{ npcRepo.$hp | async }}</td>
+                    </tr>
+                    <tr>
+                        <th>AP</th>
+                        <td>{{ npcRepo.$ap | async }}</td>
+                    </tr>
+                    <tr>
+                        <th>MP</th>
+                        <td>{{ npcRepo.$mp | async }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table mt-1">
+                <tbody class="text-center">
+                    <tr>
+                        <th>Meele Martial Attack</th>
+                        <td>{{ npcRepo.$meleeMartialAttack | async }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ranged Martial Attack</th>
+                        <td>{{ npcRepo.$rangedMartialAttack | async }}</td>
+                    </tr>
+                    <tr>
+                        <th>Melee Spell Attack</th>
+                        <td>{{ npcRepo.$meleeSpellAttack | async }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ranged Spell Attack</th>
+                        <td>{{ npcRepo.$rangedSpellAttack | async }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="col-2">
-            <h5 class="text-center fw-bold text-white">AP: {{ npcRepo.$ap | async }}</h5>
-        </div>
-        <div class="col-2">
-            <h5 class="text-center fw-bold text-white">HP: {{ npcRepo.$hp | async }}</h5>
-        </div>
-        <div class="col-6">
-            <span class="fw-bold text-white">Special Movement: {{ npcRepo.$specialMovement | async }}</span>
-        </div>
-    </div>
-     <!-- DEFENSES -->
-    <div class="row mt-3">
-        <table class="table">
-            <thead class="text-center">
+        <table class="table w-25">
+            <tbody>
                 <tr>
                     <th>Hardness</th>
-                    <th>Dodge</th>
-                    <th>Toughness</th>
-                    <th>Willpower</th>
-                    <th>Shield Blcok</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                <tr>
                     <td>{{ npcRepo.$hardness | async }}</td>
+                </tr>
+                <tr>
+                    <th>Dodge</th>
                     <td>{{ npcRepo.$dodge | async }}</td>
+                </tr>
+                <tr>
+                    <th>Toughness</th>
                     <td>{{ npcRepo.$toughness | async }}</td>
+                </tr>
+                <tr>
+                    <th>Willpower</th>
                     <td>{{ npcRepo.$willpower | async }}</td>
+                </tr>
+                <tr>
+                    <th>Shield Block</th>
                     <td>{{ npcRepo.$shieldBlock | async }} ({{ npcRepo.$shieldThreshold | async }})</td>
+                </tr>
+                <tr>
+                    <th>Special Movement</th>
+                    <td>{{ npcRepo.$specialMovement | async }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <!-- RESISTENCES, IMMUNITIES, SHIELD BLOCK -->
-    <div class="row mt-3">
+    <div class="row mt-1">
         <table class="table">
-            <thead class="text-center">
+            <tbody>
                 <tr>
                     <th>Vulnurabilities</th>
-                    <th>Damage Resistances</th>
-                    <th>Damage Immunities</th>
-                    <th>Status Effect Immunities</th>
-                </tr>
-            </thead>
-            <tbody class="text-center ">
-                <tr>
                     <td>{{ npcRepo.$damageVulnurabilities | async }}</td>
+                </tr>
+                <tr>
+                    <th>Damage Resistances</th>
                     <td>{{ npcRepo.$damageResistances | async }}</td>
+                </tr>
+                <tr>
+                    <th>Damage Immunities</th>
                     <td>{{ npcRepo.$damageImmunities | async }}</td>
+                </tr>
+                <tr>
+                    <th>Status Effect Immunities</th>
                     <td>{{ npcRepo.$statusEffectImmunties | async }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <hr class="mt-0">
     <!-- TRAITS -->
     <div class="row mt-1">
         <table class="table">
             <thead class="text-center">
                 <tr>
-                    <th colspan="8"><h5 class="fw-bold">Traits</h5></th>
+                    <th colspan="2"><h5 class="fw-bold">Traits</h5></th>
                 </tr>
             </thead>
             <tbody class="table-striped">
                 @for (trait of npcRepo.$traits | async; track $index) {
                     <tr>
-                        <td colspan="1"><span class="fw-bold">{{ trait.name }}</span></td>
-                        <td colspan="7">{{ trait.description }}</td>
+                        <td><span class="fw-bold">{{ trait.name }}</span></td>
+                        <td>{{ trait.description }}</td>
                     </tr>
                 }
             </tbody>
@@ -136,15 +159,15 @@
                 <tr>
                     <th><h5>Name</h5></th>
                     <th><h5>AP</h5></th>
-                    <th colspan="6"><h5>Description</h5></th>
+                    <th><h5>Description</h5></th>
                 </tr>
             </thead>
             <tbody class="text-center table-striped">
                 @for (ability of npcRepo.$abilities | async; track $index) {
                     <tr>
                         <td><span class="fw-bold">{{ ability.name }}</span></td>
-                        <td>{{ ability.apCost }}</td>
-                        <td colspan="6">{{ ability.description }}</td>
+                        <td>{{ ability.apCost }} [AP]</td>
+                        <td>{{ ability.description }}</td>
                     </tr>
                 }
             </tbody>
@@ -155,14 +178,14 @@
         <table class="table">
             <thead class="text-center">
                 <tr>
-                    <th colspan="8"><h5 class="fw-bold">Reactions</h5></th>
+                    <th><h5 class="fw-bold">Reactions</h5></th>
                 </tr>
             </thead>
             <tbody class="text-center table-striped">
                 @for (reaction of npcRepo.$reactions | async; track $index) {
                     <tr>
-                        <td colspan="1"><span class="fw-bold">{{ reaction.name }}</span></td>
-                        <td colspan="7">{{ reaction.description }}</td>
+                        <td><span class="fw-bold">{{ reaction.name }}</span></td>
+                        <td>{{ reaction.description }}</td>
                     </tr>
                 }
             </tbody>

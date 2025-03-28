@@ -53,7 +53,7 @@ const npcStore = createStore(
 
 @Injectable({providedIn: 'root'})
 export class NpcRepository {
-    $name = npcStore.pipe(select(state => state.name ?? 'name'));
+    $name = npcStore.pipe(select(state => state.name === '' ? 'Name' : state.name));
     $alignment = npcStore.pipe(select(state => state.alignment));
     $availibleNpcCreationPoints = npcStore.pipe(select(state => this.getBaseStatArray(state).npcCreationPoints));
     $usedNpcCreationPoints = npcStore.pipe(select(state => 
@@ -84,10 +84,10 @@ export class NpcRepository {
     $per = npcStore.pipe(select(state => this.calculatePer(state)));
     $cha = npcStore.pipe(select(state => state.chaBonus + this.getBaseStatArray(state).attributes.cha + state.creatureType.attributeBonsuses.cha));
 
-    $meleeMartialAttack = npcStore.pipe(select(state => this.calculateAgi(state) + this.getBaseStatArray(state).levels.martialLevel));
-    $rangedMartialAttack = npcStore.pipe(select(state => this.calculatePer(state) + this.getBaseStatArray(state).levels.martialLevel));
-    $meleeSpellAttack = npcStore.pipe(select(state => this.calculateAgi(state) + this.getBaseStatArray(state).levels.spellLevel));
-    $rangedSpellAttack = npcStore.pipe(select(state => this.calculatePer(state) + this.getBaseStatArray(state).levels.spellLevel));
+    $meleeMartialAttack = npcStore.pipe(select(state => 10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.martialLevel));
+    $rangedMartialAttack = npcStore.pipe(select(state => 10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.martialLevel));
+    $meleeSpellAttack = npcStore.pipe(select(state => 10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.spellLevel));
+    $rangedSpellAttack = npcStore.pipe(select(state => 10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.spellLevel));
 
     $hp = npcStore.pipe(select(state => this.getBaseStatArray(state).hpBonus + Math.floor((state.creatureSize.hpPerLevel +  Math.floor(this.calculateCon(state) / 2)) * state.levelConfig.level)));
     $hardness = npcStore.pipe(select(state => 10 + this.calculateStr(state) + this.getBaseStatArray(state).defenseBonus.hardness + state.hardnessBonus));
