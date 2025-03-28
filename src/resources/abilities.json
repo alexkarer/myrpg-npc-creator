@@ -1,6 +1,6 @@
 {
     "martialAbilities": [
-        { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }
+        { "name": "Basic Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Melee Martial Attack, hit medium martial damage." }
     ],
     "spellAbilities": [
         { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }

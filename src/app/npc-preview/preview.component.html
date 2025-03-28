@@ -134,9 +134,10 @@
     <!-- TRAITS -->
     <div class="row mt-1">
         <table class="table">
-            <thead class="text-center">
+            <thead>
                 <tr>
-                    <th colspan="2"><h5 class="fw-bold">Traits</h5></th>
+                    <th>Trait</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody class="table-striped">
@@ -152,21 +153,18 @@
     <!-- ACTIONS -->
     <div class="row mt-1">
         <table class="table">
-            <thead class="text-center">
+            <thead>
                 <tr>
-                    <th colspan="8"><h5 class="fw-bold">Actions</h5></th>
-                </tr>
-                <tr>
-                    <th><h5>Name</h5></th>
-                    <th><h5>AP</h5></th>
-                    <th><h5>Description</h5></th>
+                    <th>Action</th>
+                    <th>Cost</th>
+                    <th>Description</th>
                 </tr>
             </thead>
-            <tbody class="text-center table-striped">
+            <tbody class="table-striped">
                 @for (ability of npcRepo.$abilities | async; track $index) {
                     <tr>
                         <td><span class="fw-bold">{{ ability.name }}</span></td>
-                        <td>{{ ability.apCost }} [AP]</td>
+                        <td>{{ getAbilityCost(ability) }}</td>
                         <td>{{ ability.description }}</td>
                     </tr>
                 }
@@ -178,7 +176,8 @@
         <table class="table">
             <thead class="text-center">
                 <tr>
-                    <th><h5 class="fw-bold">Reactions</h5></th>
+                    <th>Reaction</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody class="text-center table-striped">

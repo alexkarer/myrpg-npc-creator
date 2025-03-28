@@ -29,9 +29,14 @@ export type NPC = {
     levelConfig: LevelConfig,
     archeTypeBaseStatArrays: BaseStatArray[],
     creatureType: CreatureType,
+    freeCreatureTrait: Trait | undefined,
     creatureSize: CreatureSize,
-    mpBonus: number,
     specialMovement: string[],
+
+    // traitSpecificBonuses
+    mpBonus: number,
+    additionalNpcCreationPoints: number,
+    hpPerLevelBonuses: number,
 
     // Attributes
     strBonus: number,
@@ -43,7 +48,6 @@ export type NPC = {
     chaBonus: number,
 
     // Defenses
-    hp: number,
     hardnessBonus: number,
     dodgeBonus: number,
     toughnessBonus: number,
@@ -70,5 +74,5 @@ export enum ArcheTypes {
     WARRIOR = 'Warrior',
     SPELLCASTER = 'Spellcaster',
     EXPERT = 'Expert'
-  }
+}
   

@@ -1,13 +1,13 @@
-<div class="container generatorContainer">
+<div class="m-1">
     <!-- NAME, ALIGNMENT AND LEVEL -->
-    <form class="row g-3">
-        <div class="col-6">
+    <form class="mt-3 d-flex justify-content-between">
+        <div>
             <div class="input-group">
                 <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                 <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" (change)="handleNameUpdate($event)">
             </div>
         </div>
-        <div class="col-3 d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
                     {{ npcRepo.$alignment | async }}
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownLevel" ngbDropdownToggle>
                     Level {{ npcRepo.$level | async }}
@@ -32,7 +32,7 @@
             </div>
         </div>
     </form>
-    <div class="row mt-4">
+    <div class="mt-4">
         <div class="d-flex justify-content-around">
             <div class="col">
                 <p class="text-center fw-bold fs-5 text-white">Availible NPC Creation Points: {{ npcRepo.$availibleNpcCreationPoints | async }}</p>
@@ -45,35 +45,128 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="d-flex justify-content-around">
-            <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
-                    {{ selectedArcheType }}
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
-                    @for (archType of archTypes; track $index) {
-                        <button type="button" (click)="handleArcheTypeUpdate($event)" ngbDropdownItem [value]="archType">{{ archType }}</button>
+    <hr>
+    <div class="mt-3 d-flex justify-content-around">
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
+                {{ selectedArcheType }}
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
+                @for (archType of archTypes; track $index) {
+                    <button type="button" (click)="handleArcheTypeUpdate($event)" ngbDropdownItem [value]="archType">{{ archType }}</button>
+                }
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownCreatureType" ngbDropdownToggle>
+                {{ npcRepo.$creatureType | async }}
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownCreatureType">
+                @for (creatureType of creatureTypes; track $index) {
+                    <button type="button" (click)="npcRepo.updateCreatureType(creatureType)" ngbDropdownItem>{{ creatureType.name }}</button>
+                }
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownCreatureSize" ngbDropdownToggle>
+                {{ npcRepo.$creatureSize | async }}
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownCreatureSize">
+                @for (creatureSize of creatureSizes; track $index) {
+                    <button type="button" (click)="npcRepo.updateCreatureSize(creatureSize)" ngbDropdownItem>{{ creatureSize.name }}</button>
+                }
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="mt-3 d-flex justify-content-around">
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownDefensiveTraits" ngbDropdownToggle>Defensive Traits</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownDefensiveTraits">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (trait of traits.defensiveTraits; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
                     }
                 </div>
             </div>
-            <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
-                    {{ npcRepo.$creatureType | async }}
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
-                    @for (creatureType of creatureTypes; track $index) {
-                        <button type="button" (click)="npcRepo.updateCreatureType(creatureType)" ngbDropdownItem>{{ creatureType.name }}</button>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownMovementTraits" ngbDropdownToggle>Movement Traits</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownMovementTraits">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (trait of traits.movementTraits; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
                     }
                 </div>
             </div>
-            <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
-                    {{ npcRepo.$creatureSize | async }}
-                </button>
-                <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
-                    @for (creatureSize of creatureSizes; track $index) {
-                        <button type="button" (click)="npcRepo.updateCreatureSize(creatureSize)" ngbDropdownItem>{{ creatureSize.name }}</button>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownWargerTraits" ngbDropdownToggle>Wargear Traits</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownWargerTraits">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (trait of traits.wargearTraits; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
+                    }
+                </div>
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownOtherTraits" ngbDropdownToggle>Other Traits</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownOtherTraits">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (trait of traits.otherTraits; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="mt-3 d-flex justify-content-around">
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownMartialAbilities" ngbDropdownToggle>Martial Abilities</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownMartialAbilities">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (ability of abilities.martialAbilities; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name }}</label>
+                    }
+                </div>
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownSpellAbilities" ngbDropdownToggle>Spell Abilities</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownSpellAbilities">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (ability of abilities.spellAbilities; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name }}</label>
+                    }
+                </div>
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownOtherAbilities" ngbDropdownToggle>Other Abilities</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownOtherAbilities">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (ability of abilities.otherAbilities; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name }}</label>
+                    }
+                </div>
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownReactionAbilities" ngbDropdownToggle>Reaction Abilities</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownReactionAbilities">
+                <div class="d-flex justify-content-center flex-column mx-2">
+                    @for (reaction of abilities.reactionAbilities; track $index) {
+                        <input type="checkbox" class="btn-check" [id]="'btncheck' + reaction.name" autocomplete="off" (change)="handleReactionCheckBoxUpdate($event, reaction)">
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + reaction.name">{{ reaction.name }}</label>
                     }
                 </div>
             </div>

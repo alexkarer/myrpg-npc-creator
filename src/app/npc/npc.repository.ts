@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { createStore, select, setProp, withProps } from "@ngneat/elf";
-import { NPC, LevelConfig, BaseStatArray, CreatureType, CreatureSize } from './npc';
+import { NPC, LevelConfig, BaseStatArray, CreatureType, CreatureSize, Trait, Ability, Reaction } from './npc';
 import { Alignment } from "./alignments";
 
 import creatureTypesJson from '../../resources/creature_types.json'; 
 import sizesJson from '../../resources/sizes.json'; 
 import levelsJson from '../../resources/levels.json';
 import archeTypesJson from '../../resources/archetypes.json'; 
+import traitsJson from '../../resources/traits.json';
 
 const npcStore = createStore(
     { name: 'npc'},
@@ -17,9 +18,13 @@ const npcStore = createStore(
         levelConfig: levelsJson[0],
         archeTypeBaseStatArrays: archeTypesJson.warriorBaseStatArray,
         creatureType: creatureTypesJson[0],
+        freeCreatureTrait: traitsJson.creatureTypeSpecificTraits[0],
         creatureSize: sizesJson[2],
-        mpBonus: 0,
         specialMovement: [],
+
+        mpBonus: 0,
+        additionalNpcCreationPoints: 0,
+        hpPerLevelBonuses: 0,
 
         strBonus: 0,
         agiBonus: 0,
@@ -29,7 +34,6 @@ const npcStore = createStore(
         perBonus: 0,
         chaBonus: 0,
 
-        hp: 0,
         hardnessBonus: 0,
         dodgeBonus: 0,
         toughnessBonus: 0,
@@ -55,7 +59,7 @@ const npcStore = createStore(
 export class NpcRepository {
     $name = npcStore.pipe(select(state => state.name === '' ? 'Name' : state.name));
     $alignment = npcStore.pipe(select(state => state.alignment));
-    $availibleNpcCreationPoints = npcStore.pipe(select(state => this.getBaseStatArray(state).npcCreationPoints));
+    $availibleNpcCreationPoints = npcStore.pipe(select(state => this.getBaseStatArray(state).npcCreationPoints + state.additionalNpcCreationPoints));
     $usedNpcCreationPoints = npcStore.pipe(select(state => 
         state.creatureSize.pointsCost + 
         state.creatureType.pointsCost + 
@@ -89,7 +93,7 @@ export class NpcRepository {
     $meleeSpellAttack = npcStore.pipe(select(state => 10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.spellLevel));
     $rangedSpellAttack = npcStore.pipe(select(state => 10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.spellLevel));
 
-    $hp = npcStore.pipe(select(state => this.getBaseStatArray(state).hpBonus + Math.floor((state.creatureSize.hpPerLevel +  Math.floor(this.calculateCon(state) / 2)) * state.levelConfig.level)));
+    $hp = npcStore.pipe(select(state => this.getBaseStatArray(state).hpBonus + Math.floor((state.creatureSize.hpPerLevel + state.hpPerLevelBonuses + Math.floor(this.calculateCon(state) / 2)) * state.levelConfig.level)));
     $hardness = npcStore.pipe(select(state => 10 + this.calculateStr(state) + this.getBaseStatArray(state).defenseBonus.hardness + state.hardnessBonus));
     $dodge = npcStore.pipe(select(state => 10 + this.calculateAgi(state) + this.getBaseStatArray(state).defenseBonus.dodge + state.dodgeBonus));
     $toughness = npcStore.pipe(select(state => 10 + this.calculateCon(state) + this.getBaseStatArray(state).defenseBonus.toughness + state.toughnessBonus));
@@ -102,7 +106,7 @@ export class NpcRepository {
     $statusEffectImmunties = npcStore.pipe(select(state => [...state.creatureType.statusEffectImmunities, ...state.additionalStatusEffectImmunities].join(', ')));
     $damageVulnurabilities = npcStore.pipe(select(state => [...state.creatureType.damageVulnurabilities, ...state.additionalVulnurabilities].join(', ')));
 
-    $traits = npcStore.pipe(select(state => state.traits));
+    $traits = npcStore.pipe(select(state => state.freeCreatureTrait === undefined ? state.traits : [...state.traits, state.freeCreatureTrait]));
     $abilities = npcStore.pipe(select(state => state.abilities));
     $reactions = npcStore.pipe(select(state => state.reactions));
 
@@ -123,11 +127,44 @@ export class NpcRepository {
     }
 
     updateCreatureType(type: CreatureType) {
+        let freeTrait = traitsJson.creatureTypeSpecificTraits.find(t => t.name === type.freeTraitName);
+        npcStore.update(setProp('freeCreatureTrait', existingFreeTrait => {
+            //if (existingFreeTrait) { this.removeTraitsCharacteristics(existingFreeTrait.name); }
+            return freeTrait;
+        }));
+        //if (freeTrait) { this.applyTraitsCharacteristics(freeTrait.name); }
+
         npcStore.update(setProp('creatureType', type));
     }
 
     updateCreatureSize(size: CreatureSize) {
         npcStore.update(setProp('creatureSize', size));
+    }
+
+    addTrait(trait: Trait) {
+        this.applyTraitsCharacteristics(trait.name);
+        npcStore.update(setProp('traits', traits => [...traits, trait]));
+    }
+
+    removeTrait(trait: Trait) {
+        this.removeTraitsCharacteristics(trait.name);
+        npcStore.update(setProp('traits', traits => traits.filter(t => t.name !== trait.name)));
+    }
+
+    addAbility(ability: Ability) {
+        npcStore.update(setProp('abilities', existingAbilities => [...existingAbilities, ability]));
+    }
+
+    removeAbility(ability: Ability) {
+        npcStore.update(setProp('abilities', existingAbilities => existingAbilities.filter(a => a.name !== ability.name)));
+    }
+
+    addReaction(reaction: Reaction) {
+        npcStore.update(setProp('reactions', existingReactions => [...existingReactions, reaction]));
+    }
+
+    removeReaction(reaction: Reaction) {
+        npcStore.update(setProp('reactions', existingReactions => existingReactions.filter(r => r.name !== reaction.name)));
     }
 
     private getBaseStatArray(state: NPC): BaseStatArray {
@@ -161,5 +198,150 @@ export class NpcRepository {
             .map(str => str.replaceAll('[HALF LEVEL]', Math.floor(state.levelConfig.level / 2).toString()))
             .sort((s1, s2) => s1.localeCompare(s2))
             .join(', ');
+    }
+
+    // trait characteristics functions
+    private updateAvailibleNpcPoints(points: number) {
+        npcStore.update(setProp('additionalNpcCreationPoints', p => p + points));
+    }
+    private updateMpBonus(mp: number) {
+        npcStore.update(setProp('mpBonus', mpBonus => mpBonus + mp));
+    }
+    private addSpecialMovement(move: string) {
+        npcStore.update(setProp('specialMovement', sm => [...sm, move]));
+    }
+    private removeSpecialMovement(move: string) {
+        npcStore.update(setProp('specialMovement', sm => sm.filter(spec => spec !== move)));
+    }
+    private updateHpPerLevelBonus(hp: number) {
+        npcStore.update(setProp('hpPerLevelBonuses', hpBonus => hpBonus + hp));
+    }
+    private addDamageResistance(dmgResistance: { type: string, value: string }) {
+        npcStore.update(setProp('additionalResistances', dmg => [...dmg, dmgResistance]));
+    }
+    private removeDamageResistance(dmgResistance: { type: string, value: string }) {
+        npcStore.update(setProp('additionalResistances', dmg => dmg.filter(d => d !== dmgResistance)));
+    }
+
+    private applyTraitsCharacteristics(traitName: string) {
+        switch(traitName) {
+            case 'Human Versatility':
+                this.updateAvailibleNpcPoints(1);
+                break;
+            case 'Elven Nimbleness':
+                this.updateMpBonus(1);
+                break;
+            case 'Dwarven Nightvision':
+                break;
+            case 'Undead':
+                break;
+            case 'Fire Elemental':
+                break;
+            case 'Air Elemental':
+                this.addSpecialMovement("fly(1.5m)");
+                break;
+            case 'Water Elemental':
+                this.addSpecialMovement("swim(1.5m)");
+                break;
+            case 'Immortal':
+                break;
+            case 'Nimble I':
+                this.updateMpBonus(1);
+                break;
+            case 'Nimble II':
+                this.updateMpBonus(2);
+                break;
+            case 'Nimble III':
+                this.updateMpBonus(3);
+                break;
+            case 'Fly I':
+                this.addSpecialMovement("fly(1.5m)");
+                break;
+            case 'Fly II':
+                break;
+            case 'Fly III':
+                break;
+            case 'Tank I':
+                this.updateHpPerLevelBonus(2);
+                break;
+            case 'Armor I':
+                this.addDamageResistance({ type: "physical", value: "2"});
+                break;
+            case 'Armor II':
+                break;
+            case 'Armor III':
+                break;
+            case 'Armor IV':
+                break;
+            case 'Nightvision I':
+                break;
+            case 'Nightvision II':
+                break;
+            case 'Nightvision III':
+                break;
+            default:
+                console.error('Unkown trait ' + traitName + ' unable to apply characteristics');
+        }
+    }
+
+    private removeTraitsCharacteristics(traitName: string) {
+        switch(traitName) {
+            case 'Human Versatility':
+                this.updateAvailibleNpcPoints(-1);
+                break;
+            case 'Elven Nimbleness':
+                this.updateMpBonus(-1);
+                break;
+            case 'Dwarven Nightvision':
+                break;
+            case 'Undead':
+                break;
+            case 'Fire Elemental':
+                break;
+            case 'Air Elemental':
+                this.removeSpecialMovement("fly(1.5m)");
+                break;
+            case 'Water Elemental':
+                this.removeSpecialMovement("swim(1.5m)");
+                break;
+            case 'Immortal':
+                break;
+            case 'Nimble I':
+                this.updateMpBonus(-1);
+                break;
+            case 'Nimble II':
+                this.updateMpBonus(-2);
+                break;
+            case 'Nimble III':
+                this.updateMpBonus(-3);
+                break;
+            case 'Fly I':
+                this.removeSpecialMovement("fly(1.5m)");
+                break;
+            case 'Fly II':
+                break;
+            case 'Fly III':
+                break;
+            case 'Tank I':
+                this.updateHpPerLevelBonus(-2);
+                break;
+            case 'Armor I':
+                this.removeDamageResistance({ type: "physical", value: "2"});
+                break;
+            case 'Armor II':
+                break;
+            case 'Armor III':
+                break;
+            case 'Armor IV':
+                break;
+            case 'Nightvision I':
+                break;
+            case 'Nightvision II':
+                break;
+            case 'Nightvision III':
+                break;
+            default:
+                console.error('Unkown trait ' + traitName + ' unable to apply characteristics');
+        }
     }
 }

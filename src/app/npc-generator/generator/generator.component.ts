@@ -1,14 +1,17 @@
 import {  Component } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Alignment, alignments } from '../../npc/alignments';
-import { ArcheTypes } from '../../npc/npc';
+import { Ability, ArcheTypes, Reaction, Trait } from '../../npc/npc';
 import { CommonModule } from '@angular/common';
 import { NpcRepository } from '../../npc/npc.repository';
 import { combineLatest, map, Observable } from 'rxjs';
+
 import levelJson from '../../../resources/levels.json';
 import archeTypesJson from '../../../resources/archetypes.json'; 
 import creatureTypesJson from '../../../resources/creature_types.json'; 
 import creatureSizesJson from '../../../resources/sizes.json'; 
+import traitsJson from '../../../resources/traits.json'; 
+import abilitiesJson from '../../../resources/abilities.json'; 
 
 @Component({
     selector: 'app-generator',
@@ -23,6 +26,8 @@ export class GeneratorComponent {
   readonly levelNumbers = levelJson.map(lvl => lvl.level);
   readonly creatureTypes = creatureTypesJson;
   readonly creatureSizes = creatureSizesJson;
+  readonly traits = traitsJson;
+  readonly abilities = abilitiesJson;
 
   selectedArcheType = ArcheTypes.WARRIOR;
 
@@ -72,4 +77,33 @@ export class GeneratorComponent {
     }
   }
 
+  handleTraitCheckBoxUpdate(event: Event, trait: Trait): void {
+    let target = event.target as HTMLInputElement;
+    let active = target.checked;
+    if (active) {
+      this.npcRepo.addTrait(trait);
+    } else {
+      this.npcRepo.removeTrait(trait);
+    }
+  }
+
+  handleAbilityCheckBoxUpdate(event: Event, ability: Ability): void {
+    let target = event.target as HTMLInputElement;
+    let active = target.checked;
+    if (active) {
+      this.npcRepo.addAbility(ability);
+    } else {
+      this.npcRepo.removeAbility(ability);
+    }
+  }
+
+  handleReactionCheckBoxUpdate(event: Event, reaction: Reaction): void {
+    let target = event.target as HTMLInputElement;
+    let active = target.checked;
+    if (active) {
+      this.npcRepo.addReaction(reaction);
+    } else {
+      this.npcRepo.removeReaction(reaction);
+    }
+  }
 }

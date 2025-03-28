@@ -1,6 +1,8 @@
 {
     "creatureTypeSpecificTraits": [
-        { "pointsCost": 0, "name": "Versatile", "description": "Increase NPC creation Points by 1." },
+        { "pointsCost": 0, "name": "Human Versatility", "description": "Increase NPC creation Points by 1." },
+        { "pointsCost": 0, "name": "Elven Nimbleness", "description": "+1 [MP]" },
+        { "pointsCost": 0, "name": "Dwarven Nightvision", "description": "Gain 4.5m nightvision" },
         { "pointsCost": 0, "name": "Undead", "description": "Doesn't require food, water or sleep. Can't get Exhausted" },
         { "pointsCost": 0, "name": "Fire Elemental", "description": "For Base Ability can deal fire damage instead." },
         { "pointsCost": 0, "name": "Air Elemental", "description": "Gain fly(1.5m) speed and for Base Ability can deal lightning damage instead." },
@@ -12,13 +14,17 @@
         { "pointsCost": 2, "name": "Nimble II", "description": "+2 [MP]" },
         { "pointsCost": 3, "name": "Nimble III", "description": "+3 [MP]" },
         { "pointsCost": 1, "name": "Fly I", "description": "gain fly(1.5m) speed." },
-        { "pointsCost": 2, "name": "Fly II", "description": "gain fly(3m) speed." },
-        { "pointsCost": 3, "name": "Fly III", "description": "gain fly(6m) speed." }
+        { "pointsCost": 2, "name": "Fly II", "description": "Increase fly speed by 1.5m." },
+        { "pointsCost": 3, "name": "Fly III", "description": "Increase fly speed by 3m." }
     ],
     "defensiveTraits": [
-        { "pointsCost": 1, "name": "Tough", "description": "+2 [HP] per [LEVEL]" }
+        { "pointsCost": 1, "name": "Tank I", "description": "+2 [HP] per [LEVEL]" }
     ],
     "wargearTraits": [
+        { "pointsCost": 1, "name": "Armor I", "description": "Wear Armor to gain damage resistance: phyiscal 2." },
+        { "pointsCost": 2, "name": "Armor II", "description": "The damage resitanace of your armor increases by 2." },
+        { "pointsCost": 3, "name": "Armor III", "description": "The damage resitanace of your armor increases by 2." },
+        { "pointsCost": 4, "name": "Armor IV", "description": "The damage resitanace of your armor increases by 2." }
     ],
     "otherTraits": [
         { "pointsCost": 1, "name": "Nightvision I", "description": "Gain 4.5m nightvision" },
