@@ -2,24 +2,24 @@
      <!-- OVERVIEW -->
     <div class="row">
         <div class = "col">
-            <h3 class="text-white">{{ npc?.name ? npc?.name : 'name' }}</h3>
+            <h3 class="text-white">{{ npcRepo.$name | async }}</h3>
         </div>
         <div class="col d-flex justify-content-end">
-            <h5 class="text-white">Level {{ npc?.levelConfig?.level }}, {{ npc?.levelConfig?.XP }} XP</h5>
+            <h5 class="text-white">Level {{ npcRepo.$level | async }}, {{ npcRepo.$xp | async }} XP</h5>
         </div>
     </div>
     <div class="row mt-2">
         <div class = "col-6">
-            <h5 class="text-white">{{ npc?.alignment }} {{ npc?.creatureSize?.name }} {{ npc?.creatureType?.name }}</h5>
+            <h5 class="text-white">{{ npcRepo.$alignment | async }} {{ npcRepo.$creatureSize | async }} {{ npcRepo.$creatureType | async }}</h5>
         </div>
         <div class = "col-3">
             <h5 class="text-white">
-                Martial Level: {{ npc?.martialLevel }}
+                Martial Level: {{ npcRepo.$martialLevel | async }}
             </h5>
         </div>
         <div class = "col-3">
             <h5 class="text-white">
-                Spellcasting Level: {{ npc?.spellLevel }}
+                Spellcasting Level: {{ npcRepo.$spellLevel | async }}
             </h5>
         </div>
     </div>
@@ -38,13 +38,13 @@
             </thead>
             <tbody class="text-center">
                 <tr>
-                    <td>{{ npc?.str }}</td>
-                    <td>{{ npc?.agi }}</td>
-                    <td>{{ npc?.con }}</td>
-                    <td>{{ npc?.int }}</td>
-                    <td>{{ npc?.spi }}</td>
-                    <td>{{ npc?.per }}</td>
-                    <td>{{ npc?.cha }}</td>
+                    <td>{{ npcRepo.$str | async }}</td>
+                    <td>{{ npcRepo.$agi | async }}</td>
+                    <td>{{ npcRepo.$con | async }}</td>
+                    <td>{{ npcRepo.$int | async }}</td>
+                    <td>{{ npcRepo.$spi | async }}</td>
+                    <td>{{ npcRepo.$per | async }}</td>
+                    <td>{{ npcRepo.$cha | async }}</td>
                 </tr>
             </tbody>
         </table>
@@ -52,16 +52,16 @@
     <!-- CORE VALUES -->
     <div class="row gx-1">
         <div class="col-2">
-            <h5 class="text-center fw-bold text-white">MP: {{ npc?.mp }}</h5>
+            <h5 class="text-center fw-bold text-white">MP: {{ npcRepo.$mp | async }}</h5>
         </div>
         <div class="col-2">
-            <h5 class="text-center fw-bold text-white">AP: {{ npc?.levelConfig?.AP }}</h5>
+            <h5 class="text-center fw-bold text-white">AP: {{ npcRepo.$ap | async }}</h5>
         </div>
         <div class="col-2">
-            <h5 class="text-center fw-bold text-white">HP: {{ npc?.hp }}</h5>
+            <h5 class="text-center fw-bold text-white">HP: {{ npcRepo.$hp | async }}</h5>
         </div>
         <div class="col-6">
-            <span class="fw-bold text-white">Special Movement: {{ flattenNpcSpecialMove() }}</span>
+            <span class="fw-bold text-white">Special Movement: {{ npcRepo.$specialMovement | async }}</span>
         </div>
     </div>
      <!-- DEFENSES -->
@@ -78,11 +78,11 @@
             </thead>
             <tbody class="text-center">
                 <tr>
-                    <td>{{ hardness }}</td>
-                    <td>{{ dodge }}</td>
-                    <td>{{ toughness }}</td>
-                    <td>{{ willpower }}</td>
-                    <td>{{ npc?.shieldBlock }} ({{ npc?.shieldThreshold }})</td>
+                    <td>{{ npcRepo.$hardness | async }}</td>
+                    <td>{{ npcRepo.$dodge | async }}</td>
+                    <td>{{ npcRepo.$toughness | async }}</td>
+                    <td>{{ npcRepo.$willpower | async }}</td>
+                    <td>{{ npcRepo.$shieldBlock | async }} ({{ npcRepo.$shieldThreshold | async }})</td>
                 </tr>
             </tbody>
         </table>
@@ -95,15 +95,15 @@
                     <th>Vulnurabilities</th>
                     <th>Damage Resistances</th>
                     <th>Damage Immunities</th>
-                    <th>Condition Immunities</th>
+                    <th>Status Effect Immunities</th>
                 </tr>
             </thead>
             <tbody class="text-center ">
                 <tr>
-                    <td>{{ npc?.vulnurabilities?.join(', ') }}</td>
-                    <td>{{ npc?.resistances?.join(', ') }}</td>
-                    <td>{{ npc?.immunities?.join(', ') }}</td>
-                    <td>{{ npc?.conditionImmunies?.join(', ') }}</td>
+                    <td>{{ npcRepo.$damageVulnurabilities }}</td>
+                    <td>{{ npcRepo.$damageResistances }}</td>
+                    <td>{{ npcRepo.$damageImmunities }}</td>
+                    <td>{{ npcRepo.$statusEffectImmunties }}</td>
                 </tr>
             </tbody>
         </table>
@@ -117,10 +117,12 @@
                 </tr>
             </thead>
             <tbody class="table-striped">
-                <tr *ngFor="let trait of npc?.traits">
-                    <td colspan="1"><span class="fw-bold">{{ trait.name}}</span></td>
-                    <td colspan="7">{{ trait.description }}</td>
-                </tr>
+                @for (trait of npcRepo.$traits | async; track $index) {
+                    <tr>
+                        <td colspan="1"><span class="fw-bold">{{ trait.name }}</span></td>
+                        <td colspan="7">{{ trait.description }}</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -138,11 +140,13 @@
                 </tr>
             </thead>
             <tbody class="text-center table-striped">
-                <tr *ngFor="let ability of npc?.abilities">
-                    <td><span class="fw-bold">{{ ability.name }}</span></td>
-                    <td>{{ ability.apCost }}</td>
-                    <td colspan="6">{{ ability.description }}</td>
-                </tr>
+                @for (ability of npcRepo.$abilities | async; track $index) {
+                    <tr>
+                        <td><span class="fw-bold">{{ ability.name }}</span></td>
+                        <td>{{ ability.apCost }}</td>
+                        <td colspan="6">{{ ability.description }}</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -155,10 +159,12 @@
                 </tr>
             </thead>
             <tbody class="text-center table-striped">
-                <tr *ngFor="let reaction of npc?.reactions">
-                    <td colspan="1"><span class="fw-bold">{{ reaction.name }}</span></td>
-                    <td colspan="7">{{ reaction.description }}</td>
-                </tr>
+                @for (reaction of npcRepo.$reactions | async; track $index) {
+                    <tr>
+                        <td colspan="1"><span class="fw-bold">{{ reaction.name }}</span></td>
+                        <td colspan="7">{{ reaction.description }}</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

@@ -1,9 +1,9 @@
 [
-    { "name": "Tiny", "strBonus": -4, "dodgeBonus": 6, "hpPerLevel": 2, "meleeRange": "0.1m", "moveDistance": "1.5m" },
-    { "name": "Small", "strBonus": -2, "dodgeBonus": 3, "hpPerLevel": 4, "meleeRange": "1.5m", "moveDistance": "1.5m" },
-    { "name": "Medium", "strBonus": 0, "dodgeBonus": 0, "hpPerLevel": 6, "meleeRange": "1.5m", "moveDistance": "1.5m" },
-    { "name": "Large", "strBonus": 2, "dodgeBonus": -3, "hpPerLevel": 8, "meleeRange": "1.5m", "moveDistance": "1.5m" },
-    { "name": "Huge", "strBonus": 4, "dodgeBonus": -6, "hpPerLevel": 10, "meleeRange": "3m", "moveDistance": "3m" },
-    { "name": "Gargantuan", "strBonus": 6, "dodgeBonus": -9, "hpPerLevel": 12, "meleeRange": "3m", "moveDistance": "3m" },
-    { "name": "Titanic", "strBonus": 8, "dodgeBonus": -12, "hpPerLevel": 14, "meleeRange": "4.5m", "moveDistance": "4.5m" }
+    { "name": "Tiny", "pointsCost": 0, "strBonus": -4, "dodgeBonus": 6, "hpPerLevel": 2, "meleeRange": "0.1m", "moveDistance": "1.5m" },
+    { "name": "Small", "pointsCost": 0, "strBonus": -2, "dodgeBonus": 3, "hpPerLevel": 4, "meleeRange": "1.5m", "moveDistance": "1.5m" },
+    { "name": "Medium", "pointsCost": 0, "strBonus": 0, "dodgeBonus": 0, "hpPerLevel": 6, "meleeRange": "1.5m", "moveDistance": "1.5m" },
+    { "name": "Large", "pointsCost": 2, "strBonus": 2, "dodgeBonus": -3, "hpPerLevel": 8, "meleeRange": "1.5m", "moveDistance": "1.5m" },
+    { "name": "Huge", "pointsCost": 4, "strBonus": 4, "dodgeBonus": -6, "hpPerLevel": 10, "meleeRange": "3m", "moveDistance": "3m" },
+    { "name": "Gargantuan", "pointsCost": 6, "strBonus": 6, "dodgeBonus": -9, "hpPerLevel": 12, "meleeRange": "3m", "moveDistance": "3m" },
+    { "name": "Titanic", "pointsCost": 8, "strBonus": 8, "dodgeBonus": -12, "hpPerLevel": 14, "meleeRange": "4.5m", "moveDistance": "4.5m" }
 ]

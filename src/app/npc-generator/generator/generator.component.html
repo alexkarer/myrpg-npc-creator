@@ -10,7 +10,7 @@
         <div class="col-3 d-flex justify-content-center">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownAlignment" ngbDropdownToggle>
-                    {{ npc.alignment }}
+                    {{ npcRepo.$alignment | async }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownAlignment">
                     @for (alignment of alignments; track $index) {
@@ -22,7 +22,7 @@
         <div class="col-3 d-flex justify-content-center">
             <div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-outline-primary" id="dropdownLevel" ngbDropdownToggle>
-                    Level {{ npc.levelConfig.level }}
+                    Level {{ npcRepo.$level | async }}
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownLevel">
                     @for (levelNumber of levelNumbers; track $index) {
@@ -35,12 +35,12 @@
     <!-- NPC CREATION POINTS -->
     <div class="row g-3 mt-0">
         <div class="col">
-            <p class="text-center fw-bold fs-5 text-white">Availible NPC Creation Points: {{ availibleNpCCreationPoints }}</p>
+            <p class="text-center fw-bold fs-5 text-white">Availible NPC Creation Points: {{ npcRepo.$availibleNpcCreationPoints | async }}</p>
         </div>
         <div class="col">
             <p class="text-center fw-bold fs-5" 
-                [ngClass]="{'text-bg-danger' : npcCreationPointsExceeded(), 'text-bg-success' : !npcCreationPointsExceeded()}" >
-                Used NPC Creation Points: {{ usedNpCCreationPoints }}
+                [ngClass]="{'text-bg-danger' : npcCreationPointsExceeded() | async, 'text-bg-success' : !(npcCreationPointsExceeded() | async)}" >
+                Used NPC Creation Points: {{ npcRepo.$usedNpcCreationPoints }}
             </p>
         </div>
     </div>

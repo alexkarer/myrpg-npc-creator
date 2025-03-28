@@ -25,26 +25,22 @@ export type NPC = {
     biography: string,
     alignment: Alignment,
 
-    // Attributes
-    str: number,
-    agi: number,
-    con: number,
-    int: number,
-    spi: number,
-    per: number,
-    cha: number,
-
     // Core
     levelConfig: LevelConfig,
-    martialLevel: number,
-    spellLevel: number,
-
-    baseStatArray: BaseStatArray,
+    archeTypeBaseStatArrays: BaseStatArray[],
     creatureType: CreatureType,
     creatureSize: Size,
-
-    mp: number,
+    mpBonus: number,
     specialMovement: string[],
+
+    // Attributes
+    strBonus: number,
+    agiBonus: number,
+    conBonus: number,
+    intBonus: number,
+    spiBonus: number,
+    perBonus: number,
+    chaBonus: number,
 
     // Defenses
     hp: number,
@@ -53,10 +49,10 @@ export type NPC = {
     toughnessBonus: number,
     willpowerBonus: number,
 
-    resistances: string[],
-    immunities: string[],
-    conditionImmunies: string[],
-    vulnurabilities: string[],
+    additionalResistances: { type: string, value: string }[],
+    additionalImmunities: string[],
+    additionalStatusEffectImmunities: string[],
+    additionalVulnurabilities: string[],
 
     shieldBlock: number,
     shieldThreshold: number,
@@ -70,49 +66,9 @@ export type NPC = {
     loot: string[]
 }
 
-export function createEmptyNPC(): NPC {
-    return {
-        name: '',
-        biography: '',
-        alignment: Alignment.None,
-
-        str: 0,
-        agi: 0,
-        con: 0,
-        int: 0,
-        spi: 0,
-        per: 0,
-        cha: 0,
-
-        levelConfig: levelsJson[0],
-        martialLevel: 0,
-        spellLevel: 0,
-
-        baseStatArray: archeTypesJson.warriorBaseStatArray[0],
-        creatureType: creatureTypesJson[0],
-        creatureSize: sizesJson[2],
-
-        mp: 6,
-        specialMovement: [],
-
-        hp: 0,
-        hardnessBonus: 0,
-        dodgeBonus: 0,
-        toughnessBonus: 0,
-        willpowerBonus: 0,
-
-        resistances: [],
-        immunities: [],
-        vulnurabilities: [],
-        conditionImmunies: [],
-
-        shieldBlock: 0,
-        shieldThreshold: 0,
-
-        abilities: [],
-        reactions: [],
-
-        traits: [],
-        loot: []
-    };
-}
+export enum ArcheTypes {
+    WARRIOR = 'Warrior',
+    SPELLCASTER = 'Spellcaster',
+    EXPERT = 'Expert'
+  }
+  
