@@ -1,7 +1,7 @@
 import {  Component } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Alignment, alignments } from '../../npc/alignments';
-import { Ability, ArcheTypes, Reaction, Trait } from '../../npc/npc';
+import { Ability, ArcheTypes, Attributes, Reaction, Trait } from '../../npc/npc';
 import { CommonModule } from '@angular/common';
 import { NpcRepository } from '../../npc/npc.repository';
 import { combineLatest, map, Observable } from 'rxjs';
@@ -26,6 +26,7 @@ export class GeneratorComponent {
   readonly levelNumbers = levelJson.map(lvl => lvl.level);
   readonly creatureTypes = creatureTypesJson;
   readonly creatureSizes = creatureSizesJson;
+  readonly attributes = Object.values(Attributes);
   readonly traits = traitsJson;
   readonly abilities = abilitiesJson;
 

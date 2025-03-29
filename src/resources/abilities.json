@@ -1,6 +1,13 @@
 {
     "martialAbilities": [
-        { "name": "Basic Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Melee Martial Attack, hit medium martial damage." }
+        { "name": "Basic Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [MEDIUM MARTIAL DAMAGE]." },
+        { "name": "Basic Ranged Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Ranged Martial Attack, reasonable range, on hit: [LIGHT MARTIAL DAMAGE]." },
+        { "name": "Quick Attack (1/[TURN])", "pointsCost": 2, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [LIGHT MARTIAL DAMAGE]." },
+        { "name": "Quick Attack", "pointsCost": 4, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [LIGHT MARTIAL DAMAGE]." },
+        { "name": "Heavy Attack", "pointsCost": 1, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [HEAVY MARTIAL DAMAGE]." },
+        { "name": "Ranged Attack", "pointsCost": 1, "apCost": 2, "mpCost": 0, "description": "Ranged Martial Attack, reasonable range, on hit: [MEDIUM MARTIAL DAMAGE]." },
+        { "name": "Bash", "pointsCost": 1, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: if exceeds Toughness recieve [STUNNED I]." },
+        { "name": "Cleave", "pointsCost": 1, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach 2 targets, on hit: [MEDIUM MARTIAL DAMAGE]." }
     ],
     "spellAbilities": [
         { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }

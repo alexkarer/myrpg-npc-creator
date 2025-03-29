@@ -46,6 +46,7 @@ export type NPC = {
     spiBonus: number,
     perBonus: number,
     chaBonus: number,
+    attributeBoost: Attributes,
 
     // Defenses
     hardnessBonus: number,
@@ -76,3 +77,6 @@ export enum ArcheTypes {
     EXPERT = 'Expert'
 }
   
+export enum Attributes {
+    STR = 'STR', AGI = 'AGI', CON = 'CON', INT = 'INT', SPI = 'SPI', PER = 'PER', CHA = 'CHA'
+}

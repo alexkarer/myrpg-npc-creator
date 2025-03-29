@@ -18,13 +18,17 @@
         { "pointsCost": 3, "name": "Fly III", "description": "Increase fly speed by 3m." }
     ],
     "defensiveTraits": [
-        { "pointsCost": 1, "name": "Tank I", "description": "+2 [HP] per [LEVEL]" }
+        { "pointsCost": 1, "name": "Tank I", "description": "+2 [HP] per [LEVEL]" },
+        { "pointsCost": 2, "name": "Tank II", "description": "+2 [HP] per [LEVEL]" },
+        { "pointsCost": 3, "name": "Tank III", "description": "+2 [HP] per [LEVEL]" }
     ],
     "wargearTraits": [
-        { "pointsCost": 1, "name": "Armor I", "description": "Wear Armor to gain damage resistance: phyiscal 2." },
-        { "pointsCost": 2, "name": "Armor II", "description": "The damage resitanace of your armor increases by 2." },
-        { "pointsCost": 3, "name": "Armor III", "description": "The damage resitanace of your armor increases by 2." },
-        { "pointsCost": 4, "name": "Armor IV", "description": "The damage resitanace of your armor increases by 2." }
+        { "pointsCost": 1, "name": "Armor I", "description": "Wear Armor to gain damage resistance: phyiscal 2, maneuvrepeanlty -1." },
+        { "pointsCost": 1, "name": "Armor II", "description": "The damage resitanace of your armor increases by 2 and increases maneuvrepenalty to -3." },
+        { "pointsCost": 1, "name": "Armor III", "description": "The damage resitanace of your armor increases by 2 and increases maneuvrepenalty to -5 and a movementpenalt of -1." },
+        { "pointsCost": 0, "name": "Small Shield", "description": "Gain shield block base of 10 and threshold of 15" },
+        { "pointsCost": 0, "name": "Medium Shield", "description": "Gain shield block base of 12 and threshold of 25 with maneuvrepeanlty of -1" },
+        { "pointsCost": 1, "name": "Tower Shield", "description": "Gain shield block base of 15 and threshold of 40 with maneuvrepeanlty of -3 and movement penalty of -1" }
     ],
     "otherTraits": [
         { "pointsCost": 1, "name": "Nightvision I", "description": "Gain 4.5m nightvision" },

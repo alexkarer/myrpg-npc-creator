@@ -63,7 +63,7 @@
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownCreatureType">
                 @for (creatureType of creatureTypes; track $index) {
-                    <button type="button" (click)="npcRepo.updateCreatureType(creatureType)" ngbDropdownItem>{{ creatureType.name }}</button>
+                    <button type="button" (click)="npcRepo.updateCreatureType(creatureType)" ngbDropdownItem>{{ creatureType.name + ' (' + creatureType.pointsCost + ')' }}</button>
                 }
             </div>
         </div>
@@ -73,7 +73,17 @@
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownCreatureSize">
                 @for (creatureSize of creatureSizes; track $index) {
-                    <button type="button" (click)="npcRepo.updateCreatureSize(creatureSize)" ngbDropdownItem>{{ creatureSize.name }}</button>
+                    <button type="button" (click)="npcRepo.updateCreatureSize(creatureSize)" ngbDropdownItem>{{ creatureSize.name + ' (' + creatureSize.pointsCost + ')' }}</button>
+                }
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAttrBoost" ngbDropdownToggle>
+                {{ npcRepo.$attributeBoost | async }}
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAttrBoost">
+                @for (attr of attributes; track $index) {
+                    <button type="button" (click)="npcRepo.updateAttributeBoost(attr)" ngbDropdownItem>{{ attr }}</button>
                 }
             </div>
         </div>
@@ -86,7 +96,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (trait of traits.defensiveTraits; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name + ' (' + trait.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
@@ -97,7 +107,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (trait of traits.movementTraits; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name + ' (' + trait.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
@@ -108,7 +118,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (trait of traits.wargearTraits; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name + ' (' + trait.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
@@ -119,7 +129,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (trait of traits.otherTraits; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name + ' (' + trait.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
@@ -133,7 +143,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (ability of abilities.martialAbilities; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name + ' (' + ability.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
@@ -144,7 +154,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (ability of abilities.spellAbilities; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name + ' (' + ability.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
@@ -155,7 +165,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (ability of abilities.otherAbilities; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name + ' (' + ability.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
@@ -166,7 +176,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (reaction of abilities.reactionAbilities; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + reaction.name" autocomplete="off" (change)="handleReactionCheckBoxUpdate($event, reaction)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + reaction.name">{{ reaction.name }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + reaction.name">{{ reaction.name + ' (' + reaction.pointsCost + ')' }}</label>
                     }
                 </div>
             </div>
