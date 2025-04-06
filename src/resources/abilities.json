@@ -2,19 +2,29 @@
     "martialAbilities": [
         { "name": "Basic Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [MEDIUM MARTIAL DAMAGE]." },
         { "name": "Basic Ranged Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Ranged Martial Attack, reasonable range, on hit: [LIGHT MARTIAL DAMAGE]." },
-        { "name": "Quick Attack (1/[TURN])", "pointsCost": 2, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [LIGHT MARTIAL DAMAGE]." },
-        { "name": "Quick Attack", "pointsCost": 4, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [LIGHT MARTIAL DAMAGE]." },
+        { "name": "Quick Attack I (1/[TURN])", "pointsCost": 2, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [LIGHT MARTIAL DAMAGE]." },
+        { "name": "Quick Attack II (2/[TURN])", "pointsCost": 4, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [LIGHT MARTIAL DAMAGE]." },
+        { "name": "Quick Attack III", "pointsCost": 8, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [LIGHT MARTIAL DAMAGE]." },
         { "name": "Heavy Attack", "pointsCost": 1, "apCost": 2, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [HEAVY MARTIAL DAMAGE]." },
         { "name": "Ranged Attack", "pointsCost": 1, "apCost": 2, "mpCost": 0, "description": "Ranged Martial Attack, reasonable range, on hit: [MEDIUM MARTIAL DAMAGE]." },
-        { "name": "Bash", "pointsCost": 1, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: if exceeds Toughness recieve [STUNNED I]." },
-        { "name": "Cleave", "pointsCost": 1, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach 2 targets, on hit: [MEDIUM MARTIAL DAMAGE]." },
-        { "name": "Crippling Strike", "pointsCost": 1, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [MEDIUM MARTIAL DAMAGE] and if exeeds hardness, is now [CRIPPLED I]." }
+        { "name": "Quick Bash", "pointsCost": 1, "apCost": 1, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: if exceeds Toughness recieve [STUNNED I]." },
+        { "name": "Cleave I", "pointsCost": 1, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach 2 targets, on hit: [MEDIUM MARTIAL DAMAGE]." },
+        { "name": "Cleave II", "pointsCost": 2, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach multiple targets, on hit: [MEDIUM MARTIAL DAMAGE]." },
+        { "name": "Cleave III", "pointsCost": 3, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach multiple targets, on hit: [HEAVY MARTIAL DAMAGE]." },
+        { "name": "Cleave IV", "pointsCost": 5, "apCost": 2, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach multiple targets, on hit: [HEAVY MARTIAL DAMAGE]." },
+        { "name": "Crippling Strike I", "pointsCost": 1, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [MEDIUM MARTIAL DAMAGE] and if exeeds hardness, is now [CRIPPLED I]." },
+        { "name": "Crippling Strike II", "pointsCost": 3, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [HEAVY MARTIAL DAMAGE] and if exeeds hardness, is now [CRIPPLED II]." },
+        { "name": "Crippling Strike III", "pointsCost": 5, "apCost": 2, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [MEDIUM MARTIAL DAMAGE] and if exeeds hardness, is now [CRIPPLED II]." },
+        { "name": "Stunning Strike", "pointsCost": 1, "apCost": 3, "mpCost": 0, "description": "Melee Martial Attack, [MEELE RANGE] reach, on hit: [MEDIUM MARTIAL DAMAGE] and if exeeds toughenss, is now [STUNNED I]." }
     ],
     "spellAbilities": [
-        { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }
+        { "name": "Basic Spell Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Melee Spell Attack, [MELEE RANGE] reach, on hit: [MEDIUM SPELL DAMAGE] cosmic." },
+        { "name": "Basic Ranged Spell Attack", "pointsCost": 0, "apCost": 2, "mpCost": 0, "description": "Ranged Spell Attack, reasonable range, on hit: [LIGHT SPELL DAMAGE] cosmic." },
+        { "name": "Decaying Touch", "pointsCost": 1, "apCost": 3, "mpCost": 0, "description": "Melee Spell Attack, [MELEE RANGE] reach, on hit: [MEDIUM SPELL DAMAGE] unholy if exceeds [TOUGHNESS], creature recieves [DECAYING] for 1 [TURN]." }
     ],
     "otherAbilities": [
-        { "name": "", "pointsCost": 0, "apCost": 0, "mpCost": 0, "description": "" }
+        { "name": "Pounce I", "pointsCost": 1, "apCost": 0, "mpCost": 5, "description": "Jump, on landing select 1 target within [MELEE RANGE]: 10 + Martial Level + STR or fall prone." },
+        { "name": "Pounce II", "pointsCost": 3, "apCost": 0, "mpCost": 5, "description": "Jump, on landing select multiple targets within [MELEE RANGE]: 10 + Martial Level + STR or fall prone." }
     ],
     "reactionAbilities": [
         { "name": "", "pointsCost": 0, "description": "" }

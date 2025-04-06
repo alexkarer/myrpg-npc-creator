@@ -1,5 +1,7 @@
 # MyrpgNpcCreator
 
+A simple angular SPA which provides an interface to generate NPCS for my TTRPG system
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
 
 ## Development server

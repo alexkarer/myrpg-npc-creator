@@ -110,6 +110,28 @@
         "requiredType": []
     },
     { 
+        "name": "Undead - Ghost",
+        "pointsCost": 2,
+        "attributeBonsuses": {
+            "str": -1,
+            "agi": 1,
+            "con": 0,
+            "int": -2,
+            "spi": 1,
+            "per": -1,
+            "cha": -4
+        },
+        "damageResistances": [{ "type": "unholy", "value": "5 + [HALF LEVEL]" }, { "type": "physical", "value": "5 + [HALF LEVEL]" } ],
+        "damageImmunities": [ "poison"],
+        "damageVulnurabilities": [ "holy" ],
+        "statusEffectImmunities": [ "[BLEEDING]", "[POISON]", "[INTOXICATED]", "[BLESS]", "[HEALING]", "[RESTRAINED]", "[SILENCED]", "[DEAFENED]", "[CRIPPLED]" ],
+        "incompatibleCreatureTypes": [ "Cosmic" ],
+        "tag": "Undead",
+        "freeTraitName": "Undead",
+        "canBeOnlyType": true,
+        "requiredType": []
+    },
+    { 
         "name": "Earth Elemental",
         "pointsCost": 1,
         "attributeBonsuses": {

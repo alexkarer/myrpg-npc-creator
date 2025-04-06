@@ -119,9 +119,12 @@ export class NpcRepository {
             mpCost: a.mpCost,
             description: a.description
                 .replaceAll('[MEELE RANGE]', state.creatureSize.meleeRange)
-                .replaceAll('[LIGHT MARTIAL DAMAGE]', this.getLightMartialDamage(this.calculateStr(state)))
-                .replaceAll('[MEDIUM MARTIAL DAMAGE]', this.getMediumMartialDamage(this.calculateStr(state)))
-                .replaceAll('[HEAVY MARTIAL DAMAGE]', this.getHeavyMartialDamage(this.calculateStr(state)))
+                .replaceAll('[LIGHT MARTIAL DAMAGE]', this.getLightDamage(this.calculateStr(state)))
+                .replaceAll('[MEDIUM MARTIAL DAMAGE]', this.getMediumDamage(this.calculateStr(state)))
+                .replaceAll('[HEAVY MARTIAL DAMAGE]', this.getHeavyDamage(this.calculateStr(state)))
+                .replaceAll('[LIGHT SPELL DAMAGE]', this.getLightDamage(this.calculateSpi(state)))
+                .replaceAll('[MEDIUM SPELL DAMAGE]', this.getMediumDamage(this.calculateSpi(state)))
+                .replaceAll('[HEAVY SPELL DAMAGE]', this.getHeavyDamage(this.calculateSpi(state)))
         }))
     ));
     $reactions = npcStore.pipe(select(state => state.reactions));
@@ -220,13 +223,13 @@ export class NpcRepository {
             .join(', ');
     }
 
-    private getLightMartialDamage(str: number): string {
+    private getLightDamage(str: number): string {
         return martialDamageJson.find(mdmg => mdmg.str === str)?.lightDamage ?? '';
     }
-    private getMediumMartialDamage(str: number): string {
+    private getMediumDamage(str: number): string {
         return martialDamageJson.find(mdmg => mdmg.str === str)?.mediumDamage ?? '';
     }
-    private getHeavyMartialDamage(str: number): string {
+    private getHeavyDamage(str: number): string {
         return martialDamageJson.find(mdmg => mdmg.str === str)?.heavyDamage ?? '';
     }
 
