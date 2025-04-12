@@ -19,6 +19,7 @@ export class CustomAbilityComponent {
   usageCost = customAbilitiesJson.abilityUsageCosts[1];
   usageRestriction = customAbilitiesJson.abilityUsageRestriction[0];
   targets = customAbilitiesJson.targets[0];
+  targetSave = customAbilitiesJson.targetSave[0];
   mainEffect = customAbilitiesJson.mainEffects[1];
   sideEffects: (typeof customAbilitiesJson.sideEffects[0])[] = [];
 
@@ -56,6 +57,16 @@ export class CustomAbilityComponent {
     this.triggerUpdate();
   }
 
+  handleTargetSaveUpdate(targetSave: string): void {
+    this.targetSave = targetSave;
+    this.triggerUpdate();
+  }
+
+  handleMainEffectUpdate(effect: typeof customAbilitiesJson.mainEffects[0]): void {
+    this.mainEffect = effect;
+    this.triggerUpdate();
+  }
+
   private triggerUpdate(): void {
     this.abilityChange.emit({
       name: this.getAbilityName(),
@@ -75,6 +86,21 @@ export class CustomAbilityComponent {
   }
 
   private getDescription(): string {
-    return ''; // TODO substitude spell or martial specific stuff.
+    let rawDescription = this.targets.target + ', ' +
+      (this.targets.isAOE ? ('[DT] 10+[LEVEL] ' + this.targetSave + ': ') : 'on hit: ') +
+      this.mainEffect.mainEffect;
+    if (this.abilityType === 'Martial') {
+      return rawDescription.replaceAll('[MELEE ATTACK]', '[MELEE MARTIAL ATTACK]')
+        .replaceAll('[RANGED ATTACK]', '[RANGED MARTIAL ATTACK]')
+        .replaceAll('[LIGHT DAMAGE]', '[LIGHT MARTIAL DAMAGE]')
+        .replaceAll('[MEDIUM DAMAGE]', '[MEDIUM MARTIAL DAMAGE]')
+        .replaceAll('[HEAVY DAMAGE]', '[HEAVY MARTIAL DAMAGE]')
+    } else {
+      return rawDescription.replaceAll('[MELEE ATTACK]', '[MELEE SPELL ATTACK]')
+      .replaceAll('[RANGED ATTACK]', '[RANGED SPELL ATTACK]')
+      .replaceAll('[LIGHT DAMAGE]', '[LIGHT SPELL DAMAGE]')
+      .replaceAll('[MEDIUM DAMAGE]', '[MEDIUM SPELL DAMAGE]')
+      .replaceAll('[HEAVY DAMAGE]', '[HEAVY SPELL DAMAGE]')
+    }
   }
 }

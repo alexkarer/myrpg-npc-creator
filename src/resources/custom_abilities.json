@@ -45,9 +45,9 @@
         { "mainEffect": "[LIGHT DAMAGE]", "pointCost": -1 },
         { "mainEffect": "[MEDIUM DAMAGE]", "pointCost": 0 },
         { "mainEffect": "[HEAVY DAMAGE]", "pointCost": 1 },
-        { "mainEffect": "[2 MEDIUM DAMAGE]", "pointCost": 3 },
-        { "mainEffect": "[2 HEAVY DAMAGE]", "pointCost": 4 },
-        { "mainEffect": "[3 HEAVY DAMAGE]", "pointCost": 6 },
+        { "mainEffect": "2 * [MEDIUM DAMAGE]", "pointCost": 3 },
+        { "mainEffect": "2 * [HEAVY DAMAGE]", "pointCost": 4 },
+        { "mainEffect": "3 * [HEAVY DAMAGE]", "pointCost": 6 },
         { "mainEffect": "Afflict Tier I Status Effect or prone", "pointCost": -1 },
         { "mainEffect": "Afflict Tier II Status Effect", "pointCost": 2 },
         { "mainEffect": "Afflict Tier III Status Effect", "pointCost": 6 }

@@ -72,6 +72,7 @@ export class NpcRepository {
         state.creatureType.pointsCost + 
         state.creatureSubType.pointsCost + 
         state.traits.map(t => t.pointsCost).reduce(((p1, p2) => p1 + p2), 0) +
+        state.customAbilities.map(a => a.pointsCost).reduce(((p1, p2) => p1 + p2), 0) +
         state.preDefinedAbilities.map(a => a.pointsCost).reduce(((p1, p2) => p1 + p2), 0) +
         state.reactions.map(a => a.pointsCost).reduce(((p1, p2) => p1 + p2), 0)
     ));
@@ -129,6 +130,10 @@ export class NpcRepository {
             mpCost: a.mpCost,
             description: a.description
                 .replaceAll('[MEELE RANGE]', state.creatureSize.meleeRange)
+                .replaceAll('[MELEE MARTIAL ATTACK]', 'Attack ⚔️ ' + (10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.martialLevel))
+                .replaceAll('[RANGED MARTIAL ATTACK]', 'Attack 🏹 ' + (10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.martialLevel))
+                .replaceAll('[MELEE SPELL ATTACK]', 'Attack 🫱✨ ' + (10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.spellLevel))
+                .replaceAll('[RANGED SPELL ATTACK]', 'Attack 🪄 ' + (10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.spellLevel))
                 .replaceAll('[LIGHT MARTIAL DAMAGE]', this.getLightDamage(this.calculateStr(state)))
                 .replaceAll('[MEDIUM MARTIAL DAMAGE]', this.getMediumDamage(this.calculateStr(state)))
                 .replaceAll('[HEAVY MARTIAL DAMAGE]', this.getHeavyDamage(this.calculateStr(state)))

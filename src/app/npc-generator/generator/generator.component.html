@@ -243,6 +243,7 @@
                     <th>Ability</th>
                     <th>Cost</th>
                     <th>Description</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="table-striped">
@@ -251,12 +252,13 @@
                         <td><span class="fw-bold">{{ customAbility.name }} ({{ customAbility.pointsCost }})</span></td>
                         <td>{{ customAbility.apCost }} [AP]</td>
                         <td>{{ customAbility.description }}</td>
+                        <td><button type="button" class="btn btn-outline-danger" (click)="npcRepo.removeCustomAbility(customAbility)">Delete</button></td>
                     </tr>
                 }
             </tbody>
         </table>
         <hr>
-        <app-custom-ability/>
-        <button type="button" class="btn btn-outline-success">Add Ability</button>
+        <app-custom-ability (abilityChange)="currentCustomAbility = $event"/>
+        <button type="button" class="btn btn-outline-success" (click)="handleCustomAbilityCreation()">Add Ability</button>
     </div>
 </div>

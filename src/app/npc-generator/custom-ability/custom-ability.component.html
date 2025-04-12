@@ -1,12 +1,12 @@
 <div class="bg-body-tertiary d-flex flex-column">
     <div class="d-flex">
-        <span>New Custom Ability points Costs: {{ calculatePointsCost() }}</span>
-    </div>
-    <div class="d-flex justify-content-around">
         <div class="input-group me-2">
             <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
             <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" (change)="handleNameUpdate($event)">
         </div>
+        <span>Ability points Costs: {{ calculatePointsCost() }}</span>
+    </div>
+    <div class="d-flex justify-content-around">
         <div ngbDropdown class="d-inline-block me-2">
             <button type="button" class="btn btn-outline-primary" id="dropdownAbilityType" ngbDropdownToggle>{{ abilityType }}</button>
             <div ngbDropdownMenu aria-labelledby="dropdownAbilityType">
@@ -36,6 +36,24 @@
             <div ngbDropdownMenu aria-labelledby="dropdownAbilityTargets">
                 @for (target of customAbilityOptions.targets; track $index) {
                     <button type="button" (click)="handleTargetsUpdate(target)" ngbDropdownItem>{{ target.target }} ({{ target.pointCost }})</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-around">
+        <div ngbDropdown class="d-inline-block me-2">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityTargetSaves" ngbDropdownToggle>{{ targetSave }}</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAbilitTargetSaves">
+                @for (targetSave of customAbilityOptions.targetSave; track $index) {
+                    <button type="button" (click)="handleTargetSaveUpdate(targetSave)" ngbDropdownItem>{{ targetSave }}</button>
+                }
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block me-2">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityMainEffect" ngbDropdownToggle>{{ mainEffect.mainEffect }} ({{ mainEffect.pointCost }})</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAbilityMainEffect">
+                @for (effect of customAbilityOptions.mainEffects; track $index) {
+                    <button type="button" (click)="handleMainEffectUpdate(effect)" ngbDropdownItem>{{ effect.mainEffect }} ({{ effect.pointCost }})</button>
                 }
             </div>
         </div>

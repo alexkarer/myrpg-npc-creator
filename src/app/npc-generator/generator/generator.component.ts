@@ -32,6 +32,7 @@ export class GeneratorComponent {
   readonly abilities = abilitiesJson;
 
   selectedArcheType = ArcheTypes.WARRIOR;
+  currentCustomAbility!: Ability;
 
   constructor(public npcRepo: NpcRepository) {}
 
@@ -106,6 +107,12 @@ export class GeneratorComponent {
       this.npcRepo.addReaction(reaction);
     } else {
       this.npcRepo.removeReaction(reaction);
+    }
+  }
+
+  handleCustomAbilityCreation(): void {
+    if (this.currentCustomAbility) {
+      this.npcRepo.addCustomAbility(this.currentCustomAbility);
     }
   }
 }
