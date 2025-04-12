@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { createStore, select, setProp, withProps } from "@ngneat/elf";
+import { Injectable } from '@angular/core';
+import { createStore, select, setProp, withProps } from '@ngneat/elf';
 import { NPC, LevelConfig, BaseStatArray, CreatureType, CreatureSize, Trait, Ability, Reaction, Attributes, CreatureSubType } from './npc';
 import { Alignment } from './alignments';
 
@@ -28,6 +28,7 @@ const npcStore = createStore(
 
         mpBonus: 0,
         additionalNpcCreationPoints: 0,
+        baseHpBonus: 0,
         hpPerLevelBonuses: 0,
 
         strBonus: 0,
@@ -132,14 +133,23 @@ export class NpcRepository {
                 .replaceAll('[MEELE RANGE]', state.creatureSize.meleeRange)
                 .replaceAll('[MELEE MARTIAL ATTACK]', 'Attack ⚔️ ' + (10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.martialLevel))
                 .replaceAll('[RANGED MARTIAL ATTACK]', 'Attack 🏹 ' + (10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.martialLevel))
-                .replaceAll('[MELEE SPELL ATTACK]', 'Attack 🫱✨ ' + (10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.spellLevel))
-                .replaceAll('[RANGED SPELL ATTACK]', 'Attack 🪄 ' + (10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.spellLevel))
+                .replaceAll('[MELEE SPELL ATTACK]', 'Attack ⚔️✨ ' + (10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.spellLevel))
+                .replaceAll('[RANGED SPELL ATTACK]', 'Attack 🏹✨ ' + (10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.spellLevel))
                 .replaceAll('[LIGHT MARTIAL DAMAGE]', this.getLightDamage(this.calculateStr(state)))
                 .replaceAll('[MEDIUM MARTIAL DAMAGE]', this.getMediumDamage(this.calculateStr(state)))
                 .replaceAll('[HEAVY MARTIAL DAMAGE]', this.getHeavyDamage(this.calculateStr(state)))
                 .replaceAll('[LIGHT SPELL DAMAGE]', this.getLightDamage(this.calculateSpi(state)))
                 .replaceAll('[MEDIUM SPELL DAMAGE]', this.getMediumDamage(this.calculateSpi(state)))
                 .replaceAll('[HEAVY SPELL DAMAGE]', this.getHeavyDamage(this.calculateSpi(state)))
+                .replaceAll('[STR]', this.calculateStr(state).toString())
+                .replaceAll('[AGI]', this.calculateAgi(state).toString())
+                .replaceAll('[CON]', this.calculateCon(state).toString())
+                .replaceAll('[INT]', this.calculateInt(state).toString())
+                .replaceAll('[SPI]', this.calculateSpi(state).toString())
+                .replaceAll('[PER]', this.calculatePer(state).toString())
+                .replaceAll('[CHA]', this.calculateCha(state).toString())
+                .replaceAll('[MARTIAL LEVEL]', this.getBaseStatArray(state).levels.martialLevel.toString())
+                .replaceAll('[SPELL LEVEL]', this.getBaseStatArray(state).levels.spellLevel.toString())
         }))
     ));
     $reactions = npcStore.pipe(select(state => state.reactions));
@@ -301,6 +311,7 @@ export class NpcRepository {
     private flattenDamageResistances(state: NPC): string {
         return [...state.creatureType.damageResistances, ...state.additionalResistances]
             .map(dmgR => dmgR.type + ' ' + dmgR.value)
+            .map(str => str.replaceAll('[LEVEL]', Math.ceil(state.levelConfig.level).toString()))
             .map(str => str.replaceAll('[HALF LEVEL]', Math.floor(state.levelConfig.level / 2).toString()))
             .sort((s1, s2) => s1.localeCompare(s2))
             .join(', ');
@@ -336,14 +347,41 @@ export class NpcRepository {
         npcStore.update(setProp('additionalResistances', dmg => [...dmg, dmgResistance]));
     }
     private removeDamageResistance(dmgResistance: { type: string, value: string }) {
-        npcStore.update(setProp('additionalResistances', dmg => dmg.filter(d => d !== dmgResistance)));
+        npcStore.update(setProp('additionalResistances', dmg => dmg.filter(d => !(d.type === dmgResistance.type && d.value === dmgResistance.value))));
+    }
+    private addDamageImmunity(dmgImmunity: string) {
+        npcStore.update(setProp('additionalImmunities', dmg => [...dmg, dmgImmunity]));
+    }
+    private removeDamageImmunity(dmgImmunity: string) {
+        npcStore.update(setProp('additionalImmunities', dmg => dmg.filter(d => d !== dmgImmunity)));
+    }
+    private addStatusEffectImmunity(statusEffectImmunity: string) {
+        npcStore.update(setProp('additionalStatusEffectImmunities', sei => [...sei, statusEffectImmunity]));
+    }
+    private removeStatusEffectImmunity(statusEffectImmunity: string) {
+        npcStore.update(setProp('additionalStatusEffectImmunities', sei => sei.filter(s => s !== statusEffectImmunity)));
+    }
+    private updateHardnessBonus(bonus: number) {
+        npcStore.update(setProp('hardnessBonus', hardnessBonus => hardnessBonus + bonus));
     }
     private updateDodgeBonus(bonus: number) {
         npcStore.update(setProp('dodgeBonus', dodgeBonus => dodgeBonus + bonus));
     }
+    private updateToughnessBonus(bonus: number) {
+        npcStore.update(setProp('toughnessBonus', toughnessBonus => toughnessBonus + bonus));
+    }
+    private updateWillpowerBonus(bonus: number) {
+        npcStore.update(setProp('willpowerBonus', willpowerBonus => willpowerBonus + bonus));
+    }
     private setShield(shieldBlock: number, shieldThreshold: number) {
         npcStore.update(setProp('shieldBlock', block => shieldBlock));
         npcStore.update(setProp('shieldThreshold', threshold => shieldThreshold));
+    }
+    private updateBaseHpBonus(hp: number) {
+        npcStore.update(setProp('baseHpBonus', hpBonus => hpBonus + hp));
+    }
+    private updateSpiBonus(spi: number) {
+        npcStore.update(setProp('spiBonus', spiBonus => spiBonus + spi));
     }
 
     private applyTraitsCharacteristics(traitName: string) {
@@ -361,10 +399,10 @@ export class NpcRepository {
             case 'Fire Elemental':
                 break;
             case 'Air Elemental':
-                this.addSpecialMovement("fly(1.5m)");
+                this.addSpecialMovement('fly(1.5m)');
                 break;
             case 'Water Elemental':
-                this.addSpecialMovement("swim(1.5m)");
+                this.addSpecialMovement('swim(1.5m)');
                 break;
             case 'Immortal':
                 break;
@@ -378,38 +416,82 @@ export class NpcRepository {
                 this.updateMpBonus(3);
                 break;
             case 'Fly I':
-                this.addSpecialMovement("fly(1.5m)");
+                this.addSpecialMovement('fly(1.5m)');
                 break;
             case 'Fly II':
                 break;
             case 'Fly III':
                 break;
             case 'Tank I':
+                this.updateBaseHpBonus(5);
                 this.updateHpPerLevelBonus(2);
                 break;
             case 'Tank II':
+                this.updateBaseHpBonus(10);
                 this.updateHpPerLevelBonus(2);
                 break;
             case 'Tank III':
+                this.updateBaseHpBonus(20);
                 this.updateHpPerLevelBonus(2);
+                break;
+            case 'Hardness I':
+                this.updateHardnessBonus(2);
+                break;
+            case 'Hardness II':
+                this.updateHardnessBonus(2);
+                break;
+            case 'Dodge I':
+                this.updateDodgeBonus(1);
+                break;
+            case 'Dodge II':
+                this.updateDodgeBonus(1);
+                break;
+            case 'Toughness I':
+                this.updateToughnessBonus(2);
+                break;
+            case 'Toughness II':
+                this.updateToughnessBonus(2);
+                break;
+            case 'Willpower I':
+                this.updateWillpowerBonus(2);
+                break;
+            case 'Willpower II':
+                this.updateWillpowerBonus(2);
+                break;
+            case 'Natural Armor':
+                this.addDamageResistance({ type: 'physical', value: '2 + [LEVEL]'});
+                break;
+            case 'Damage Resistance I':
+                this.addDamageResistance({ type: 'custom', value: '5 + [HALF LEVEL]'});
+                break;
+            case 'Damage Resistance II':
+                this.addDamageResistance({ type: 'custom', value: '15 + [LEVEL]'});
+                break;
+            case 'Damage Immunity':
+                this.addDamageImmunity('custom');
+                break;
+            case 'Status Effect Resistance':
+                break;
+            case 'Status Effect Immunity':
+                this.addStatusEffectImmunity('custom');
                 break;
             case 'Armor I':
                 this.updateDodgeBonus(-1);
-                this.addDamageResistance({ type: "physical", value: "2"});
+                this.addDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor II':
                 this.updateDodgeBonus(-2);
-                this.addDamageResistance({ type: "physical", value: "2"});
+                this.addDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor III':
                 this.updateDodgeBonus(-2);
                 this.updateMpBonus(-1);
-                this.addDamageResistance({ type: "physical", value: "2"});
+                this.addDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor IV':
                 this.updateDodgeBonus(-2);
                 this.updateMpBonus(-1);
-                this.addDamageResistance({ type: "physical", value: "2"});
+                this.addDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Small Shield':
                 this.setShield(10, 15);
@@ -428,6 +510,10 @@ export class NpcRepository {
             case 'Nightvision II':
                 break;
             case 'Nightvision III':
+                break;
+            case 'Cosmic Corrupted':
+                this.updateSpiBonus(1);
+                this.addDamageResistance({ type: 'cosmic', value: '5 + [HALF LEVEL]'});
                 break;
             default:
                 console.error('Unkown trait ' + traitName + ' unable to apply characteristics');
@@ -449,10 +535,10 @@ export class NpcRepository {
             case 'Fire Elemental':
                 break;
             case 'Air Elemental':
-                this.removeSpecialMovement("fly(1.5m)");
+                this.removeSpecialMovement('fly(1.5m)');
                 break;
             case 'Water Elemental':
-                this.removeSpecialMovement("swim(1.5m)");
+                this.removeSpecialMovement('swim(1.5m)');
                 break;
             case 'Immortal':
                 break;
@@ -466,38 +552,82 @@ export class NpcRepository {
                 this.updateMpBonus(-3);
                 break;
             case 'Fly I':
-                this.removeSpecialMovement("fly(1.5m)");
+                this.removeSpecialMovement('fly(1.5m)');
                 break;
             case 'Fly II':
                 break;
             case 'Fly III':
                 break;
             case 'Tank I':
+                this.updateBaseHpBonus(-5);
                 this.updateHpPerLevelBonus(-2);
                 break;
             case 'Tank II':
+                this.updateBaseHpBonus(-10);
                 this.updateHpPerLevelBonus(-2);
                 break;
             case 'Tank III':
+                this.updateBaseHpBonus(-20);
                 this.updateHpPerLevelBonus(-2);
+                break;
+            case 'Hardness I':
+                this.updateHardnessBonus(-2);
+                break;
+            case 'Hardness II':
+                this.updateHardnessBonus(-2);
+                break;
+            case 'Dodge I':
+                this.updateDodgeBonus(-1);
+                break;
+            case 'Dodge II':
+                this.updateDodgeBonus(-1);
+                break;
+            case 'Toughness I':
+                this.updateToughnessBonus(-2);
+                break;
+            case 'Toughness II':
+                this.updateToughnessBonus(-2);
+                break;
+            case 'Willpower I':
+                this.updateWillpowerBonus(-2);
+                break;
+            case 'Willpower II':
+                this.updateWillpowerBonus(-2);
+                break;
+            case 'Natural Armor':
+                this.removeDamageResistance({ type: 'physical', value: '2 + [LEVEL]'});
+                break;
+            case 'Damage Resistance I':
+                this.removeDamageResistance({ type: 'custom', value: '5 + [HALF LEVEL]'});
+                break;
+            case 'Damage Resistance II':
+                this.removeDamageResistance({ type: 'custom', value: '15 + [LEVEL]'});
+                break;
+            case 'Damage Immunity':
+                this.removeDamageImmunity('custom');
+                break;
+            case 'Status Effect Resistance':
+                break;
+            case 'Status Effect Immunity':
+                this.removeStatusEffectImmunity('custom');
                 break;
             case 'Armor I':
                 this.updateDodgeBonus(1);
-                this.removeDamageResistance({ type: "physical", value: "2"});
+                this.removeDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor II':
                 this.updateDodgeBonus(2);
-                this.removeDamageResistance({ type: "physical", value: "2"});
+                this.removeDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor III':
                 this.updateDodgeBonus(2);
                 this.updateMpBonus(1);
-                this.removeDamageResistance({ type: "physical", value: "2"});
+                this.removeDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor IV':
                 this.updateDodgeBonus(2);
                 this.updateMpBonus(1);
-                this.removeDamageResistance({ type: "physical", value: "2"});
+                this.removeDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Small Shield':
                 this.setShield(0, 0);
@@ -516,6 +646,10 @@ export class NpcRepository {
             case 'Nightvision II':
                 break;
             case 'Nightvision III':
+                break;
+            case 'Cosmic Corrupted':
+                this.updateSpiBonus(-1);
+                this.removeDamageResistance({ type: 'cosmic', value: '5 + [HALF LEVEL]'});
                 break;
             default:
                 console.error('Unkown trait ' + traitName + ' unable to apply characteristics');

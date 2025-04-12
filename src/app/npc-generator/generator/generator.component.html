@@ -182,6 +182,17 @@
                     </div>
                 </div>
             </div>
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownCreatureTypeTraits" ngbDropdownToggle>Creature Type Traits</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownCreatureTypeTraits">
+                    <div class="d-flex justify-content-center flex-column mx-2">
+                        @for (trait of traits.creatureTypeTraits; track $index) {
+                            <input type="checkbox" class="btn-check" [id]="'btncheck' + trait.name" autocomplete="off" (change)="handleTraitCheckBoxUpdate($event, trait)">
+                            <label class="btn btn-outline-primary my-1" [for]="'btncheck' + trait.name">{{ trait.name + ' (' + trait.pointsCost + ')' }}</label>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
@@ -189,21 +200,10 @@
         <h5 class="mb-3 text-center">Pre-defined Abilities</h5>
         <div class="d-flex justify-content-around">
             <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownMartialAbilities" ngbDropdownToggle>Martial Abilities</button>
-                <div ngbDropdownMenu aria-labelledby="dropdownMartialAbilities">
+                <button type="button" class="btn btn-outline-primary" id="dropdownMovementAbilities" ngbDropdownToggle>Movement Abilities</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownMovementAbilities">
                     <div class="d-flex justify-content-center flex-column mx-2">
-                        @for (ability of abilities.martialAbilities; track $index) {
-                            <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
-                            <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name + ' (' + ability.pointsCost + ')' }}</label>
-                        }
-                    </div>
-                </div>
-            </div>
-            <div ngbDropdown class="d-inline-block">
-                <button type="button" class="btn btn-outline-primary" id="dropdownSpellAbilities" ngbDropdownToggle>Spell Abilities</button>
-                <div ngbDropdownMenu aria-labelledby="dropdownSpellAbilities">
-                    <div class="d-flex justify-content-center flex-column mx-2">
-                        @for (ability of abilities.spellAbilities; track $index) {
+                        @for (ability of abilities.movementAbilities; track $index) {
                             <input type="checkbox" class="btn-check" [id]="'btncheck' + ability.name" autocomplete="off" (change)="handleAbilityCheckBoxUpdate($event, ability)">
                             <label class="btn btn-outline-primary my-1" [for]="'btncheck' + ability.name">{{ ability.name + ' (' + ability.pointsCost + ')' }}</label>
                         }
@@ -259,6 +259,6 @@
         </table>
         <hr>
         <app-custom-ability (abilityChange)="currentCustomAbility = $event"/>
-        <button type="button" class="btn btn-outline-success" (click)="handleCustomAbilityCreation()">Add Ability</button>
+        <button type="button" class="mt-2 btn btn-outline-success" (click)="handleCustomAbilityCreation()">Add Ability</button>
     </div>
 </div>

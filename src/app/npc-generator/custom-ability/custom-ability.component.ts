@@ -20,15 +20,16 @@ export class CustomAbilityComponent {
   usageRestriction = customAbilitiesJson.abilityUsageRestriction[0];
   targets = customAbilitiesJson.targets[0];
   targetSave = customAbilitiesJson.targetSave[0];
+  dtCalculationAttribute = customAbilitiesJson.dtCalculationAttribute[0];
   mainEffect = customAbilitiesJson.mainEffects[1];
-  sideEffects: (typeof customAbilitiesJson.sideEffects[0])[] = [];
+  additionalEffects: (typeof customAbilitiesJson.additionalEffects[0])[] = [];
 
   calculatePointsCost(): number {
     return this.usageCost.pointCost +
       this.usageRestriction.pointCost +
       this.targets.pointCost +
       this.mainEffect.pointCost +
-      this.sideEffects.map(e => e.pointCost).reduce(((e1, e2) => e1 + e2), 0)
+      this.additionalEffects.map(e => e.pointCost).reduce(((e1, e2) => e1 + e2), 0)
   }
 
   handleNameUpdate(event: Event): void {
@@ -62,9 +63,24 @@ export class CustomAbilityComponent {
     this.triggerUpdate();
   }
 
+  handleDtCalculationAttributeUpdate(attr: string): void {
+    this.dtCalculationAttribute = attr;
+    this.triggerUpdate();
+  }
+
   handleMainEffectUpdate(effect: typeof customAbilitiesJson.mainEffects[0]): void {
     this.mainEffect = effect;
     this.triggerUpdate();
+  }
+
+  handleAdditionalEffectCheckBoxUpdate(event: Event, effect: typeof customAbilitiesJson.additionalEffects[0]): void {
+    let target = event.target as HTMLInputElement;
+    let active = target.checked;
+    if (active) {
+      this.additionalEffects.push(effect);
+    } else {
+      this.additionalEffects = this.additionalEffects.filter(e => e.additionalEffect !== effect.additionalEffect);
+    }
   }
 
   private triggerUpdate(): void {
@@ -87,20 +103,25 @@ export class CustomAbilityComponent {
 
   private getDescription(): string {
     let rawDescription = this.targets.target + ', ' +
-      (this.targets.isAOE ? ('[DT] 10+[LEVEL] ' + this.targetSave + ': ') : 'on hit: ') +
-      this.mainEffect.mainEffect;
+      (this.targets.isAOE ? ('[DT] 10+[LEVEL]+' + this.dtCalculationAttribute + 'on fail: ' + this.targetSave + ': ') : 'on hit: ') +
+      this.mainEffect.mainEffect +
+      (this.targets.isAOE ? ' [HALF]' : '') +
+      (this.additionalEffects.length === 0 ? '' : ', additionally ') +
+      this.additionalEffects.map(e => e.additionalEffect).join(' ');
     if (this.abilityType === 'Martial') {
       return rawDescription.replaceAll('[MELEE ATTACK]', '[MELEE MARTIAL ATTACK]')
         .replaceAll('[RANGED ATTACK]', '[RANGED MARTIAL ATTACK]')
         .replaceAll('[LIGHT DAMAGE]', '[LIGHT MARTIAL DAMAGE]')
         .replaceAll('[MEDIUM DAMAGE]', '[MEDIUM MARTIAL DAMAGE]')
         .replaceAll('[HEAVY DAMAGE]', '[HEAVY MARTIAL DAMAGE]')
+        .replaceAll('[LEVEL]', '[MARTIAL LEVEL]')
     } else {
       return rawDescription.replaceAll('[MELEE ATTACK]', '[MELEE SPELL ATTACK]')
-      .replaceAll('[RANGED ATTACK]', '[RANGED SPELL ATTACK]')
-      .replaceAll('[LIGHT DAMAGE]', '[LIGHT SPELL DAMAGE]')
-      .replaceAll('[MEDIUM DAMAGE]', '[MEDIUM SPELL DAMAGE]')
-      .replaceAll('[HEAVY DAMAGE]', '[HEAVY SPELL DAMAGE]')
+        .replaceAll('[RANGED ATTACK]', '[RANGED SPELL ATTACK]')
+        .replaceAll('[LIGHT DAMAGE]', '[LIGHT SPELL DAMAGE]')
+        .replaceAll('[MEDIUM DAMAGE]', '[MEDIUM SPELL DAMAGE]')
+        .replaceAll('[HEAVY DAMAGE]', '[HEAVY SPELL DAMAGE]')
+        .replaceAll('[LEVEL]', '[SPELL LEVEL]')
     }
   }
 }

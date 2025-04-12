@@ -21,14 +21,28 @@
         { "pointsCost": 3, "name": "Fly III", "description": "Increase fly speed by 3m." }
     ],
     "defensiveTraits": [
-        { "pointsCost": 1, "name": "Tank I", "description": "+2 [HP] per [LEVEL]" },
-        { "pointsCost": 2, "name": "Tank II", "description": "+2 [HP] per [LEVEL]" },
-        { "pointsCost": 3, "name": "Tank III", "description": "+2 [HP] per [LEVEL]" }
+        { "pointsCost": 1, "name": "Tank I", "description": "+5 [HP], +2 [HP] per [LEVEL]" },
+        { "pointsCost": 2, "name": "Tank II", "description": "+10 [HP], +2 [HP] per [LEVEL]" },
+        { "pointsCost": 3, "name": "Tank III", "description": "+20 [HP], +2 [HP] per [LEVEL]" },
+        { "pointsCost": 1, "name": "Hardness I", "description": "+2 [HARDNESS]" },
+        { "pointsCost": 1, "name": "Hardness II", "description": "+2 [HARDNESS]" },
+        { "pointsCost": 1, "name": "Dodge I", "description": "+1 [DODGE]" },
+        { "pointsCost": 1, "name": "Dodge II", "description": "+2 [DODGE]" },
+        { "pointsCost": 1, "name": "Toughness I", "description": "+2 [TOUGHNESS]" },
+        { "pointsCost": 1, "name": "Toughness II", "description": "+2 [TOUGHNESS]" },
+        { "pointsCost": 1, "name": "Willpower I", "description": "+2 [WILLPOWER]" },
+        { "pointsCost": 1, "name": "Willpower II", "description": "+2 [WILLPOWER]" },
+        { "pointsCost": 3, "name": "Natural Armor", "description": "gain resistance 2 + [LEVEL] physical." },
+        { "pointsCost": 2, "name": "Damage Resistance I", "description": "gain resistance 5 + [HALF LEVEL] against a damage type of your choice except phyiscal." },
+        { "pointsCost": 4, "name": "Damage Resistance II", "description": "gain resistance 15 + [LEVEL] against a damage type of your choice except phyiscal." },
+        { "pointsCost": 4, "name": "Damage Immunity", "description": "Gain Immunity against a damage type of your choice." },
+        { "pointsCost": 1, "name": "Status Effect Resistance", "description": "Gain resistance against a status effect, if you are affected by the status affect, you instead suffer a version one tier lower." },
+        { "pointsCost": 2, "name": "Status Effect Immunity", "description": "Gain immunity against a status effect and all it's tiers." }
     ],
     "wargearTraits": [
         { "pointsCost": 1, "name": "Armor I", "description": "Wear Armor to gain damage resistance: phyiscal 2, maneuvrepeanlty -1." },
-        { "pointsCost": 1, "name": "Armor II", "description": "The damage resitanace of your armor increases by 2 and increases maneuvrepenalty to -3." },
-        { "pointsCost": 1, "name": "Armor III", "description": "The damage resitanace of your armor increases by 2 and increases maneuvrepenalty to -5 and a movementpenalt of -1." },
+        { "pointsCost": 1, "name": "Armor II", "description": "Wear Armor to gain damage resistance: phyiscal 4, increases maneuvrepenalty to -3." },
+        { "pointsCost": 2, "name": "Armor III", "description": "Wear Armor to gain damage resistance: phyiscal 6, increases maneuvrepenalty to -5 and a movementpenalt of -1." },
         { "pointsCost": 0, "name": "Small Shield", "description": "Gain shield block base of 10 and threshold of 15" },
         { "pointsCost": 0, "name": "Medium Shield", "description": "Gain shield block base of 12 and threshold of 25 with maneuvrepeanlty of -1" },
         { "pointsCost": 1, "name": "Tower Shield", "description": "Gain shield block base of 15 and threshold of 40 with maneuvrepeanlty of -3 and movement penalty of -1" }
@@ -36,6 +50,17 @@
     "otherTraits": [
         { "pointsCost": 1, "name": "Nightvision I", "description": "Gain 4.5m nightvision" },
         { "pointsCost": 2, "name": "Nightvision II", "description": "Gain 6m nightvision" },
-        { "pointsCost": 3, "name": "Nightvision III", "description": "Gain 12m nightvision" }
+        { "pointsCost": 3, "name": "Nightvision III", "description": "Gain 12m nightvision" },
+        { "pointsCost": 1, "name": "Deadly I", "description": "Increase Crit Threshold by 1." },
+        { "pointsCost": 3, "name": "Deadly II", "description": "Increase Crit Threshold by 1." },
+        { "pointsCost": 5, "name": "Deadly III", "description": "Increase Crit Threshold by 1." },
+        { "pointsCost": 2, "name": "Tag Team", "description": "If another creature with the same trait is within [MELEE] of a target, then the creature has [DISADVANTAGE] on any [DODGE] [SAVE] or [SHIELD BLOCK]" },
+        { "pointsCost": 2, "name": "REGENERATION I", "description": "At the start of the Creatures [TURN] it regenerates d6 [HP]." },
+        { "pointsCost": 4, "name": "REGENERATION II", "description": "At the start of the Creatures [TURN] it regenerates 10 [HP]." },
+        { "pointsCost": 6, "name": "REGENERATION III", "description": "At the start of the Creatures [TURN] it regenerates 20 [HP]." }
+    ],
+    "creatureTypeTraits": [
+        { "pointsCost": 1, "name": "Mimic", "description": "If the creature remains motionless it is undistinguishable from the object it is mimicing. But can be detected with a [DT] 25 + [LEVEL] [PER] Investigation [SKILL TEST]. Each creature that touches the Mimic gets stuck on it and recieves [RESTRAINED I] [DT] 10 + [LEVEl] + [CON]." },
+        { "pointsCost": 1, "name": "Cosmic Corrupted", "description": "The creature has been strongly corrupted by the Aether. Increase [SPI] by 1. Get cosmic resistance equal to 5 + [HALF LEVEL]" }
     ]
 }

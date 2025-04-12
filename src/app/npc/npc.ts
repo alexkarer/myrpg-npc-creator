@@ -15,7 +15,7 @@ import traitsJson from '../../resources/traits.json';
 export type Trait = typeof traitsJson.creatureTypeSpecificTraits[0];
 
 import abilitiesJson from '../../resources/abilities.json'; 
-export type Ability = typeof abilitiesJson.martialAbilities[0];
+export type Ability = typeof abilitiesJson.movementAbilities[0];
 export type Reaction = typeof abilitiesJson.reactionAbilities[0];
 
 import levelsJson from '../../resources/levels.json';
@@ -40,6 +40,7 @@ export type NPC = {
     // traitSpecificBonuses
     mpBonus: number,
     additionalNpcCreationPoints: number,
+    baseHpBonus: number,
     hpPerLevelBonuses: number,
 
     // Attributes

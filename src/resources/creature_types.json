@@ -114,8 +114,8 @@
                 "pointsCost": 1,
                 "attributeBonsuses": {
                     "str": 1,
-                    "agi": 1,
-                    "con": 2,
+                    "agi": 0,
+                    "con": 1,
                     "int": 1,
                     "spi": 0,
                     "per": 0,
@@ -162,7 +162,7 @@
         "damageResistances": [{ "type": "unholy", "value": "5 + [HALF LEVEL]" } ],
         "damageImmunities": [ "poison"],
         "damageVulnurabilities": [ "holy" ],
-        "statusEffectImmunities": [ "[POISON]", "[INTOXICATED]", "[BLESS]", "[HEALING]" ],
+        "statusEffectImmunities": [ "[POISON]", "[INTOXICATED]", "[BLESS]", "[HEALING]", "[DECAYING]" ],
         "freeTrait": "Undead",
         "availibleSubTypes": [
             { 
@@ -241,7 +241,7 @@
         "availibleSubTypes": [
             { 
                 "name": "Earth",
-                "pointsCost": 1,
+                "pointsCost": 2,
                 "attributeBonsuses": {
                     "str": 2,
                     "agi": -2,
@@ -259,7 +259,7 @@
             },
             { 
                 "name": "Fire",
-                "pointsCost": 1,
+                "pointsCost": 2,
                 "attributeBonsuses": {
                     "str": 0,
                     "agi": 1,
@@ -277,7 +277,7 @@
             },
             { 
                 "name": "Air",
-                "pointsCost": 1,
+                "pointsCost": 2,
                 "attributeBonsuses": {
                     "str": -2,
                     "agi": 3,
@@ -295,7 +295,7 @@
             },
             { 
                 "name": "Water",
-                "pointsCost": 1,
+                "pointsCost": 2,
                 "attributeBonsuses": {
                     "str": 1,
                     "agi": 1,

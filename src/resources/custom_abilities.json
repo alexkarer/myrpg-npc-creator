@@ -41,22 +41,35 @@
         "[TOUGHNESS]",
         "[WILLPOWER]"
     ],
-    "mainEffects": [
-        { "mainEffect": "[LIGHT DAMAGE]", "pointCost": -1 },
-        { "mainEffect": "[MEDIUM DAMAGE]", "pointCost": 0 },
-        { "mainEffect": "[HEAVY DAMAGE]", "pointCost": 1 },
-        { "mainEffect": "2 * [MEDIUM DAMAGE]", "pointCost": 3 },
-        { "mainEffect": "2 * [HEAVY DAMAGE]", "pointCost": 4 },
-        { "mainEffect": "3 * [HEAVY DAMAGE]", "pointCost": 6 },
-        { "mainEffect": "Afflict Tier I Status Effect or prone", "pointCost": -1 },
-        { "mainEffect": "Afflict Tier II Status Effect", "pointCost": 2 },
-        { "mainEffect": "Afflict Tier III Status Effect", "pointCost": 6 }
+    "dtCalculationAttribute": [
+        "[STR]",
+        "[AGI]",
+        "[CON]",
+        "[INT]",
+        "[SPI]",
+        "[PER]",
+        "[CHA]"
     ],
-    "sideEffects": [
-        { "sideEffect": "[LIGHT DAMAGE]", "pointCost": 2 },
-        { "sideEffect": "Push [STR] or [SPI] m away", "pointCost": 1 },
-        { "sideEffect": "Afflict Tier I Status Effect or prone", "pointCost": 2 },
-        { "sideEffect": "Afflict Tier II Status Effect", "pointCost": 6 },
-        { "sideEffect": "life steal, heal for halve damage done", "pointCost": 2 }
+    "mainEffects": [
+        { "mainEffect": "[LIGHT DAMAGE] damage", "pointCost": -1 },
+        { "mainEffect": "[MEDIUM DAMAGE] damage", "pointCost": 0 },
+        { "mainEffect": "[HEAVY DAMAGE] damage", "pointCost": 1 },
+        { "mainEffect": "3 * [LIGHT DAMAGE] damage", "pointCost": 3 },
+        { "mainEffect": "4 * [LIGHT DAMAGE] damage", "pointCost": 4 },
+        { "mainEffect": "5 * [LIGHT DAMAGE] damage", "pointCost": 5 },
+        { "mainEffect": "knock prone", "pointCost": -1 },
+        { "mainEffect": "Afflict [TIER I STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": -1 },
+        { "mainEffect": "Afflict [TIER II STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 2 },
+        { "mainEffect": "Afflict [TIER III STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 6 }
+    ],
+    "additionalEffects": [
+        { "additionalEffect": "[LIGHT DAMAGE] damage", "pointCost": 2 },
+        { "additionalEffect": "[MEDIUM DAMAGE] damage", "pointCost": 4 },
+        { "additionalEffect": "[HEAVY DAMAGE] damage", "pointCost": 5 },
+        { "additionalEffect": "push [STR] or [SPI] m away", "pointCost": 1 },
+        { "additionalEffect": "knock prone", "pointCost": 2 },
+        { "additionalEffect": "afflict [TIER I STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 2 },
+        { "additionalEffect": "afflict [TIER II STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 6 },
+        { "additionalEffect": "the creature heals [HP] equal to half damage done", "pointCost": 2 }
     ]
 }

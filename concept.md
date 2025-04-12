@@ -72,11 +72,12 @@ Abilities are not predefined but can be created and consist fo the following com
 Abilities also have ability creation points, one npc creation point should grant a certain amount of ability creation points
 
 1. Ability Type
-2. Ability Cost
+2. Ability Usage Cost
 3. Ability Usage Restriction
 4. Targets
-5. Main Effect
-6. Side effects
+5. Targeted Defense and Attribute for DT Calculation
+6. Main Effect
+7. Additional effects
 
 **Movement Abilities**
 Movement abilities are predifined
