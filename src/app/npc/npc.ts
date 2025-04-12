@@ -5,6 +5,8 @@ export type BaseStatArray = typeof archeTypesJson.warriorBaseStatArray[0];
 
 import creatureTypesJson from '../../resources/creature_types.json'; 
 export type CreatureType = typeof creatureTypesJson[0];
+const subType = creatureTypesJson[0].availibleSubTypes[0]
+export type CreatureSubType = typeof subType;
 
 import sizesJson from '../../resources/sizes.json'; 
 export type CreatureSize = typeof sizesJson[0];
@@ -30,6 +32,8 @@ export type NPC = {
     archeTypeBaseStatArrays: BaseStatArray[],
     creatureType: CreatureType,
     freeCreatureTrait: Trait | undefined,
+    creatureSubType: CreatureSubType,
+    freeSubCreatureTrait: Trait | undefined,
     creatureSize: CreatureSize,
     specialMovement: string[],
 
@@ -46,7 +50,8 @@ export type NPC = {
     spiBonus: number,
     perBonus: number,
     chaBonus: number,
-    attributeBoost: Attributes,
+    primaryAttributeBoost: Attributes,
+    secondaryAttributeBoost: Attributes
 
     // Defenses
     hardnessBonus: number,
@@ -62,8 +67,9 @@ export type NPC = {
     shieldBlock: number,
     shieldThreshold: number,
 
-    // Actions
-    abilities: Ability[],
+    // Abilities
+    preDefinedAbilities: Ability[],
+    customAbilities: Ability[],
     reactions: Reaction[]
 
     // Other

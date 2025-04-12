@@ -5,17 +5,18 @@ import { Ability, ArcheTypes, Attributes, Reaction, Trait } from '../../npc/npc'
 import { CommonModule } from '@angular/common';
 import { NpcRepository } from '../../npc/npc.repository';
 import { combineLatest, map, Observable } from 'rxjs';
+import { CustomAbilityComponent } from "../custom-ability/custom-ability.component"; 
 
 import levelJson from '../../../resources/levels.json';
 import archeTypesJson from '../../../resources/archetypes.json'; 
 import creatureTypesJson from '../../../resources/creature_types.json'; 
 import creatureSizesJson from '../../../resources/sizes.json'; 
 import traitsJson from '../../../resources/traits.json'; 
-import abilitiesJson from '../../../resources/abilities.json'; 
+import abilitiesJson from '../../../resources/abilities.json';
 
 @Component({
     selector: 'app-generator',
-    imports: [NgbDropdownModule, CommonModule],
+    imports: [NgbDropdownModule, CommonModule, CustomAbilityComponent],
     templateUrl: './generator.component.html',
     styleUrl: './generator.component.scss'
 })
@@ -92,9 +93,9 @@ export class GeneratorComponent {
     let target = event.target as HTMLInputElement;
     let active = target.checked;
     if (active) {
-      this.npcRepo.addAbility(ability);
+      this.npcRepo.addPreDefinedAbility(ability);
     } else {
-      this.npcRepo.removeAbility(ability);
+      this.npcRepo.removePreDefinedAbility(ability);
     }
   }
 

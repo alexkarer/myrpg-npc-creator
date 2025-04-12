@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { createStore, select, setProp, withProps } from "@ngneat/elf";
-import { NPC, LevelConfig, BaseStatArray, CreatureType, CreatureSize, Trait, Ability, Reaction, Attributes } from './npc';
+import { NPC, LevelConfig, BaseStatArray, CreatureType, CreatureSize, Trait, Ability, Reaction, Attributes, CreatureSubType } from './npc';
 import { Alignment } from './alignments';
 
 import creatureTypesJson from '../../resources/creature_types.json'; 
@@ -12,14 +12,17 @@ import martialDamageJson from '../../resources/martial_damage.json';
 
 const npcStore = createStore(
     { name: 'npc'},
-    withProps<NPC>({ name: '',
+    withProps<NPC>({ 
+        name: '',
         biography: '',
         alignment: Alignment.None,
 
         levelConfig: levelsJson[0],
         archeTypeBaseStatArrays: archeTypesJson.warriorBaseStatArray,
         creatureType: creatureTypesJson[0],
-        freeCreatureTrait: traitsJson.creatureTypeSpecificTraits[0],
+        creatureSubType: creatureTypesJson[0].availibleSubTypes[0],
+        freeCreatureTrait: undefined,
+        freeSubCreatureTrait: traitsJson.creatureTypeSpecificTraits[0],
         creatureSize: sizesJson[2],
         specialMovement: [],
 
@@ -34,7 +37,8 @@ const npcStore = createStore(
         spiBonus: 0,
         perBonus: 0,
         chaBonus: 0,
-        attributeBoost: Attributes.STR,
+        primaryAttributeBoost: Attributes.STR,
+        secondaryAttributeBoost: Attributes.AGI,
 
         hardnessBonus: 0,
         dodgeBonus: 0,
@@ -49,7 +53,8 @@ const npcStore = createStore(
         shieldBlock: 0,
         shieldThreshold: 0,
 
-        abilities: [],
+        preDefinedAbilities: [],
+        customAbilities: [],
         reactions: [],
 
         traits: [],
@@ -65,8 +70,9 @@ export class NpcRepository {
     $usedNpcCreationPoints = npcStore.pipe(select(state => 
         state.creatureSize.pointsCost + 
         state.creatureType.pointsCost + 
+        state.creatureSubType.pointsCost + 
         state.traits.map(t => t.pointsCost).reduce(((p1, p2) => p1 + p2), 0) +
-        state.abilities.map(a => a.pointsCost).reduce(((p1, p2) => p1 + p2), 0) +
+        state.preDefinedAbilities.map(a => a.pointsCost).reduce(((p1, p2) => p1 + p2), 0) +
         state.reactions.map(a => a.pointsCost).reduce(((p1, p2) => p1 + p2), 0)
     ));
 
@@ -76,6 +82,8 @@ export class NpcRepository {
     $spellLevel = npcStore.pipe(select(state => this.getBaseStatArray(state).levels.spellLevel));
 
     $creatureType = npcStore.pipe(select(state => state.creatureType.name));
+    $avilibleSubTypes = npcStore.pipe(select(state => state.creatureType.availibleSubTypes));
+    $creatureSubType = npcStore.pipe(select(state => state.creatureSubType.name));
     $creatureSize = npcStore.pipe(select(state => state.creatureSize.name));
 
     $ap = npcStore.pipe(select(state => state.levelConfig.AP));
@@ -85,11 +93,12 @@ export class NpcRepository {
     $str = npcStore.pipe(select(state => this.calculateStr(state)));
     $agi = npcStore.pipe(select(state => this.calculateAgi(state)));
     $con = npcStore.pipe(select(state => this.calculateCon(state)));
-    $int = npcStore.pipe(select(state => state.intBonus + this.getBaseStatArray(state).attributes.int + state.creatureType.attributeBonsuses.int  + (state.attributeBoost === Attributes.INT ? 2 : 0)));
+    $int = npcStore.pipe(select(state => this.calculateInt(state)));
     $spi = npcStore.pipe(select(state => this.calculateSpi(state)));
     $per = npcStore.pipe(select(state => this.calculatePer(state)));
-    $cha = npcStore.pipe(select(state => state.chaBonus + this.getBaseStatArray(state).attributes.cha + state.creatureType.attributeBonsuses.cha  + (state.attributeBoost === Attributes.CHA ? 2 : 0)));
-    $attributeBoost = npcStore.pipe(select(state => state.attributeBoost));
+    $cha = npcStore.pipe(select(state => this.calculateCha(state)));
+    $primaryAttributeBoost = npcStore.pipe(select(state => state.primaryAttributeBoost));
+    $secondaryAttributeBoost = npcStore.pipe(select(state => state.secondaryAttributeBoost));
 
     $meleeMartialAttack = npcStore.pipe(select(state => 10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.martialLevel));
     $rangedMartialAttack = npcStore.pipe(select(state => 10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.martialLevel));
@@ -111,7 +120,8 @@ export class NpcRepository {
 
     $traits = npcStore.pipe(select(state => state.freeCreatureTrait === undefined ? state.traits : [...state.traits, state.freeCreatureTrait]));
 
-    $abilities = npcStore.pipe(select(state => state.abilities
+    $customAbilities = npcStore.pipe(select(state => state.customAbilities));
+    $allAbilities = npcStore.pipe(select(state => [...state.preDefinedAbilities, ...state.customAbilities]
         .map(a => ({
             name: a.name,
             pointsCost: a.pointsCost,
@@ -146,7 +156,7 @@ export class NpcRepository {
     }
 
     updateCreatureType(type: CreatureType) {
-        let freeTrait = traitsJson.creatureTypeSpecificTraits.find(t => t.name === type.freeTraitName);
+        let freeTrait = traitsJson.creatureTypeSpecificTraits.find(t => t.name === type.freeTrait);
         npcStore.update(setProp('freeCreatureTrait', existingFreeTrait => {
             //if (existingFreeTrait) { this.removeTraitsCharacteristics(existingFreeTrait.name); }
             return freeTrait;
@@ -154,14 +164,30 @@ export class NpcRepository {
         //if (freeTrait) { this.applyTraitsCharacteristics(freeTrait.name); }
 
         npcStore.update(setProp('creatureType', type));
+        this.updateCreatureSubType(type.availibleSubTypes[0]);
+    }
+
+    updateCreatureSubType(subType: CreatureSubType) {
+        let freeTrait = traitsJson.creatureTypeSpecificTraits.find(t => t.name === subType.freeTrait);
+        npcStore.update(setProp('freeSubCreatureTrait', existingFreeTrait => {
+            //if (existingFreeTrait) { this.removeTraitsCharacteristics(existingFreeTrait.name); }
+            return freeTrait;
+        }));
+        //if (freeTrait) { this.applyTraitsCharacteristics(freeTrait.name); }
+
+        npcStore.update(setProp('creatureSubType', subType));
     }
 
     updateCreatureSize(size: CreatureSize) {
         npcStore.update(setProp('creatureSize', size));
     }
 
-    updateAttributeBoost(attr: Attributes) {
-        npcStore.update(setProp('attributeBoost', attr));
+    updatePrimaryAttributeBoost(attr: Attributes) {
+        npcStore.update(setProp('primaryAttributeBoost', attr));
+    }
+
+    updateSecondaryAttributeBoost(attr: Attributes) {
+        npcStore.update(setProp('secondaryAttributeBoost', attr));
     }
 
     addTrait(trait: Trait) {
@@ -174,12 +200,20 @@ export class NpcRepository {
         npcStore.update(setProp('traits', traits => traits.filter(t => t.name !== trait.name)));
     }
 
-    addAbility(ability: Ability) {
-        npcStore.update(setProp('abilities', existingAbilities => [...existingAbilities, ability]));
+    addCustomAbility(ability: Ability) {
+        npcStore.update(setProp('customAbilities', existingAbilities => [...existingAbilities, ability]));
     }
 
-    removeAbility(ability: Ability) {
-        npcStore.update(setProp('abilities', existingAbilities => existingAbilities.filter(a => a.name !== ability.name)));
+    removeCustomAbility(ability: Ability) {
+        npcStore.update(setProp('customAbilities', existingAbilities => existingAbilities.filter(a => a.name !== ability.name)));
+    }
+
+    addPreDefinedAbility(ability: Ability) {
+        npcStore.update(setProp('preDefinedAbilities', existingAbilities => [...existingAbilities, ability]));
+    }
+
+    removePreDefinedAbility(ability: Ability) {
+        npcStore.update(setProp('preDefinedAbilities', existingAbilities => existingAbilities.filter(a => a.name !== ability.name)));
     }
 
     addReaction(reaction: Reaction) {
@@ -196,23 +230,67 @@ export class NpcRepository {
     }
 
     private calculateStr(state: NPC): number {
-        return state.strBonus + this.getBaseStatArray(state).attributes.str + state.creatureType.attributeBonsuses.str + state.creatureSize.strBonus + (state.attributeBoost === Attributes.STR ? 2 : 0);
+        return state.strBonus +
+            this.getBaseStatArray(state).attributes.str +
+            state.creatureType.attributeBonsuses.str +
+            state.creatureSubType.attributeBonsuses.str +
+            state.creatureSize.strBonus +
+            (state.primaryAttributeBoost === Attributes.STR ? 2 : 0) +
+            (state.secondaryAttributeBoost === Attributes.STR ? 1 : 0);
     }
 
     private calculateAgi(state: NPC): number {
-        return state.agiBonus + this.getBaseStatArray(state).attributes.agi + state.creatureType.attributeBonsuses.agi + (state.attributeBoost === Attributes.AGI ? 2 : 0);
+        return state.agiBonus +
+            this.getBaseStatArray(state).attributes.agi +
+            state.creatureType.attributeBonsuses.agi +
+            state.creatureSubType.attributeBonsuses.agi +
+            (state.primaryAttributeBoost === Attributes.AGI ? 2 : 0) +
+            (state.secondaryAttributeBoost === Attributes.AGI ? 1 : 0);
     }
 
     private calculateCon(state: NPC): number {
-        return state.conBonus + this.getBaseStatArray(state).attributes.con + state.creatureType.attributeBonsuses.con + (state.attributeBoost === Attributes.CON ? 2 : 0);
+        return state.conBonus +
+            this.getBaseStatArray(state).attributes.con +
+            state.creatureType.attributeBonsuses.con +
+            state.creatureSubType.attributeBonsuses.con +
+            (state.primaryAttributeBoost === Attributes.CON ? 2 : 0) +
+            (state.secondaryAttributeBoost === Attributes.CON ? 1 : 0);
+    }
+
+    private calculateInt(state: NPC): number {
+        return state.intBonus +
+            this.getBaseStatArray(state).attributes.int +
+            state.creatureType.attributeBonsuses.int +
+            state.creatureSubType.attributeBonsuses.int +
+            (state.primaryAttributeBoost === Attributes.INT ? 2 : 0) +
+            (state.secondaryAttributeBoost === Attributes.INT ? 1 : 0);
     }
 
     private calculateSpi(state: NPC): number {
-        return state.spiBonus + this.getBaseStatArray(state).attributes.spi + state.creatureType.attributeBonsuses.spi + (state.attributeBoost === Attributes.SPI ? 2 : 0);
+        return state.spiBonus +
+            this.getBaseStatArray(state).attributes.spi +
+            state.creatureType.attributeBonsuses.spi +
+            state.creatureSubType.attributeBonsuses.spi +
+            (state.primaryAttributeBoost === Attributes.SPI ? 2 : 0) +
+            (state.secondaryAttributeBoost === Attributes.SPI ? 1 : 0);
     }
 
     private calculatePer(state: NPC): number {
-        return state.perBonus + this.getBaseStatArray(state).attributes.per + state.creatureType.attributeBonsuses.per + (state.attributeBoost === Attributes.PER ? 2 : 0);
+        return state.perBonus + 
+            this.getBaseStatArray(state).attributes.per +
+            state.creatureType.attributeBonsuses.per +
+            state.creatureSubType.attributeBonsuses.per +
+            (state.primaryAttributeBoost === Attributes.PER ? 2 : 0) +
+            (state.secondaryAttributeBoost === Attributes.PER ? 1 : 0);
+    }
+
+    private calculateCha(state: NPC): number {
+        return state.chaBonus +
+            this.getBaseStatArray(state).attributes.cha +
+            state.creatureType.attributeBonsuses.cha +
+            state.creatureSubType.attributeBonsuses.cha +
+            (state.primaryAttributeBoost === Attributes.CHA ? 2 : 0) +
+            (state.secondaryAttributeBoost === Attributes.CHA ? 1 : 0);
     }
 
     private flattenDamageResistances(state: NPC): string {

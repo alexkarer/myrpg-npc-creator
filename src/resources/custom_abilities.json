@@ -1,0 +1,62 @@
+{
+    "abilityTypes": [ "Martial", "Spell" ],
+    "abilityUsageCosts": [
+        { "apCost": 1, "pointCost": 2 },
+        { "apCost": 2, "pointCost": 0 },
+        { "apCost": 3, "pointCost": -2 },
+        { "apCost": 4, "pointCost": -4 },
+        { "apCost": 5, "pointCost": -6 },
+        { "apCost": 6, "pointCost": -8 }
+    ],
+    "abilityUsageRestriction": [
+        { "abilityUsageRestriction": "None", "pointCost": 0, "onlyUsableWithCost": null },
+        { "abilityUsageRestriction": "1/TURN", "pointCost": -1, "onlyUsableWithCost": "1 [AP]" },
+        { "abilityUsageRestriction": "Cooldown(2)", "pointCost": -3, "onlyUsableWithCost": null },
+        { "abilityUsageRestriction": "Cooldown(3)", "pointCost": -4, "onlyUsableWithCost": null },
+        { "abilityUsageRestriction": "Once", "pointCost": -5, "onlyUsableWithCost": null }
+    ],
+    "targets": [
+        { "target": "[MELEE ATTACK], [MEELE RANGE] reach, 1 target", "pointCost": 0, "isAOE": false },
+        { "target": "[RANGED ATTACK], 15m range", "pointCost": 1, "isAOE": false },
+        { "target": "[RANGED ATTACK], 30m range", "pointCost": 2, "isAOE": false },
+        { "target": "[MELEE ATTACK], [MEELE RANGE] reach, Cleave", "pointCost": 2, "isAOE": false },
+        { "target": "[RANGED ATTACK], 15m range, 2 targets", "pointCost": 3, "isAOE": false },
+        { "target": "[RANGED ATTACK], 15m range, 3 targets", "pointCost": 5, "isAOE": false },
+        { "target": "[RANGED ATTACK], 15m range, unlimited targets", "pointCost": 8, "isAOE": false },
+        { "target": "[LINE] (1.5m * 9m)", "pointCost": 3, "isAOE": true },
+        { "target": "[LINE] (1.5m * 15m)", "pointCost": 4, "isAOE": true },
+        { "target": "[LINE] (1.5m * 30m)", "pointCost": 5, "isAOE": true },
+        { "target": "[CONE] (4.5m)", "pointCost": 3, "isAOE": true },
+        { "target": "[CONE] (9m)", "pointCost": 5, "isAOE": true },
+        { "target": "[CONE] (15m)", "pointCost": 6, "isAOE": true },
+        { "target": "[SPHERE] (1.5m), 9m range", "pointCost": 3, "isAOE": true },
+        { "target": "[SPHERE] (3m), 12m range", "pointCost": 4, "isAOE": true },
+        { "target": "[SPHERE] (4.5m), 15m range", "pointCost": 5, "isAOE": true },
+        { "target": "[SPHERE] (6m), 18m range", "pointCost": 6, "isAOE": true },
+        { "target": "[SPHERE] (9m), 30m range", "pointCost": 8, "isAOE": true }
+    ],
+    "targetSave": [
+        "[HARDNESS]",
+        "[DODGE]",
+        "[TOUGHNESS]",
+        "[WILLPOWER]"
+    ],
+    "mainEffects": [
+        { "mainEffect": "[LIGHT DAMAGE]", "pointCost": -1 },
+        { "mainEffect": "[MEDIUM DAMAGE]", "pointCost": 0 },
+        { "mainEffect": "[HEAVY DAMAGE]", "pointCost": 1 },
+        { "mainEffect": "[2 MEDIUM DAMAGE]", "pointCost": 3 },
+        { "mainEffect": "[2 HEAVY DAMAGE]", "pointCost": 4 },
+        { "mainEffect": "[3 HEAVY DAMAGE]", "pointCost": 6 },
+        { "mainEffect": "Afflict Tier I Status Effect or prone", "pointCost": -1 },
+        { "mainEffect": "Afflict Tier II Status Effect", "pointCost": 2 },
+        { "mainEffect": "Afflict Tier III Status Effect", "pointCost": 6 }
+    ],
+    "sideEffects": [
+        { "sideEffect": "[LIGHT DAMAGE]", "pointCost": 2 },
+        { "sideEffect": "Push [STR] or [SPI] m away", "pointCost": 1 },
+        { "sideEffect": "Afflict Tier I Status Effect or prone", "pointCost": 2 },
+        { "sideEffect": "Afflict Tier II Status Effect", "pointCost": 6 },
+        { "sideEffect": "life steal, heal for halve damage done", "pointCost": 2 }
+    ]
+}

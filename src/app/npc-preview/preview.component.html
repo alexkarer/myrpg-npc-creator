@@ -4,7 +4,7 @@
         <h5 class="text-white">Level {{ npcRepo.$level | async }}, {{ npcRepo.$xp | async }} XP</h5>
     </div>
     <div class="d-flex justify-content-between mt-2">
-        <h5 class="text-white">{{ npcRepo.$alignment | async }} {{ npcRepo.$creatureSize | async }} {{ npcRepo.$creatureType | async }}</h5>
+        <h5 class="text-white">{{ npcRepo.$alignment | async }} {{ npcRepo.$creatureSize | async }} {{ npcRepo.$creatureType | async }} ({{ npcRepo.$creatureSubType | async }})</h5>
         <h5 class="text-white">Martial Level: {{ npcRepo.$martialLevel | async }}, Spell Level: {{ npcRepo.$spellLevel | async }}</h5>
     </div>
     <hr class="mt-0">
@@ -150,18 +150,18 @@
             </tbody>
         </table>
     </div>
-    <!-- ACTIONS -->
+    <!-- ABILITIES -->
     <div class="row mt-1">
         <table class="table">
             <thead>
                 <tr>
-                    <th>Action</th>
+                    <th>Ability</th>
                     <th>Cost</th>
                     <th>Description</th>
                 </tr>
             </thead>
             <tbody class="table-striped">
-                @for (ability of npcRepo.$abilities | async; track $index) {
+                @for (ability of npcRepo.$allAbilities | async; track $index) {
                     <tr>
                         <td><span class="fw-bold">{{ ability.name }}</span></td>
                         <td>{{ getAbilityCost(ability) }}</td>
@@ -171,7 +171,6 @@
             </tbody>
         </table>
     </div>
-    <!-- REACTIONS -->
     <div class="row mt-1">
         <table class="table">
             <thead class="text-center">

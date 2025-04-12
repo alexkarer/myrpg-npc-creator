@@ -1,0 +1,43 @@
+<div class="bg-body-tertiary d-flex flex-column">
+    <div class="d-flex">
+        <span>New Custom Ability points Costs: {{ calculatePointsCost() }}</span>
+    </div>
+    <div class="d-flex justify-content-around">
+        <div class="input-group me-2">
+            <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+            <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" (change)="handleNameUpdate($event)">
+        </div>
+        <div ngbDropdown class="d-inline-block me-2">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityType" ngbDropdownToggle>{{ abilityType }}</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAbilityType">
+                @for (type of customAbilityOptions.abilityTypes; track $index) {
+                    <button type="button" (click)="handleTypeUpdate(type)" ngbDropdownItem>{{ type }}</button>
+                }
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block me-2">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityUsageCost" ngbDropdownToggle>{{ usageCost.apCost }} [AP] ({{ usageCost.pointCost }})</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAbilityUsageCost">
+                @for (cost of customAbilityOptions.abilityUsageCosts; track $index) {
+                    <button type="button" (click)="handleUsageCostUpdate(cost)" ngbDropdownItem>{{ cost.apCost }} [AP] ({{ cost.pointCost }})</button>
+                }
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block me-2">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityUsageRestriction" ngbDropdownToggle>{{ usageRestriction.abilityUsageRestriction }} ({{ usageRestriction.pointCost }})</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAbilityUsageRestriction">
+                @for (restriction of customAbilityOptions.abilityUsageRestriction; track $index) {
+                    <button type="button" (click)="handleUsageRestrictionUpdate(restriction)" ngbDropdownItem>{{ restriction.abilityUsageRestriction }} ({{ restriction.pointCost }})</button>
+                }
+            </div>
+        </div>
+        <div ngbDropdown class="d-inline-block me-2">
+            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityTargets" ngbDropdownToggle>{{ targets.target }} ({{ targets.pointCost }})</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownAbilityTargets">
+                @for (target of customAbilityOptions.targets; track $index) {
+                    <button type="button" (click)="handleTargetsUpdate(target)" ngbDropdownItem>{{ target.target }} ({{ target.pointCost }})</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

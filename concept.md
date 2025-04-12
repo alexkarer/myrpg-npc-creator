@@ -71,74 +71,18 @@ Various Traits to buy abilities and gear
 Abilities are not predefined but can be created and consist fo the following components:
 Abilities also have ability creation points, one npc creation point should grant a certain amount of ability creation points
 
-**Ability Type**
-- Martial
-- Spell
-
-**Ability Cost**
-- 1 AP, +2
-- 2 AP, 0
-- 3 AP, -2,
-- 4 AP, -4,
-- 5 AP, -6,
-- 6 AP, -8
-
-**Ability Usage modifier**
-- 1/TURN, can only be used for 1 [AP] abilities: -1
-- Cooldown(2): -2
-- Cooldown(3): -3
-- Once per Encounter: -5
-
-**Targets**
-- single target melee, 0
-- single target ranged, +1
-- melee, cleave, +1
-- 2 targets ranged, +3
-- 3 targets ranged, +4
-- line (1.5m, 6m), +2
-- line (1.5m, 12m), +4
-- cone (4.5m), +2
-- cone (9m), +4
-- cone (15m), +6
-- ranged sphere (1.5m), +2
-- ranged sphere (3m), +4
-- ranged sphere (4.5m), +5
-- ranged sphere (6m), +6
-- ranged sphere (9m), +7
-
-for AOE can choose between, dodge, toughness, willpower
-
-**Main Effect**
-- light damage, -1
-- medium damage, 0
-- heavy damage, 1
-- 2x medium damage, 2
-- 2x heavy damage, 4
-- 3x heavy damage, 6
-- afflict tier I status effect, -1
-- afflict tier II status effect, 2
-- afflict tier III status effect, 6
-
-Additionally status effects have save neds
-if save succeeds status effect drops to one worse tier (also initial).
-
-**Side Effects**
-- light dmage, 2
-- push, STR or SPI m, 1
-- knock prone, 2
-- afflict tier I status effect, +2
-- afflict tier II status effect, +6
-- afflict tier III status effect, +10
-- life steal, heal for halve damage done, 2
-
-conditions last [LEVEL]/2 Turns, min 2
-damage types should be just a free choice.
+1. Ability Type
+2. Ability Cost
+3. Ability Usage Restriction
+4. Targets
+5. Main Effect
+6. Side effects
 
 **Movement Abilities**
-Movement abilities should be predifined
+Movement abilities are predifined
 
 **Reactions**
-Reaction abilities should be predifined 
+Reaction abilities are predifined 
 
 **Other**
-There should be an additional set of predefined abilities that do not fit anywhere else or are to complicated to model with the abilitiy builder.
+There is an additional set of predefined abilities that do not fit anywhere else or are to complicated to model with the abilitiy builder.

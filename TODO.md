@@ -2,18 +2,16 @@
 
 add spellcasting test which is based on int to determine DT for save against AOE.
 
-**Attribute**
-add minor attribute Boost for 1
-
 **Add skills**
 - implement skills, see concept
 
-**Creature Types**
-- Split them up properly with types + subtypes
-- add Swarm Type (prob. should be subtype for beast)
-
 **Abilities**
 - Implement ability buildser, see concept
+
+Additionally status effects have save neds
+if save succeeds status effect drops to one worse tier (also initial).
+conditions last [LEVEL]/2 Turns, min 2
+damage types should be just a free choice.
 
 **Traits**
 - Sneak Attack (multiple tiers, gain extra damage)
@@ -28,6 +26,7 @@ add minor attribute Boost for 1
 - tag team (gain advatage when other creature has same trait and is engaged in melee combat)
 - Auras, increase damage, increase defense, increase attack
 - Traits that allow creature to be stronger during encounter
+- cosmic touched
 
 **Other abilities**
 - Heal for Spi damage

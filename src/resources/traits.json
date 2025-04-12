@@ -4,10 +4,13 @@
         { "pointsCost": 0, "name": "Elven Nimbleness", "description": "+1 [MP]" },
         { "pointsCost": 0, "name": "Dwarven Nightvision", "description": "Gain 4.5m nightvision" },
         { "pointsCost": 0, "name": "Undead", "description": "Doesn't require food, water or sleep. Can't get Exhausted" },
-        { "pointsCost": 0, "name": "Fire Elemental", "description": "For Base Ability can deal fire damage instead." },
-        { "pointsCost": 0, "name": "Air Elemental", "description": "Gain fly(1.5m) speed and for Base Ability can deal lightning damage instead." },
-        { "pointsCost": 0, "name": "Water Elemental", "description": "Gain swim(1.5m) speed and for Base Ability can deal frost or acid damage instead." },
-        { "pointsCost": 0, "name": "Immortal", "description": "Doesn't require food, water or sleep. Can't get Exhausted. When it is reduced to 0 [HP] instead of dying it goes back to the Aether where it reforms." }
+        { "pointsCost": 0, "name": "Primordial", "description": "When it is reduced to 0 [HP] instead of dying it's energy reforms again in the Elemental Plane of it's orgin." },
+        { "pointsCost": 0, "name": "Earth Elemental", "description": "Gain Burrow(3m) speed." },
+        { "pointsCost": 0, "name": "Fire Elemental", "description": "[AURA] creatures recieve 2*[LEVEL] fire damage" },
+        { "pointsCost": 0, "name": "Air Elemental", "description": "Gain fly(1.5m) speed." },
+        { "pointsCost": 0, "name": "Water Elemental", "description": "Gain swim(3m) speed." },
+        { "pointsCost": 0, "name": "Immortal", "description": "Doesn't require food, water or sleep. Can't get Exhausted. When it is reduced to 0 [HP] instead of dying it goes back to the Aether where it reforms." },
+        { "pointsCost": 0, "name": "Incorporeal", "description": "Gain fly(1.5m) speed and you can move through walls but can't end your mvoe in there" }
     ],
     "movementTraits": [
         { "pointsCost": 1, "name": "Nimble I", "description": "+1 [MP]" },
