@@ -1,7 +1,7 @@
 {
     "movementAbilities": [
-        { "name": "Pounce I", "pointsCost": 1, "apCost": 0, "mpCost": 5, "description": "Jump, on landing select 1 target within [MELEE RANGE]: 10 + Martial Level + STR or fall prone." },
-        { "name": "Pounce II", "pointsCost": 3, "apCost": 0, "mpCost": 5, "description": "Jump, on landing select multiple targets within [MELEE RANGE]: 10 + Martial Level + STR or fall prone." }
+        { "name": "Pounce I", "pointsCost": 1, "apCost": 0, "mpCost": 5, "description": "Jump, on landing select 1 target within [MELEE RANGE]: 10 + [MARTIAL LEVEL] + [STR] or fall prone." },
+        { "name": "Pounce II", "pointsCost": 3, "apCost": 0, "mpCost": 5, "description": "Jump, on landing select multiple targets within [MELEE RANGE]: 10 + [MARTIAL LEVEL] + [STR] or fall prone." }
     ],
     "reactionAbilities": [
         { "name": "Unnatural Dodge", "pointsCost": 1, "description": "When hit by an [ATTACK] halve the damge recieved by that [ATTACK]." }

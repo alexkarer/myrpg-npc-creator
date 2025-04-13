@@ -8,11 +8,12 @@ export enum Alignment {
     ChaoticGood = 'Chaotic Good',
     ChaoticNeutral = 'Chaotic Neutral',
     ChaoticEvil = 'Chaotic Evil',
-    None = 'None'
+    Unaligned = 'Unaligned',
+    Any = 'Any'
 }
 
 export const alignments: Alignment[] = [
-    Alignment.None, 
+    Alignment.Unaligned, 
     Alignment.LawfulGood, 
     Alignment.LawfulNeutral, 
     Alignment.LawfulEvil, 
@@ -21,5 +22,6 @@ export const alignments: Alignment[] = [
     Alignment.NeutralEvil, 
     Alignment.ChaoticGood,
     Alignment.ChaoticNeutral,
-    Alignment.ChaoticEvil
+    Alignment.ChaoticEvil,
+    Alignment.Any
   ]

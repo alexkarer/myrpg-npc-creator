@@ -15,7 +15,7 @@ const npcStore = createStore(
     withProps<NPC>({ 
         name: '',
         biography: '',
-        alignment: Alignment.None,
+        alignment: Alignment.Unaligned,
 
         levelConfig: levelsJson[0],
         archeTypeBaseStatArrays: archeTypesJson.warriorBaseStatArray,
@@ -107,7 +107,7 @@ export class NpcRepository {
     $meleeSpellAttack = npcStore.pipe(select(state => 10 + this.calculateAgi(state) + this.getBaseStatArray(state).levels.spellLevel));
     $rangedSpellAttack = npcStore.pipe(select(state => 10 + this.calculatePer(state) + this.getBaseStatArray(state).levels.spellLevel));
 
-    $hp = npcStore.pipe(select(state => this.getBaseStatArray(state).hpBonus + Math.floor((state.creatureSize.hpPerLevel + state.hpPerLevelBonuses + Math.floor(this.calculateCon(state) / 2)) * state.levelConfig.level)));
+    $hp = npcStore.pipe(select(state => this.getBaseStatArray(state).hpBonus + state.baseHpBonus + Math.floor((state.creatureSize.hpPerLevel + state.hpPerLevelBonuses + Math.floor(this.calculateCon(state) / 2)) * state.levelConfig.level)));
     $hardness = npcStore.pipe(select(state => 10 + this.calculateStr(state) + this.getBaseStatArray(state).defenseBonus.hardness + state.hardnessBonus));
     $dodge = npcStore.pipe(select(state => 10 + this.calculateAgi(state) + this.getBaseStatArray(state).defenseBonus.dodge + state.dodgeBonus + state.creatureSize.dodgeBonus));
     $toughness = npcStore.pipe(select(state => 10 + this.calculateCon(state) + this.getBaseStatArray(state).defenseBonus.toughness + state.toughnessBonus));
@@ -150,6 +150,7 @@ export class NpcRepository {
                 .replaceAll('[CHA]', this.calculateCha(state).toString())
                 .replaceAll('[MARTIAL LEVEL]', this.getBaseStatArray(state).levels.martialLevel.toString())
                 .replaceAll('[SPELL LEVEL]', this.getBaseStatArray(state).levels.spellLevel.toString())
+                .replaceAll('[DEFAULT DURATION]', Math.max(2, Math.floor(state.levelConfig.level / 2)).toString())
         }))
     ));
     $reactions = npcStore.pipe(select(state => state.reactions));
@@ -419,8 +420,10 @@ export class NpcRepository {
                 this.addSpecialMovement('fly(1.5m)');
                 break;
             case 'Fly II':
+                this.addSpecialMovement('fly(3m)');
                 break;
             case 'Fly III':
+                this.addSpecialMovement('fly(4.5m)');
                 break;
             case 'Tank I':
                 this.updateBaseHpBonus(5);
@@ -480,30 +483,25 @@ export class NpcRepository {
                 this.addDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor II':
-                this.updateDodgeBonus(-2);
-                this.addDamageResistance({ type: 'physical', value: '2'});
+                this.updateDodgeBonus(-3);
+                this.addDamageResistance({ type: 'physical', value: '4'});
                 break;
             case 'Armor III':
-                this.updateDodgeBonus(-2);
+                this.updateDodgeBonus(-5);
                 this.updateMpBonus(-1);
-                this.addDamageResistance({ type: 'physical', value: '2'});
-                break;
-            case 'Armor IV':
-                this.updateDodgeBonus(-2);
-                this.updateMpBonus(-1);
-                this.addDamageResistance({ type: 'physical', value: '2'});
+                this.addDamageResistance({ type: 'physical', value: '6'});
                 break;
             case 'Small Shield':
-                this.setShield(10, 15);
+                this.setShield(12, 15);
                 break;
             case 'Medium Shield':
                 this.updateDodgeBonus(-1);
-                this.setShield(12, 25);
+                this.setShield(14, 25);
                 break;
             case 'Tower Shield':
                 this.updateDodgeBonus(-3)
                 this.updateMpBonus(-1);
-                this.setShield(15, 40);
+                this.setShield(16, 40);
                 break;
             case 'Nightvision I':
                 break;
@@ -555,8 +553,10 @@ export class NpcRepository {
                 this.removeSpecialMovement('fly(1.5m)');
                 break;
             case 'Fly II':
+                this.removeSpecialMovement('fly(3m)');
                 break;
             case 'Fly III':
+                this.removeSpecialMovement('fly(4.5m)');
                 break;
             case 'Tank I':
                 this.updateBaseHpBonus(-5);
@@ -616,18 +616,13 @@ export class NpcRepository {
                 this.removeDamageResistance({ type: 'physical', value: '2'});
                 break;
             case 'Armor II':
-                this.updateDodgeBonus(2);
-                this.removeDamageResistance({ type: 'physical', value: '2'});
+                this.updateDodgeBonus(3);
+                this.removeDamageResistance({ type: 'physical', value: '4'});
                 break;
             case 'Armor III':
-                this.updateDodgeBonus(2);
+                this.updateDodgeBonus(5);
                 this.updateMpBonus(1);
-                this.removeDamageResistance({ type: 'physical', value: '2'});
-                break;
-            case 'Armor IV':
-                this.updateDodgeBonus(2);
-                this.updateMpBonus(1);
-                this.removeDamageResistance({ type: 'physical', value: '2'});
+                this.removeDamageResistance({ type: 'physical', value: '6'});
                 break;
             case 'Small Shield':
                 this.setShield(0, 0);

@@ -44,7 +44,7 @@
         { "pointsCost": 1, "name": "Armor II", "description": "Wear Armor to gain damage resistance: phyiscal 4, increases maneuvrepenalty to -3." },
         { "pointsCost": 2, "name": "Armor III", "description": "Wear Armor to gain damage resistance: phyiscal 6, increases maneuvrepenalty to -5 and a movementpenalt of -1." },
         { "pointsCost": 0, "name": "Small Shield", "description": "Gain shield block base of 10 and threshold of 15" },
-        { "pointsCost": 0, "name": "Medium Shield", "description": "Gain shield block base of 12 and threshold of 25 with maneuvrepeanlty of -1" },
+        { "pointsCost": 1, "name": "Medium Shield", "description": "Gain shield block base of 12 and threshold of 25 with maneuvrepeanlty of -1" },
         { "pointsCost": 1, "name": "Tower Shield", "description": "Gain shield block base of 15 and threshold of 40 with maneuvrepeanlty of -3 and movement penalty of -1" }
     ],
     "otherTraits": [
@@ -57,7 +57,11 @@
         { "pointsCost": 2, "name": "Tag Team", "description": "If another creature with the same trait is within [MELEE] of a target, then the creature has [DISADVANTAGE] on any [DODGE] [SAVE] or [SHIELD BLOCK]" },
         { "pointsCost": 2, "name": "REGENERATION I", "description": "At the start of the Creatures [TURN] it regenerates d6 [HP]." },
         { "pointsCost": 4, "name": "REGENERATION II", "description": "At the start of the Creatures [TURN] it regenerates 10 [HP]." },
-        { "pointsCost": 6, "name": "REGENERATION III", "description": "At the start of the Creatures [TURN] it regenerates 20 [HP]." }
+        { "pointsCost": 6, "name": "REGENERATION III", "description": "At the start of the Creatures [TURN] it regenerates 20 [HP]." },
+        { "pointsCost": 2, "name": "Spell Eater", "description": "Each time a [SPELL ABILITY] is used within 9m of the creature, the creature regains 1d6 + additional d6 per [SPELL ABILITY] level and the next damaging Ability deals d6 for [SPELL ABILITY] level." },
+        { "pointsCost": 1, "name": "Deadly Demise I", "description": "When the creature dies all creautre within 1.5m have to make [SAVE] or recieve 2d6 damage." },
+        { "pointsCost": 3, "name": "Deadly Demise II", "description": "When the creature dies all creautre within 3m have to make [SAVE] or recieve 4d6 damage." },
+        { "pointsCost": 5, "name": "Deadly Demise III", "description": "When the creature dies all creautre within 4.5m have to make [SAVE] or recieve 6d6 damage." }
     ],
     "creatureTypeTraits": [
         { "pointsCost": 1, "name": "Mimic", "description": "If the creature remains motionless it is undistinguishable from the object it is mimicing. But can be detected with a [DT] 25 + [LEVEL] [PER] Investigation [SKILL TEST]. Each creature that touches the Mimic gets stuck on it and recieves [RESTRAINED I] [DT] 10 + [LEVEl] + [CON]." },

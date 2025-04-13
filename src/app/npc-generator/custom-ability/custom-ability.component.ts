@@ -97,13 +97,13 @@ export class CustomAbilityComponent {
     if (this.usageRestriction.abilityUsageRestriction === 'None') {
       return this.name;
     } else {
-      return this.name + ' ' + this.usageRestriction;
+      return this.name + ', ' + this.usageRestriction.abilityUsageRestriction;
     }
   }
 
   private getDescription(): string {
     let rawDescription = this.targets.target + ', ' +
-      (this.targets.isAOE ? ('[DT] 10+[LEVEL]+' + this.dtCalculationAttribute + 'on fail: ' + this.targetSave + ': ') : 'on hit: ') +
+      (this.targets.isAOE ? ('[DT] 10+[LEVEL]+' + this.dtCalculationAttribute + ' on fail: ' + this.targetSave + ': ') : 'on hit: ') +
       this.mainEffect.mainEffect +
       (this.targets.isAOE ? ' [HALF]' : '') +
       (this.additionalEffects.length === 0 ? '' : ', additionally ') +
@@ -115,6 +115,8 @@ export class CustomAbilityComponent {
         .replaceAll('[MEDIUM DAMAGE]', '[MEDIUM MARTIAL DAMAGE]')
         .replaceAll('[HEAVY DAMAGE]', '[HEAVY MARTIAL DAMAGE]')
         .replaceAll('[LEVEL]', '[MARTIAL LEVEL]')
+        .replaceAll('[SELECTED SAVE]', this.targetSave + ' [SAVE]')
+        .replaceAll('[CUSTOM DT]', this.targetSave + ' [DT] 10+[MARTIAL LEVEL]+' + this.dtCalculationAttribute)
     } else {
       return rawDescription.replaceAll('[MELEE ATTACK]', '[MELEE SPELL ATTACK]')
         .replaceAll('[RANGED ATTACK]', '[RANGED SPELL ATTACK]')
@@ -122,6 +124,8 @@ export class CustomAbilityComponent {
         .replaceAll('[MEDIUM DAMAGE]', '[MEDIUM SPELL DAMAGE]')
         .replaceAll('[HEAVY DAMAGE]', '[HEAVY SPELL DAMAGE]')
         .replaceAll('[LEVEL]', '[SPELL LEVEL]')
+        .replaceAll('[SELECTED SAVE]', this.targetSave + ' [SAVE]')
+        .replaceAll('[CUSTOM DT]', this.targetSave + ' [DT] 10+[SPELL LEVEL]+' + this.dtCalculationAttribute)
     }
   }
 }

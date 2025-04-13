@@ -1,7 +1,7 @@
 {
     "abilityTypes": [ "Martial", "Spell" ],
     "abilityUsageCosts": [
-        { "apCost": 1, "pointCost": 2 },
+        { "apCost": 1, "pointCost": 3 },
         { "apCost": 2, "pointCost": 0 },
         { "apCost": 3, "pointCost": -2 },
         { "apCost": 4, "pointCost": -4 },
@@ -11,14 +11,17 @@
     "abilityUsageRestriction": [
         { "abilityUsageRestriction": "None", "pointCost": 0, "onlyUsableWithCost": null },
         { "abilityUsageRestriction": "1/TURN", "pointCost": -1, "onlyUsableWithCost": "1 [AP]" },
-        { "abilityUsageRestriction": "Cooldown(2)", "pointCost": -3, "onlyUsableWithCost": null },
-        { "abilityUsageRestriction": "Cooldown(3)", "pointCost": -4, "onlyUsableWithCost": null },
+        { "abilityUsageRestriction": "CD(2)", "pointCost": -3, "onlyUsableWithCost": null },
+        { "abilityUsageRestriction": "CD(3)", "pointCost": -4, "onlyUsableWithCost": null },
         { "abilityUsageRestriction": "Once", "pointCost": -5, "onlyUsableWithCost": null }
     ],
     "targets": [
-        { "target": "[MELEE ATTACK], [MEELE RANGE] reach, 1 target", "pointCost": 0, "isAOE": false },
+        { "target": "[MELEE ATTACK], [MEELE RANGE] reach", "pointCost": 0, "isAOE": false },
+        { "target": "[MEELE RANGE] reach, 1 target", "pointCost": 0, "isAOE": true },
         { "target": "[RANGED ATTACK], 15m range", "pointCost": 1, "isAOE": false },
         { "target": "[RANGED ATTACK], 30m range", "pointCost": 2, "isAOE": false },
+        { "target": "15m range, 1 target", "pointCost": 1, "isAOE": true },
+        { "target": "30m range, 1 target", "pointCost": 2, "isAOE": true },
         { "target": "[MELEE ATTACK], [MEELE RANGE] reach, Cleave", "pointCost": 2, "isAOE": false },
         { "target": "[RANGED ATTACK], 15m range, 2 targets", "pointCost": 3, "isAOE": false },
         { "target": "[RANGED ATTACK], 15m range, 3 targets", "pointCost": 5, "isAOE": false },
@@ -27,6 +30,7 @@
         { "target": "[LINE] (1.5m * 15m)", "pointCost": 4, "isAOE": true },
         { "target": "[LINE] (1.5m * 30m)", "pointCost": 5, "isAOE": true },
         { "target": "[CONE] (4.5m)", "pointCost": 3, "isAOE": true },
+        { "target": "[CONE] (6m)", "pointCost": 4, "isAOE": true },
         { "target": "[CONE] (9m)", "pointCost": 5, "isAOE": true },
         { "target": "[CONE] (15m)", "pointCost": 6, "isAOE": true },
         { "target": "[SPHERE] (1.5m), 9m range", "pointCost": 3, "isAOE": true },
@@ -57,19 +61,20 @@
         { "mainEffect": "3 * [LIGHT DAMAGE] damage", "pointCost": 3 },
         { "mainEffect": "4 * [LIGHT DAMAGE] damage", "pointCost": 4 },
         { "mainEffect": "5 * [LIGHT DAMAGE] damage", "pointCost": 5 },
-        { "mainEffect": "knock prone", "pointCost": -1 },
-        { "mainEffect": "Afflict [TIER I STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": -1 },
-        { "mainEffect": "Afflict [TIER II STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 2 },
-        { "mainEffect": "Afflict [TIER III STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 6 }
+        { "mainEffect": "knock prone if failed [CUSTOM DT] [HARDNESS] [SAVE]", "pointCost": -1 },
+        { "mainEffect": "Afflict [TIER I STATUS EFFECT] lasts [DEFAULT DURATION] [ROUND] [SAVE LOWERS]", "pointCost": -1 },
+        { "mainEffect": "Afflict [TIER II STATUS EFFECT] lasts [DEFAULT DURATION] [ROUND] [SAVE LOWERS]", "pointCost": 2 },
+        { "mainEffect": "Afflict [TIER III STATUS EFFECT] lasts [DEFAULT DURATION] [ROUND] [SAVE LOWERS]", "pointCost": 6 }
     ],
     "additionalEffects": [
         { "additionalEffect": "[LIGHT DAMAGE] damage", "pointCost": 2 },
         { "additionalEffect": "[MEDIUM DAMAGE] damage", "pointCost": 4 },
         { "additionalEffect": "[HEAVY DAMAGE] damage", "pointCost": 5 },
-        { "additionalEffect": "push [STR] or [SPI] m away", "pointCost": 1 },
-        { "additionalEffect": "knock prone", "pointCost": 2 },
-        { "additionalEffect": "afflict [TIER I STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 2 },
-        { "additionalEffect": "afflict [TIER II STATUS EFFECT] lasts [LEVEL]/2, min 2 [TURN] [SAVE LOWERS]", "pointCost": 6 },
+        { "additionalEffect": "pull [STR] or [SPI] m closer if failed [CUSTOM DT] [HARDNESS] [SAVE].", "pointCost": 1 },
+        { "additionalEffect": "push [STR] or [SPI] m away if failed [CUSTOM DT] [HARDNESS] [SAVE]", "pointCost": 1 },
+        { "additionalEffect": "knock prone if failed [CUSTOM DT] [HARDNESS] [SAVE]", "pointCost": 2 },
+        { "additionalEffect": "afflict [TIER I STATUS EFFECT] if failed [CUSTOM DT] [SELECTED SAVE] lasts [DEFAULT DURATION] [ROUND] [SAVE LOWERS]", "pointCost": 2 },
+        { "additionalEffect": "afflict [TIER II STATUS EFFECT] if failed [CUSTOM DT] [SELECTED SAVE] lasts [DEFAULT DURATION] [ROUND] [SAVE LOWERS]", "pointCost": 6 },
         { "additionalEffect": "the creature heals [HP] equal to half damage done", "pointCost": 2 }
     ]
 }

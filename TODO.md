@@ -8,6 +8,7 @@ add spellcasting test which is based on int to determine DT for save against AOE
 **Abilities**
 - add functionlity to replace dedicated status effects in description
 - add possiblity for status effects to decrease in tier on successful saves, introduce new keyword [SAVE LOWERS]
+- properly add functionality to differentiate between attack and single target save. (just add extra targeting options)
 
 **Base move distance**
 - add base move distance from movement

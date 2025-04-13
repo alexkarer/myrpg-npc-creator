@@ -58,10 +58,10 @@
             </div>
         </div>
         <div ngbDropdown class="d-inline-block me-2">
-            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityMainEffect" ngbDropdownToggle>{{ mainEffect.mainEffect }} ({{ mainEffect.pointCost }})</button>
+            <button type="button" class="btn btn-outline-primary" id="dropdownAbilityMainEffect" ngbDropdownToggle>{{ mainEffect.mainEffect.substring(0, 30) }} ({{ mainEffect.pointCost }})</button>
             <div ngbDropdownMenu aria-labelledby="dropdownAbilityMainEffect">
                 @for (effect of customAbilityOptions.mainEffects; track $index) {
-                    <button type="button" (click)="handleMainEffectUpdate(effect)" ngbDropdownItem>{{ effect.mainEffect }} ({{ effect.pointCost }})</button>
+                    <button type="button" (click)="handleMainEffectUpdate(effect)" ngbDropdownItem>{{ effect.mainEffect.substring(0, 30) }} ({{ effect.pointCost }})</button>
                 }
             </div>
         </div>
@@ -71,7 +71,7 @@
                 <div class="d-flex justify-content-center flex-column mx-2">
                     @for (additionalEffect of customAbilityOptions.additionalEffects; track $index) {
                         <input type="checkbox" class="btn-check" [id]="'btncheck' + additionalEffect.additionalEffect.replaceAll(' ', '')" autocomplete="off" (change)="handleAdditionalEffectCheckBoxUpdate($event, additionalEffect)">
-                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + additionalEffect.additionalEffect.replaceAll(' ', '')">{{ additionalEffect.additionalEffect + ' (' + additionalEffect.pointCost + ')' }}</label>
+                        <label class="btn btn-outline-primary my-1" [for]="'btncheck' + additionalEffect.additionalEffect.replaceAll(' ', '')">{{ additionalEffect.additionalEffect.substring(0, 30) }} ({{ additionalEffect.pointCost }})</label>
                     }
                 </div>
             </div>
