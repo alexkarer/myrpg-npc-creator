@@ -1,3 +1,7 @@
+# Deprecated
+
+This repository is deprecated, all future changes in the npc-generator will now be done in https://github.com/alexkarer/Reclaim-The-Realm-TTRPG
+
 # MyrpgNpcCreator
 
 A simple angular SPA which provides an interface to generate NPCS for my TTRPG system
